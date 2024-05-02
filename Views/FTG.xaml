@@ -1,0 +1,31 @@
+﻿<hacs:View x:Class="CegsLLNL.Views.FTG"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:CegsLLNL.Views"
+    xmlns:hacs="schemas.aeonhacs.com/wpf"
+    mc:Ignorable="d"
+    Background="{x:Null}">
+    <Canvas Width="159" Height="126">
+        <hacs:Chamber Data="M0.5,43.5 h34 M52.5,17.5 h17 v52 h-17 m0,-26 h17"
+                   Canvas.Right="0"
+                   Component="FTG" HelpText="FlowThrough Gas" />
+        <hacs:Stub Orientation="Right" FittingSize="3/8" Canvas.Right="104" Canvas.Top="39" />
+
+        <hacs:Fitting Data="M3.5,0.5 v13 h13" FittingSize="3/8"
+                   IsHitTestVisible="False" Canvas.Right="141" Canvas.Top="108" />
+
+        <hacs:ConvolutedTubing TubingSize="3/8" Data="M0,0 h-5 m0,0 h-5 c -30,0 -36.5,28.5 -36.5,50.5 v9 m0,0 v5" Canvas.Right="108" Canvas.Top="39" />
+        <hacs:GasSupply GasName="He" HelpText="Helium gas supply" Valve="vHe_FTG" 
+                     Orientation="Right" Canvas.Right="33" Canvas.Top="7" />
+        <hacs:GasSupply GasName="O2" HelpText="Oxygen gas supply" Valve="vO2_FTG"
+                     Orientation="Right" Canvas.Right="33" Canvas.Top="59" />
+        <hacs:Valve d:ValveState="Closed"
+            Component="vFTG_IP1" HelpText="FTG-IP1 valve" Canvas.Right="85" Canvas.Top="34" />
+
+        <hacs:Valve Component="vFtgFlow" HelpText="FTG flow valve" Canvas.Top="34" Canvas.Right="33" d:ValveState="Closed" >
+            <hacs:Restriction Orientation="Horizontal"/>
+        </hacs:Valve>
+    </Canvas>
+</hacs:View>

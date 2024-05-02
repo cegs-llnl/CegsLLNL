@@ -1,0 +1,23 @@
+﻿<hacs:View x:Class="CegsLLNL.Views.AM" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:CegsLLNL.Views"
+        xmlns:hacs="schemas.aeonhacs.com/wpf"
+        mc:Ignorable="d"
+        Background="{x:Null}">
+
+    <Canvas Width="176" Height="183">
+        <hacs:Chamber Component="Section.AM" HelpText="Auxilary port manifold"
+                   Data="M0.5,17.5 h17 v147 m0,-17 h-17 m17,-26 h-17 m17,-26 h-17 m17,-26 h-17 m17,-26 h-17" Canvas.Right="0" />
+
+        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="7" Component="AP1" />
+        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="33" Component="AP2" />
+        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="59" Component="AP3" />
+        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="85" Component="AP4" />
+        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="111" Component="AP5" />
+        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="137" Component="AP6" />
+        
+        <hacs:Valve Component="vd13C_AM" d:ValveState="Opened"  HelpText="d13C-AM Valve" Canvas.Top="164" Canvas.Right="7" />
+    </Canvas>
+</hacs:View>
