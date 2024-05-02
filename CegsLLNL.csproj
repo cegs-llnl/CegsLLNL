@@ -40,8 +40,8 @@
 	  <PackageReference Include="WpfControls.ColorPicker" Version="1.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Core\Core.csproj" />
-	  <ProjectReference Include="..\Wpf\Wpf.csproj" />
+	  <ProjectReference Include="..\Core\AeonHacs.Core.csproj" />
+	  <ProjectReference Include="..\Wpf\AeonHacs.Wpf.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="LJUDDotNet">
