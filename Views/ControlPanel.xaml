@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:cegs="clr-namespace:AeonHacs.Components"
         xmlns:local="clr-namespace:CegsLLNL.Views"
-        xmlns:hacs="schemas.aeonhacs.com/wpf"
+        xmlns:hacs="http://schemas.aeonhacs.com/wpf"
         mc:Ignorable="d" 
         d:DesignWidth="1200"
         d:DesignHeight="630">
@@ -22,7 +22,7 @@
     <!--==============================================-->
     <Grid>
         <!-- Simplify references to Cegs properties -->
-        <hacs:View x:Name="Cegs" Component="CEGSLLNL" Visibility="Collapsed" />
+        <hacs:View x:Name="Cegs" Component="CegsLLNL" Visibility="Collapsed" />
 
         <!-- System Uptime -->
         <StackPanel Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top">

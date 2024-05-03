@@ -285,86 +285,6 @@ namespace AeonHacs.Components
         {
             ProcessStep.Start("Open line");
 
-            ProcessSubStep.Start("Close gas supplies");
-            foreach (GasSupply g in GasSupplies.Values)
-            {
-                if (g.Destination.VacuumSystem == VacuumSystem1)
-                    g.ShutOff();
-            }
-
-            // close gas flow valves after all shutoff valves are closed
-            foreach (GasSupply g in GasSupplies.Values)
-            {
-                if (g.Destination.VacuumSystem == VacuumSystem1)
-                    g.FlowValve?.CloseWait();
-            }
-
-            ProcessSubStep.End();
-
-            Evacuate(OkPressure);
-
-            Clean(VTT);
-            Clean(CT);
-
-            var gmWasOpened = GM.IsOpened && PreparedGRsAreOpened();
-            var mcWasOpened = MC_Split.IsOpened && MC.Ports.All(p => p.IsOpened);
-            var ctWasOpened = CT_VTT.IsOpened;
-            var imWasOpened = IM.IsOpened;
-
-            if (gmWasOpened && mcWasOpened && ctWasOpened && imWasOpened && IM_CT.IsOpened && VTT_MC.IsOpened)
-            {
-                Evacuate();
-                ProcessStep.End();
-                return;
-            }
-
-            if (!mcWasOpened)
-            {
-                ProcessSubStep.Start($"Evacuate {MC_Split.Name}");
-                VacuumSystem1.IsolateManifold();
-                MC_Split.OpenAndEvacuateAll(OkPressure);        // include MC aliquot ports
-                ProcessSubStep.End();
-            }
-
-            if (!gmWasOpened)
-            {
-                ProcessSubStep.Start($"Evacuate {GM.Name} and prepared GRs");
-                VacuumSystem1.IsolateManifold();
-                GM.Isolate();
-                OpenPreparedGRs();
-                GM.OpenAndEvacuate(OkPressure);
-                ProcessSubStep.End();
-            }
-            else
-            {
-                GM.InternalValves.Open(); // ensure GM internal valves are open in case MC evacuation closed them.
-            }
-
-            if (!ctWasOpened)
-            {
-                ProcessSubStep.Start($"Evacuate {CT_VTT.Name}");
-                VacuumSystem1.IsolateManifold();
-                CT_VTT.OpenAndEvacuate(OkPressure);
-                ProcessSubStep.End();
-            }
-
-            if (!imWasOpened)
-            {
-                ProcessSubStep.Start($"Evacuate {IM.Name}");
-                VacuumSystem1.IsolateManifold();
-                IM.OpenAndEvacuate(OkPressure);
-                ProcessSubStep.End();
-            }
-
-            ProcessSubStep.Start($"Join and Evacuate all sections");
-            OpenPreparedGRs();
-            MC.PathToVacuum?.Open();     // Opens GM, too; avoid closing GR ports
-            VTT.PathToVacuum?.Open();
-            IM.PathToVacuum?.Open();
-            IM_CT.Open();
-            VTT_MC.Open();
-            ProcessSubStep.End();
-
             ProcessStep.End();
         }
 
@@ -391,7 +311,7 @@ namespace AeonHacs.Components
             im.OpenAndEvacuate();
             Split.OpenAndEvacuate();
             im.PathToVacuum.Open();
-            WaitForStablePressure(CleanPressure);
+            im.VacuumSystem.WaitForStablePressure(CleanPressure);
             InletPort.Close();
             ProcessStep.End();
 
