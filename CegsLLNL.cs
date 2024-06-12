@@ -705,6 +705,7 @@ namespace AeonHacs.Components
         /// Use a flow of oxygen through the Inlet Port to combust the sample.
         /// </summary>
         protected virtual void UseIpFlow() => NeedIpFlow = true;
+
         /// <summary>
         /// Provide a fixed amount (pressure) of oxygen into the Inlet Port
         /// to combust the sample.
@@ -735,7 +736,6 @@ namespace AeonHacs.Components
                 InletPort.SampleFurnace.Setpoint = IpSetpoint;
         }
 
-
         /// <summary>
         /// Wait for Inlet Port temperature to fall below IpSetpoint
         /// </summary>
@@ -754,6 +754,7 @@ namespace AeonHacs.Components
             WaitFor(shouldStop, -1, 1000);
             ProcessStep.End();
         }
+
         /// <summary>
         /// Turn on the Inlet Port sample furnace.
         /// </summary>
@@ -1003,7 +1004,21 @@ namespace AeonHacs.Components
         }
 
         /// <summary>
+        /// Override default CEGS Collect() to use parameter-driven methods.
+        /// TODO: refactor default CEGS code to use this approach.
+        /// </summary>
+        protected override void Collect()
+        {
+            StartCollecting();
+            CollectUntilConditionMet();
+            StopCollecting();
+            TransferCO2FromCTToVTT();
+        }
+
+
+        /// <summary>
         /// Wait for the CEGS to be ready to process a sample.
+        /// ("CEGS" in this case is the section from the VTT onward.)
         /// </summary>
         protected virtual void WaitForCegs()
         {
@@ -1030,7 +1045,7 @@ namespace AeonHacs.Components
         }
 
         /// <summary>
-        /// Run the ExtractEtc process step, then evacuate VS2
+        /// Run the ExtractEtc process step, then evacuate VS2.
         /// </summary>
         protected virtual void ExtractEtcThenEvacuateVS2()
         {
@@ -1051,10 +1066,23 @@ namespace AeonHacs.Components
         
         #region Test functions
         /// <summary>
+        /// Moving the valves like this sometimes helps pinpoint vacuum performance problem areas.
+        /// </summary>
+        protected void ExerciseValvesForever()
+        {
+            while (true)
+            {
+                ExerciseAllValves(4);
+                WaitMinutes(2);
+            }
+        }
+
+        /// <summary>
         /// General-purpose code tester. Put whatever you want here.
         /// </summary>
         protected override void Test()
         {
+            Alert("FirstAlert", "FirstMessage");
         }
 
         #endregion Test functions

@@ -74,9 +74,9 @@
         <hacs:Valve Canvas.Left="0" Canvas.Top="0" d:ValveState="Opened"
             Component="vIM_VM1" HelpText="IMC-VM1 valve" />
         <hacs:Valve Canvas.Left="208" d:ValveState="Opened"
-            Component="vCT2_VM1" HelpText="CT2-VM1 valve" VerticalAlignment="Center" />
-        <hacs:Valve Canvas.Left="234" d:ValveState="Opened"
             Component="vCT1_VM1" HelpText="CT1-VM1 valve" VerticalAlignment="Center" />
+        <hacs:Valve Canvas.Left="234" d:ValveState="Opened"
+            Component="vCT2_VM1" HelpText="CT2-VM1 valve" VerticalAlignment="Center" />
 
     </Canvas>
 </hacs:View>
