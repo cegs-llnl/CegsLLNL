@@ -9,7 +9,7 @@
     <Canvas Width="256" Height="217">
         <!--Vacuum manifold-->
         <hacs:Chamber Canvas.Left="5" Canvas.Top="18" 
-                   Data="M4.5,0.5 v17 h234 v-17 M4.5,17.5 v17 M30.5,17.5 v-13 M56.5,17.5 v-13 M82.5,17.5 v17 M134.5,17.5 v17 M212.5,17.5 v-17" 
+                   Data="M4.5,0.5 v17 h234 v-69 M4.5,17.5 v17 M30.5,17.5 v-13 M56.5,17.5 v-13 M82.5,17.5 v17 M134.5,17.5 v17 M212.5,17.5 v-199" 
                    hacs:View.Component="VM1" AutomationProperties.HelpText="Vacuum manifold 1"/>
 
         <!--Gross pressure manometer-->
@@ -73,10 +73,6 @@
 
         <hacs:Valve Canvas.Left="0" Canvas.Top="0" d:ValveState="Opened"
             Component="vIM_VM1" HelpText="IMC-VM1 valve" />
-        <hacs:Valve Canvas.Left="208" d:ValveState="Opened"
-            Component="vCT1_VM1" HelpText="CT1-VM1 valve" VerticalAlignment="Center" />
-        <hacs:Valve Canvas.Left="234" d:ValveState="Opened"
-            Component="vCT2_VM1" HelpText="CT2-VM1 valve" VerticalAlignment="Center" />
 
     </Canvas>
 </hacs:View>
