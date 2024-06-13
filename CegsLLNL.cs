@@ -1,4 +1,5 @@
 ﻿using AeonHacs.Utilities;
+using Org.BouncyCastle.Asn1.X509;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -464,8 +465,8 @@ namespace AeonHacs.Components
             ProcessDictionary["Bypass CO2 analyzer"] = BypassCO2Analyzer;
             ProcessDictionary["Use IP flow"] = UseIpFlow;
             ProcessDictionary["No IP flow"] = NoIpFlow;
-            ProcessDictionary["Collect in CT1"] = CollectToCT1;
-            ProcessDictionary["Collect in CT2"] = CollectToCT2;
+            ProcessDictionary["Select CT1"] = CollectToCT1;
+            ProcessDictionary["Select CT2"] = CollectToCT2;
             ProcessDictionary["Toggle CT collection"] = ToggleCT;
             ProcessDictionary["Start collecting"] = StartCollecting;
             ProcessDictionary["Clear collection conditions"] = ClearCollectionConditions;
@@ -932,7 +933,6 @@ namespace AeonHacs.Components
         {
             ProcessStep.Start($"Trapping sample in {CurrentCT.Name}");
 
-            ClearCollectionConditions();
             var ct = CurrentCT;
             IM_CT.OpenAndEvacuate(OkPressure);
             ct.WaitForFrozen(false);
@@ -958,6 +958,7 @@ namespace AeonHacs.Components
         }
 
 
+        string stoppedBecause = "";
         /// <summary>
         /// Wait for a collection stop condition to occur.
         /// </summary>
@@ -968,22 +969,42 @@ namespace AeonHacs.Components
             bool shouldStop()
             {
                 if (Stopping)
+                {
+                    stoppedBecause = "CEGS is shutting down";
                     return true;
+                }
                 if (CollectUntilTemperatureRises != double.NaN && InletPort.Temperature >= CollectUntilTemperatureRises)
+                {
+                    stoppedBecause = $"InletPort.Temperature rose to {CollectUntilTemperatureRises:0} °C";
                     return true;
+                }
                 if (CollectUntilTemperatureFalls != double.NaN && InletPort.Temperature <= CollectUntilTemperatureFalls)
+                {
+                    stoppedBecause = $"InletPort.Temperature fell to {CollectUntilTemperatureFalls:0} °C";
                     return true;
+                }
                 if (CollectCloseIpPressure != double.NaN && InletPort.IsOpened && InletPort.Pressure <= CollectCloseIpPressure)
                     InletPort.Close();
                 if (CollectUntilCtPressureFalls != double.NaN && CT.Pressure <= CollectUntilCtPressureFalls)
+                {
+                    stoppedBecause = $"CoilTrap.Pressure fell to {CollectUntilCtPressureFalls:0} °C";
                     return true;
+                }
                 if (CollectUntilUgc != double.NaN && CollectedUgc >= CollectUntilUgc)
+                {
+                    stoppedBecause = $"Collected {CollectUntilUgc:0} µg C";
                     return true;
+                }
                 if (CollectUntilMinutes != double.NaN && CollectStopwatch.Elapsed.TotalMinutes >= CollectUntilMinutes)
+                {
+                    stoppedBecause = $"{MinutesString((int) CollectUntilMinutes)} elapsed";
                     return true;
+                }
+                stoppedBecause = "";
                 return false;
             }
             WaitFor(shouldStop, -1, 1000);
+            SampleLog.Record($"{Sample.LabId}\tStopped collecting:\t{stoppedBecause}");
 
             ProcessStep.End();
         }

@@ -8,9 +8,9 @@
     Background="{x:Null}">
     <Canvas Width="256" Height="217">
         <!--Vacuum manifold-->
-        <hacs:Chamber Canvas.Left="5" Canvas.Top="18" 
-                   Data="M4.5,0.5 v17 h234 v-17 M4.5,17.5 v17 M30.5,17.5 v-13 M56.5,17.5 v-13 M82.5,17.5 v17 M134.5,17.5 v17 M212.5,17.5 v-17" 
-                   hacs:View.Component="VM1" AutomationProperties.HelpText="Vacuum manifold 1"/>
+        <hacs:Chamber Component="Section.VM1" HelpText="Vacuum manifold 1" 
+            Data="M4.5,0.5 v17 h234 v-17 M4.5,17.5 v17 M30.5,17.5 v-13 M56.5,17.5 v-13 M82.5,17.5 v17 M134.5,17.5 v17 M212.5,17.5 v-17" 
+            Canvas.Left="5" Canvas.Top="18" />
 
         <!--Gross pressure manometer-->
         <hacs:PortPressureSensor Canvas.Left="82" Canvas.Top="20" Background="Transparent" Panel.ZIndex="-1"
