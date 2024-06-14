@@ -9,7 +9,7 @@
     <Canvas Width="256" Height="217">
         <!--Vacuum manifold-->
         <hacs:Chamber Canvas.Left="5" Canvas.Top="18" 
-                   Data="M4.5,0.5 v17 h234 v-69 M4.5,17.5 v17 M30.5,17.5 v-13 M56.5,17.5 v-13 M82.5,17.5 v17 M134.5,17.5 v17 M212.5,17.5 v-199" 
+                   Data="M4.5,0.5 v17 h234 M4.5,17.5 v17 M30.5,17.5 v-13 M56.5,17.5 v-13 M82.5,17.5 v17 M134.5,17.5 v17 M212.5,17.5 v-199 M238.5,-51.5 v86" 
                    hacs:View.Component="VM1" AutomationProperties.HelpText="Vacuum manifold 1"/>
 
         <!--Gross pressure manometer-->
@@ -30,6 +30,8 @@
         <!--Gas supplies-->
         <hacs:GasSupply GasName="O2" HelpText="Oxygen gas supply" Valve="vO2_VM1"
                      Canvas.Left="-1" Canvas.Top="52" Width="21" Background="Transparent"/>
+        <hacs:GasSupply GasName="He" HelpText="Helium gas supply" Valve="vHe_VM1" FlowValve="vHeFlow" d:FlowValve=""
+                        Canvas.Top="52" Canvas.Left="233" Width="21" Background="Transparent" />
         <!--Vacuum system-->
         <Canvas Canvas.Left="75" Canvas.Top="52" Width="129" Height="138">
             <hacs:View Width="129" Height="138" Background="Transparent"
