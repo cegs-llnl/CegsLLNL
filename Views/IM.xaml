@@ -9,7 +9,7 @@
     Background="{x:Null}"
     >
 
-    <Canvas Width="250" Height="216">
+    <Canvas Width="250" Height="182">
 
         <hacs:Chamber Canvas.Right="0" Canvas.Top="0"
                    Data="M0.5,16.5 h17 v156 h-17 M0.5,42.5 h17 M0.5,68.5 h17 M17.5,94.5 h69 M0.5,120.5 h17 M0.5,146.5 h17 M43.5,94.5 v17 M69.5,94.5 v-17"
@@ -35,5 +35,8 @@
         <hacs:InletPort Orientation="Right" d:PortType="Manual" Canvas.Right="86" Canvas.Top="110" Component="IP4" HelpText="Inlet port 4" MouseLeftButtonDown="InletPort_MouseLeftButtonDown" />
         <hacs:InletPort Orientation="Right" d:PortType="Manual" Canvas.Right="86" Canvas.Top="136" Component="IP5" HelpText="Inlet port 5" MouseLeftButtonDown="InletPort_MouseLeftButtonDown" />
         <hacs:InletPort Orientation="Right" d:PortType="Manual" Canvas.Right="86" Canvas.Top="162" Component="IP6" HelpText="Inlet port 6" MouseLeftButtonDown="InletPort_MouseLeftButtonDown" />
-    </Canvas>
+
+
+        <hacs:Valve Canvas.Left="197" Canvas.Top="111" d:ValveState="Opened"
+            Component="vIM_VM1" HelpText="IMC-VM1 valve" />    </Canvas>
 </hacs:View>

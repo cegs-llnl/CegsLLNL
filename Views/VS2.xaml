@@ -9,7 +9,7 @@
     <Canvas Width="259" Height="191">
         <!--Vacuum manifold-->
         <hacs:Chamber Component="Section.VM2" HelpText="Vacuum manifold 2"
-            Data="M4.5,0.5 v17 h234 v-17 M4.5,17.5 v17 M136.5,17.5 v-13 M162.5,17.5 v-13 M56.5,17.5 v17 M186.5,17.5 v17 M212.5,17.5 v17 M238.5,17.5 v17" 
+            Data="M4.5,-103.5 v121 h234 v-121 M4.5,17.5 v17 M136.5,17.5 v-13 M162.5,17.5 v-13 M56.5,17.5 v17 M186.5,17.5 v17 M212.5,17.5 v17 M238.5,17.5 v17" 
             Canvas.Left="8" Canvas.Top="18" />
 
         <!--Gross pressure manometer-->
@@ -79,9 +79,5 @@
             <hacs:Valve Canvas.Left="55" Canvas.Top="78" d:ValveState="Opened" 
                 Component="vR2" HelpText="Roughing valve" />
         </Canvas>
-        <hacs:Valve Canvas.Left="3" Canvas.Top="0" d:ValveState="Opened"
-        Component="vCTO_VM2" HelpText="CTO-VM2 valve" />
-        <hacs:Valve Canvas.Left="237" Canvas.Top="0" d:ValveState="Opened"
-        Component="vGMC_VM2" HelpText="GMC-VM2 valve" />
     </Canvas>
 </hacs:View>

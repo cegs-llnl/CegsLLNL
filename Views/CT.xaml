@@ -7,7 +7,7 @@
     mc:Ignorable="d"
     Background="{x:Null}">
 
-    <Canvas Width="211" Height="204">
+    <Canvas Width="217" Height="194">
 
         <!--CTF - Coil trap flow chamber-->
         <hacs:Chamber hacs:View.Component="Section.CTF" AutomationProperties.HelpText="Coil trap flow chamber" 
@@ -23,7 +23,7 @@
 
         <!--CTO - Coil trap outlet-->
         <hacs:Chamber hacs:View.Component="Section.CTO" AutomationProperties.HelpText="Coil trap outlet"
-                   Data="M13.5,0.5 v60 M13.5,43.5 h43 M39.5,43.5 v121"
+                   Data="M13.5,0.5 v60 M13.5,43.5 h43 M39.5,43.5 v17"
                    Canvas.Left="160" Canvas.Top="39" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
         <!--CT1 - Coil trap 1-->
@@ -58,6 +58,9 @@
         <hacs:Valve Canvas.Left="60" Canvas.Top="99" Component="vCTF_CT2" HelpText="CTF-CT2 valve" d:ValveState="Opened" />
         <hacs:Valve Canvas.Left="164" Canvas.Top="151" Component="vCT2_VM1" HelpText="CT2-VM1 valve" d:ValveState="Opened" />
         <hacs:Valve Canvas.Left="164" Canvas.Top="99" Component="vCT2_CTO" HelpText="CT2-CTO valve" d:ValveState="Opened" />
+        <hacs:Valve Canvas.Left="190" Canvas.Top="99" Component="vCTO_VM2" HelpText="CTO-VM2 valve" d:ValveState="Opened" />
+
+
     </Canvas>
 
 </hacs:View>

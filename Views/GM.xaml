@@ -9,7 +9,7 @@
 
     <Canvas Width="225" Height="397">
         <hacs:Chamber Component="Section.GM" HelpText="Graphite manifold" 
-           Data="M0.5,16.5 h43 m0,-17 v34 m-26,-17 v121" Canvas.Top="182" />
+           Data="M0.5,16.5 h43 m0,-17 v34 m-26,-17 v17" Canvas.Top="182" />
 
         <hacs:Chamber Component="Section.GML_GMC" HelpText="Graphite manifold" 
                    Data="M16.5,0.5 v147 h17 m-17,-26 h17 m-17,-26 h17 m-17,-26 h17 m-17,-26 h17 m-17,-26 h17" Canvas.Left="27" Canvas.Top="233" />
@@ -19,8 +19,10 @@
 
         <hacs:Valve Canvas.Left="34" Canvas.Top="163" d:ValveState="Opened" 
 		    Component="vGMR_GMC" HelpText="GMR-GMC valve" />
-        <hacs:Valve Canvas.Left="34" Canvas.Bottom="157" d:ValveState="Opened" 
-		    Component="vGML_GMC" HelpText="GML-GMC valve" Canvas.Top="215" />
+        <hacs:Valve Canvas.Left="34" Canvas.Top="215" d:ValveState="Opened" 
+		    Component="vGML_GMC" HelpText="GML-GMC valve" />
+        <hacs:Valve Canvas.Left="8" Canvas.Top="215" d:ValveState="Opened" 
+            Component="vGMC_VM2" HelpText="GMC-VM2 valve" />
 
         <Grid Canvas.Left="17.5" Canvas.Bottom="203" Background="Transparent" ClipToBounds="True" RenderTransform="{hacs:AnchorTransform BottomCenter}"
             hacs:View.Component="pGM" AutomationProperties.HelpText="Graphite manifold pressure" >

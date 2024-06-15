@@ -73,8 +73,5 @@
                     Component="vR1" HelpText="Roughing valve" />
         </Canvas>
 
-        <hacs:Valve Canvas.Left="0" Canvas.Top="0" d:ValveState="Opened"
-            Component="vIM_VM1" HelpText="IMC-VM1 valve" />
-
     </Canvas>
 </hacs:View>

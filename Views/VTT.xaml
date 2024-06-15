@@ -26,5 +26,7 @@
 
         <hacs:VtcTemperature Canvas.Top="79" Canvas.Left="17.5" RenderTransform="{hacs:AnchorTransform TopCenter}"
             Component="VTC" AutomationProperties.HelpText="VTC temperature" ContentStringFormat="0" />
+        <Label Content="°C" Padding="1,0.5" VerticalAlignment="Top" Canvas.Left="34" Canvas.Top="79" />
+
     </Canvas>
 </hacs:View>
