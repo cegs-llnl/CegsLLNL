@@ -10,7 +10,7 @@
     <Canvas Width="159" Height="126">
         <hacs:Chamber Data="M0.5,43.5 h34 M52.5,17.5 h17 v52 h-17 m0,-26 h17"
                    Canvas.Right="0"
-                   Component="FTG" HelpText="FlowThrough Gas" />
+                   Component="Section.FTG" HelpText="FlowThrough Gas" />
         <hacs:Stub Orientation="Right" FittingSize="3/8" Canvas.Right="104" Canvas.Top="39" />
 
         <hacs:Fitting Data="M3.5,0.5 v13 h13" FittingSize="3/8"

@@ -1,5 +1,5 @@
 ﻿using AeonHacs.Utilities;
-using Org.BouncyCastle.Asn1.X509;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -130,6 +130,8 @@ namespace AeonHacs.Components
 
             #endregion Cegs options
 
+            ChamberCT1 = Find<IChamber>("CT1");
+
             // Sections
             VM1 = Find<Section>("VM1");
             VM2 = Find<Section>("VM2");
@@ -143,6 +145,7 @@ namespace AeonHacs.Components
             IP1 = Find<Section>("IP1");
 
             FTG_IP1 = Find<Section>("FTG_IP1");
+            FTG_IM = Find<Section>("FTG_IM");
             IM_CTF = Find<Section>("IM_CTF");
             IM_CA_CTF = Find<Section>("IM_CTF");
             IM_CT1 = Find<Section>("IM_CT1");
@@ -163,6 +166,9 @@ namespace AeonHacs.Components
             CA1 = Find<SableCA10>("CA1");
             IpOvenRamper = Find<OvenRamper>("IpOvenRamper");
             FTG_IMFlowManager = Find<FlowManager>("FTG_IMFlowManager");
+
+            // Select Default Coil Trap
+            SelectCT1();
         }
         #endregion HacsComponent
 
@@ -196,6 +202,13 @@ namespace AeonHacs.Components
         /// The amount of carbon in the Measurement Chamber.
         /// </summary>
         public virtual double umolCinMC => ugCinMC.Value / gramsCarbonPerMole;
+
+        IChamber ChamberCT1
+        {
+            get => chamberCT1;
+            set => chamberCT1 = value;
+        }
+        IChamber chamberCT1;
 
         #region Sections
 
@@ -269,6 +282,11 @@ namespace AeonHacs.Components
         /// Flow-Through Gas..Inlet Port 1 section
         /// </summary>
         public ISection FTG_IP1 { get; set; }
+
+        /// <summary>
+        /// Flow-Through Gas..Inlet Manifold section
+        /// </summary>
+        public ISection FTG_IM { get; set; }
 
         /// <summary>
         /// Inlet Manifold..Coil Trap Flow section (bypasses CO2 analyzer)
@@ -413,8 +431,14 @@ namespace AeonHacs.Components
             ProcessDictionary["Replace iron in sulfur traps"] = ChangeSulfurFe;
             Separators.Add(ProcessDictionary.Count);
 
+            ProcessDictionary["Prepare loaded inlet ports for collection"] = PrepareIPsForCollection;
             ProcessDictionary["Prepare carbonate sample for acid"] = PrepareCarbonateSample;
             ProcessDictionary["Load acidified carbonate sample"] = LoadCarbonateSample;
+            Separators.Add(ProcessDictionary.Count);
+
+            ProcessDictionary["Open and evacuate line"] = OpenLine;
+            ProcessDictionary["Open and evacuate VS1"] = OpenVS1Line;
+            ProcessDictionary["Open and evacuate VS2"] = OpenVS2Line;
             Separators.Add(ProcessDictionary.Count);
 
             ProcessDictionary["Admit sealed CO2 to InletPort"] = AdmitSealedCO2IP;
@@ -425,9 +449,6 @@ namespace AeonHacs.Components
             ProcessDictionary["Remove sulfur"] = RemoveSulfur;
             ProcessDictionary["Dilute small sample"] = Dilute;
             ProcessDictionary["Graphitize aliquots"] = GraphitizeAliquots;
-            ProcessDictionary["Open and evacuate line"] = OpenLine;
-            ProcessDictionary["Open and evacuate VS1"] = OpenVS1Line;
-            ProcessDictionary["Open and evacuate VS2"] = OpenVS2Line;
             Separators.Add(ProcessDictionary.Count);
 
             ProcessDictionary["Collect, etc."] = CollectEtc;
@@ -453,7 +474,6 @@ namespace AeonHacs.Components
             ProcessDictionary["Wait for operator"] = WaitForOperator;
             Separators.Add(ProcessDictionary.Count);
 
-            ProcessDictionary["Prepare loaded inlet ports for collection"] = PrepareIPsForCollection;
             ProcessDictionary["Transfer CO2 from CT to VTT"] = TransferCO2FromCTToVTT;
             ProcessDictionary["Transfer CO2 from MC to VTT"] = TransferCO2FromMCToVTT;
             ProcessDictionary["Transfer CO2 from MC to GR"] = TransferCO2FromMCToGR;
@@ -465,13 +485,14 @@ namespace AeonHacs.Components
             ProcessDictionary["Bypass CO2 analyzer"] = BypassCO2Analyzer;
             ProcessDictionary["Use IP flow"] = UseIpFlow;
             ProcessDictionary["No IP flow"] = NoIpFlow;
-            ProcessDictionary["Select CT1"] = CollectToCT1;
-            ProcessDictionary["Select CT2"] = CollectToCT2;
+            ProcessDictionary["Select CT1"] = SelectCT1;
+            ProcessDictionary["Select CT2"] = SelectCT2;
             ProcessDictionary["Toggle CT collection"] = ToggleCT;
             ProcessDictionary["Start collecting"] = StartCollecting;
             ProcessDictionary["Clear collection conditions"] = ClearCollectionConditions;
             ProcessDictionary["Collect until condition met"] = CollectUntilConditionMet;
             ProcessDictionary["Stop collecting"] = StopCollecting;
+            ProcessDictionary["Stop collecting after bleed down"] = StopCollectingAfterBleedDown;
             ProcessDictionary["Turn on quartz furnace"] = TurnOnIpQuartzFurnace;
             ProcessDictionary["Turn off quartz furnace"] = TurnOffIpQuartzFurnace;
             ProcessDictionary["Adjust sample setpoint"] = AdjustIpSetpoint;
@@ -539,6 +560,7 @@ namespace AeonHacs.Components
             OpenVS2Line();
             WaitFor(() => VS1All.VacuumSystem.Pressure <= OkPressure && VS2All.VacuumSystem.Pressure <= OkPressure);
             Section.Connections(VS1All, VS2All).Open();
+            CA.Isolate();
         }
 
         /// <summary>
@@ -591,39 +613,44 @@ namespace AeonHacs.Components
         public double ImPressureTarget => GetParameter("ImPressureTarget");
 
         /// <summary>
-        /// During sample collection, close the Inlet Port when the Inlet Manifold reaches this pressure. 
-        /// Ignore Inlet Manifold pressure if this value is double.NaN (not a number).
+        /// During sample collection, close the Inlet Port when the Inlet Manifold pressure falls to this value, 
+        /// provided that it is a number (i.e., not NaN).
         /// </summary>
-        public double CollectCloseIpPressure => GetParameter("CollectCloseIpPressure");
+        public double CollectCloseIpAtPressure => GetParameter("CollectCloseIpAtPressure");
 
         /// <summary>
-        /// Stop collecting into the coil trap when the Inlet Port rises to this temperature. 
-        /// Ignore this stop condition if the value is double.NaN (not a number).
+        /// During sample collection, close the Inlet Port when the Coil Trap pressure falls to this value,
+        /// provided that it is a number (i.e., not NaN).
+        /// </summary>
+        public double CollectCloseIpAtCtPressure => GetParameter("CollectCloseIpAtCtPressure");
+
+        /// <summary>
+        /// Stop collecting into the coil trap when the Inlet Port temperature rises to this value,
+        /// provided that it is a number (i.e., not NaN).
         /// </summary>
         public double CollectUntilTemperatureRises => GetParameter("CollectUntilTemperatureRises");
 
         /// <summary>
-        /// Stop collecting into the coil trap when the Inlet Port falls to this temperature. 
-        /// Ignore this stop condition if the value is double.NaN (not a number).
+        /// Stop collecting into the coil trap when the Inlet Port temperature falls to this value,
+        /// provided that it is a number (i.e., not NaN).
         /// </summary>
         public double CollectUntilTemperatureFalls => GetParameter("CollectUntilTemperatureFalls");
 
         /// <summary>
-        /// Stop collecting when the Coil Trap falls to or below this pressure. 
-        /// Ignore Coil Trap pressure if this value is double.NaN (not a number).
+        /// Stop collecting when the Coil Trap pressure falls to or below this value,
+        /// provided that it is a number (i.e., not NaN).
         /// </summary>
         public double CollectUntilCtPressureFalls => GetParameter("CollectUntilCtPressureFalls");
 
         /// <summary>
-        /// Stop collecting into the coil trap when amount of carbon in 
-        /// the Coil Trap reaches this value. 
-        /// Ignore the amount of carbon if this value is double.NaN (not a number).
+        /// Stop collecting into the coil trap when amount of carbon in the Coil Trap reaches this value,
+        /// provided that it is a number (i.e., not NaN).
         /// </summary>
         public double CollectUntilUgc => GetParameter("CollectUntilUgc");
 
         /// <summary>
         /// Stop collecting into the coil trap when this much time has elapsed. 
-        /// Ignore the collection time if this value is double.NaN (not a number).
+        /// provided that the value is a number (i.e., not NaN).
         /// </summary>
         public double CollectUntilMinutes => GetParameter("CollectUntilMinutes");
 
@@ -631,6 +658,7 @@ namespace AeonHacs.Components
         /// How many minutes to wait.
         /// </summary>
         public double WaitTimerMinutes => GetParameter("WaitTimerMinutes");
+
         /// <summary>
         /// What pressure to evacuate to.
         /// </summary>
@@ -651,12 +679,12 @@ namespace AeonHacs.Components
         /// Provide a flow of oxygen through the Inlet Port to combust the sample,
         /// instead of a fixed pressure.
         /// </summary>
-        public virtual bool NeedIpFlow { get; set; } = true;
+        public virtual bool NeedIpFlow { get; set; } = false;
 
         /// <summary>
         /// Direct the sample gas through the CO2 analyzer during collection.
         /// </summary>
-        public virtual bool NeedAnalyzer { get; set; } = true;
+        public virtual bool NeedAnalyzer { get; set; } = false;
 
         /// <summary>
         /// Monitors the time elapsed since the current sample collection phase began.
@@ -666,7 +694,7 @@ namespace AeonHacs.Components
         /// <summary>
         /// The coil trap currently being used to trap sample gas.
         /// </summary>
-        public ISection CurrentCT => IM_CT.Chambers.Contains(Find<Chamber>("CT1")) ? CT1 : CT2;
+        public ISection CurrentCT => IM_CT.Chambers.Contains(ChamberCT1) ? CT1 : CT2;
 
         /// <summary>
         /// A CEGS task dispatched to run concurrently while the main 
@@ -730,7 +758,7 @@ namespace AeonHacs.Components
         /// </summary>
         protected virtual void AdjustIpSetpoint()
         {
-            if (IpSetpoint == double.NaN) return;
+            if (IpSetpoint.IsNaN()) return;
             if (IpOvenRamper.Enabled)
                 IpOvenRamper.Setpoint = IpSetpoint;
             else
@@ -862,6 +890,7 @@ namespace AeonHacs.Components
                 destination.Isolate();
                 o2.OpenWait();
                 InletPort.Open();
+                InletPort.State = LinePort.States.InProcess;
                 destination.Evacuate();
             }
 
@@ -903,12 +932,12 @@ namespace AeonHacs.Components
         /// <summary>
         /// Use Coil Trap 1 for sample collection;
         /// </summary>
-        protected virtual void CollectToCT1() =>  IM_CT = NeedAnalyzer ? IM_CA_CT1 : IM_CT1;
+        protected virtual void SelectCT1() =>  IM_CT = NeedAnalyzer ? IM_CA_CT1 : IM_CT1;
 
         /// <summary>
         /// Use Coil Trap 2 for sample collection.
         /// </summary>
-        protected virtual void CollectToCT2() => IM_CT = NeedAnalyzer ? IM_CA_CT2 : IM_CT2;
+        protected virtual void SelectCT2() => IM_CT = NeedAnalyzer ? IM_CA_CT2 : IM_CT2;
 
         /// <summary>
         /// Switch coil traps.
@@ -918,9 +947,9 @@ namespace AeonHacs.Components
             ProcessStep.Start($"Toggle CT");
 
             if (CT == CT1)
-                CollectToCT2();
+                SelectCT2();
             else
-                CollectToCT1();
+                SelectCT1();
             StartCollecting();
 
             ProcessStep.End();
@@ -934,10 +963,10 @@ namespace AeonHacs.Components
             ProcessStep.Start($"Trapping sample in {CurrentCT.Name}");
 
             var ct = CurrentCT;
-            IM_CT.OpenAndEvacuate(OkPressure);
-            ct.WaitForFrozen(false);
-            ct.FlowManager.FlowValve.Close();
+            // TODO RESTORE DEBUG ct.WaitForFrozen(false);
+            ct.FlowValve.CloseWait();
             InletPort.Open();
+            InletPort.State = LinePort.States.InProcess;
             CollectStopwatch.Restart();
             ct.FlowManager.Start(FirstTrapBleedPressure);
 
@@ -957,49 +986,67 @@ namespace AeonHacs.Components
             ClearParameter("CollectUntilMinutes");
         }
 
-
         string stoppedBecause = "";
         /// <summary>
         /// Wait for a collection stop condition to occur.
         /// </summary>
         protected virtual void CollectUntilConditionMet()
         {
-            ProcessStep.Start($"Wait for a collection stop condition to occur");
+            ProcessStep.Start($"Wait for a collection stop condition");
 
             bool shouldStop()
             {
+                if (CollectStopwatch.IsRunning && CollectStopwatch.ElapsedMilliseconds < 1000)
+                    return false;
+
+                // TODO: what if flow manager becomes !Busy (because FlowValve is fully open)?
+                // TODO: should we invoke DuringBleed()? When?
+                // TODO: should we disable/enable CT.VacuumSystem.Manometer?
+
+                // Open flow bypass when conditions allow it without producing an excessive
+                // downstream pressure spike. Then wait for the spike to be evacuated.
+                if (IM.Pressure - FirstTrap.Pressure < FirstTrapFlowBypassPressure)
+                    FirstTrap.Open();   // open bypass if available
+
+
+                if (CollectCloseIpAtPressure.IsANumber() && InletPort.IsOpened && InletPort.Pressure <= CollectCloseIpAtPressure)
+                    InletPort.Close();
+                if (CollectCloseIpAtCtPressure.IsANumber() && InletPort.IsOpened && CT.Pressure <= CollectCloseIpAtCtPressure)
+                    InletPort.Close();
+
                 if (Stopping)
                 {
                     stoppedBecause = "CEGS is shutting down";
                     return true;
                 }
-                if (CollectUntilTemperatureRises != double.NaN && InletPort.Temperature >= CollectUntilTemperatureRises)
+                if (CollectUntilTemperatureRises.IsANumber() && InletPort.Temperature >= CollectUntilTemperatureRises)
                 {
                     stoppedBecause = $"InletPort.Temperature rose to {CollectUntilTemperatureRises:0} °C";
                     return true;
                 }
-                if (CollectUntilTemperatureFalls != double.NaN && InletPort.Temperature <= CollectUntilTemperatureFalls)
+                if (CollectUntilTemperatureFalls.IsANumber() && InletPort.Temperature <= CollectUntilTemperatureFalls)
                 {
                     stoppedBecause = $"InletPort.Temperature fell to {CollectUntilTemperatureFalls:0} °C";
                     return true;
                 }
-                if (CollectCloseIpPressure != double.NaN && InletPort.IsOpened && InletPort.Pressure <= CollectCloseIpPressure)
-                    InletPort.Close();
-                if (CollectUntilCtPressureFalls != double.NaN && CT.Pressure <= CollectUntilCtPressureFalls)
+
+                // old?: FirstTrap.Pressure < FirstTrapEndPressure;
+                if (CollectUntilCtPressureFalls.IsANumber() && CT.Pressure <= CollectUntilCtPressureFalls && IM.Pressure < Math.Ceiling(CollectUntilCtPressureFalls)+2)
                 {
-                    stoppedBecause = $"CoilTrap.Pressure fell to {CollectUntilCtPressureFalls:0} °C";
+                    stoppedBecause = $"CoilTrap.Pressure fell to {CollectUntilCtPressureFalls:0.00} Torr";
                     return true;
                 }
-                if (CollectUntilUgc != double.NaN && CollectedUgc >= CollectUntilUgc)
+                if (CollectUntilUgc.IsANumber() && CollectedUgc >= CollectUntilUgc)
                 {
                     stoppedBecause = $"Collected {CollectUntilUgc:0} µg C";
                     return true;
                 }
-                if (CollectUntilMinutes != double.NaN && CollectStopwatch.Elapsed.TotalMinutes >= CollectUntilMinutes)
+                if (CollectUntilMinutes.IsANumber() && CollectStopwatch.Elapsed.TotalMinutes >= CollectUntilMinutes)
                 {
                     stoppedBecause = $"{MinutesString((int) CollectUntilMinutes)} elapsed";
                     return true;
                 }
+
                 stoppedBecause = "";
                 return false;
             }
@@ -1010,29 +1057,59 @@ namespace AeonHacs.Components
         }
 
         /// <summary>
-        /// Stop collecting
+        /// Stop collecting immediately
         /// </summary>
-        protected virtual void StopCollecting()
+        protected virtual void StopCollecting() => StopCollecting(true);
+
+        /// <summary>
+        /// Close the IP and wait for CT pressure to bleed down until it stops falling.
+        /// </summary>
+        protected virtual void StopCollectingAfterBleedDown() => StopCollecting(false);
+
+        /// <summary>
+        /// Stop collecting. If 'immediately' is false, wait for CT pressure to bleed down after closing IP
+        /// </summary>
+        /// <param name="immediately">If false, wait for CT pressure to bleed down after closing IP</param>
+        protected virtual void StopCollecting(bool immediately = true)
         {
             ProcessStep.Start("Stop Collecting");
 
             CT = CurrentCT;     // The VTT will take it from here
+            CT.FlowManager?.Stop();
+            InletPort.Close();
+            if (!immediately) 
+                FinishCollecting();
+            IM_CT.Close();
             CT.Isolate();
-            CT.FlowManager.Stop();
-            CT.FlowManager.FlowValve.Close();
+            CT.FlowValve.CloseWait();
 
             ProcessStep.End();
         }
 
         /// <summary>
-        /// Override default CEGS Collect() to use parameter-driven methods.
-        /// TODO: refactor default CEGS code to use this approach.
+        /// Wait until pCT stops falling
+        /// </summary>
+        protected virtual void FinishCollecting()
+        {
+            ProcessStep.Start($"Wait for {IM_CT.Name} pressure to stop falling");
+            WaitFor(() => !CTF.Manometer.IsFalling);
+            ProcessStep.End();
+        }
+
+        /// <summary>
+        /// Override CEGS Collect() to use parameter-driven methods.
+        /// TODO: refactor base to use this approach.
         /// </summary>
         protected override void Collect()
         {
+            IM_CT.Isolate();
+            IM_CT.FlowValve.OpenWait();
+            IM_CT.OpenAndEvacuate(OkPressure);
+
             StartCollecting();
             CollectUntilConditionMet();
-            StopCollecting();
+            StopCollecting(false);
+
             TransferCO2FromCTToVTT();
         }
 
@@ -1080,11 +1157,140 @@ namespace AeonHacs.Components
             ProcessStep.End();
         }
 
+        protected override void PreconditionGRs()
+        {
+            var grs = GraphiteReactors.FindAll(gr => gr.State == GraphiteReactor.States.WaitPrep);
+            if (grs.Count < 1)
+            {
+                Notice.Send("Nothing to do", "No reactors are awaiting preparation.", Notice.Type.Tell);
+                return;
+            }
+            var gsInert = InertGasSupply(GM);
+            if (gsInert == null)
+            {
+                Notice.Send("Configuration Error", "Can't find inert gas supply for GM.", Notice.Type.Tell);
+                return;
+            }
+            var gsH2 = GasSupply("H2", GM);
+            if (gsH2 == null)
+            {
+                Notice.Send("Configuration Error", "Can't find H2 gas supply for GM.", Notice.Type.Tell);
+                return;
+            }
+
+            // close grs that aren't awaiting prep
+            foreach (var gr in GraphiteReactors.Except(grs))
+                gr.Close();
+
+            var count = grs.Count;
+            ProcessStep.Start($"Calibrate GR {"manometer".Plurality(count)} and {"volume".Plurality(count)}");
+
+            // on the first flush, get the sizes
+            ProcessSubStep.Start("Evacuate graphite reactors");
+            GM.Isolate();
+            grs.ForEach(gr => gr.Open());
+            GM.OpenAndEvacuate(OkPressure);
+            WaitForStablePressure(GM.VacuumSystem, OkPressure);
+            WaitMinutes(10);
+            ProcessSubStep.End();
+
+            ProcessSubStep.Start($"Zero GR manometers.");
+            grs.ForEach(gr => gr.Manometer.ZeroNow());
+            while (grs.Any(gr => gr.Manometer.Zeroing))
+                Wait();
+            grs.ForEach(gr => gr.Close());
+            ProcessSubStep.End();
+
+            foreach (var gr in grs)
+            {
+                ProcessStep.Start($"Measure {gr.Name} volume");
+                gsInert.Admit(PressureOverAtm);
+                GM.Isolate();
+                WaitSeconds(10);
+                var p0 = GM.Manometer.WaitForAverage((int)MeasurementSeconds);
+                var gmMilliLiters = GM.CurrentVolume(true);
+                gr.Open();
+                WaitSeconds(5);
+                gr.Close();
+                WaitSeconds(5);
+                var p1 = GM.Manometer.WaitForAverage((int)MeasurementSeconds);
+
+                ProcessSubStep.Start($"Calibrate {gr.Manometer.Name}");
+                // TODO: make this safe and move it into AIVoltmeter
+                var offset = gr.Manometer.Conversion.Operations[0];
+                var v = offset.Execute((gr.Manometer as AIVoltmeter).Voltage);
+                var gain = gr.Manometer.Conversion.Operations[1] as Arithmetic;
+                gain.Operand = p1 / v;
+                ProcessSubStep.End();
+
+                gr.MilliLiters = gmMilliLiters * (p0 / p1 - 1);
+                gr.Size = EnableSmallReactors && gr.MilliLiters < 2.0 ? GraphiteReactor.Sizes.Small : GraphiteReactor.Sizes.Standard;
+                ProcessStep.End();
+            }
+
+            grs.ForEach(gr => gr.Open());
+            GM.OpenAndEvacuate(OkPressure);
+            ProcessStep.End();
+
+            ProcessStep.Start("Evacuate & Flush GRs with inert gas");
+            Flush(GM, 2);
+            GM.VacuumSystem.WaitForPressure(OkPressure);
+            ProcessStep.End();
+
+
+            if (IronPreconditioningMinutes > 0)
+            {
+                if (IronPreconditionH2Pressure > 0)
+                {
+                    ProcessStep.Start("Admit H2 into GRs");
+                    GM.IsolateFromVacuum();
+                    gsH2.FlowPressurize(IronPreconditionH2Pressure);
+                    grs.ForEach(gr => gr.Close());
+                    ProcessStep.End();
+                }
+
+                ProcessStep.Start("Start Heating Fe");
+                grs.ForEach(gr =>
+                {
+                    gr.TurnOn(IronPreconditioningTemperature);
+                });
+                ProcessStep.End();
+
+                int targetTemp = (int)IronPreconditioningTemperature - (int)IronPreconditioningTemperatureCushion;
+                ProcessStep.Start($"Wait for GRs to reach {targetTemp} °C.");
+                while (AnyUnderTemp(grs, targetTemp)) Wait();
+                ProcessStep.End();
+
+                ProcessStep.Start("Precondition iron for " + MinutesString((int)IronPreconditioningMinutes));
+                if (IronPreconditionH2Pressure > 0)
+                {
+                    GM.OpenAndEvacuate(OkPressure);
+                    OpenLine();
+                }
+                WaitRemaining((int)IronPreconditioningMinutes);
+                ProcessStep.End();
+
+                grs.ForEach(gr => { gr.Heater.TurnOff(); });
+            }
+
+            grs.ForEach(gr => gr.PreparationComplete());
+
+            OpenLine();
+            Alert("Operator Needed", "Graphite reactor preconditioning complete");
+        }
+
+        protected override void PrepareIPsForCollection()
+        {
+            VS1All.Isolate();
+            base.PrepareIPsForCollection();
+        }
+
+
         #endregion Process Steps
 
 
         #endregion Process Management
-        
+
         #region Test functions
         /// <summary>
         /// Moving the valves like this sometimes helps pinpoint vacuum performance problem areas.
@@ -1098,12 +1304,70 @@ namespace AeonHacs.Components
             }
         }
 
+
+        protected void RampedOxidation()
+        {
+            IncludeCO2Analyzer();
+            SelectCT1();
+            UseIpFlow();
+
+            IM.ClosePorts();
+
+            ProcessStep.Start($"Evacuate FTG_IM to {OkPressure} Torr");
+            FTG_IM.FlowValve.OpenWait();
+            FTG_IM.OpenAndEvacuate(OkPressure);
+            ProcessStep.End();
+
+            ProcessStep.Start($"Leak check; 5 minutes");
+            IM.Manometer.ZeroNow();
+            WaitFor(() => !IM.Manometer.Zeroing);   // Now, it's zeroed
+            IM.Isolate();
+            IP1.Open();
+            if (WaitFor(() => IM.Pressure > 2, 1 * 60 * 1000, 1000))
+            {
+                IP1.Close();
+                Pause("Sample Alert", "IM Pressure too high. Process Paused.");
+            }
+            ProcessStep.End();
+
+            // YOU ARE HERE
+            var o2 = Find<IValve>("vO2_FTG");
+            var gs = Find<GasSupply>("O2.FTG.IM");
+            o2.OpenWait();
+            gs.Admit(700);
+            StartFlowThroughToTrap();
+
+            ProcessStep.Start($"Heat Quartz");
+            TurnOnIpQuartzFurnace();
+            WaitMinutes((int)QuartzFurnaceWarmupMinutes);
+            ProcessStep.End();
+
+            SetParameter("IpRampRate", 50);
+            SetParameter("IpSetpoint", 200);
+            TurnOnIpSampleFurnace();
+            ClearCollectionConditions();
+            SetParameter("CollectUntilTemperatureRises", 150);
+            CollectUntilConditionMet();
+            WaitForCegs();
+            StartExtractEtc();
+
+            ToggleCT();
+            SetParameter("CollectUntilTemperatureRises", 200);
+            CollectUntilConditionMet();
+            StopCollecting();
+            WaitForCegs();
+            StartExtractEtc();
+            WaitForCegs();
+
+            OpenLine();
+        }
+
+
         /// <summary>
         /// General-purpose code tester. Put whatever you want here.
         /// </summary>
         protected override void Test()
         {
-            Alert("FirstAlert", "FirstMessage");
         }
 
         #endregion Test functions

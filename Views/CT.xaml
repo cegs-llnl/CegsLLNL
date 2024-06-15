@@ -10,7 +10,7 @@
     <Canvas Width="211" Height="204">
 
         <!--CTF - Coil trap flow chamber-->
-        <hacs:Chamber hacs:View.Component="CTF" AutomationProperties.HelpText="Coil trap flow chamber" 
+        <hacs:Chamber hacs:View.Component="Section.CTF" AutomationProperties.HelpText="Coil trap flow chamber" 
                    Canvas.Left="0" Canvas.Top="39"
                    Data="M0.5,43.5 h34 M17.5,43.5 v-17 M52.5,43.5 h30 M69.5,0.5 v60" />
 
@@ -22,14 +22,14 @@
         </Canvas>
 
         <!--CTO - Coil trap outlet-->
-        <hacs:Chamber hacs:View.Component="CTO" AutomationProperties.HelpText="Coil trap outlet"
+        <hacs:Chamber hacs:View.Component="Section.CTO" AutomationProperties.HelpText="Coil trap outlet"
                    Data="M13.5,0.5 v60 M13.5,43.5 h43 M39.5,43.5 v121"
                    Canvas.Left="160" Canvas.Top="39" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
         <!--CT1 - Coil trap 1-->
-        <hacs:Chamber hacs:View.Component="CT1" AutomationProperties.HelpText="Coil trap 1" 
+        <hacs:Chamber hacs:View.Component="Section.CT1" AutomationProperties.HelpText="Coil trap 1" 
                    Canvas.Left="56.5" Canvas.Top="0"
-                   Data="M13,21.5 v-17 h29 v13 M62,17.5v-13 h55 v17 M91,4.5 v199" />
+                   Data="M13,21.5 v-17 h29 v13 M62,17.5v-13 h55 v17 M91,4.5 v17" />
 
         <hacs:FTC Canvas.Left="91" Canvas.Top="21" Width="35" Height="42"
             Component="ftcCT1" HelpText="Coil trap 1 coldfinger" HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -38,8 +38,8 @@
 
         <!--CT2 - Coil trap 2-->
         <hacs:Chamber Canvas.Left="56.5" Canvas.Top="117"
-                   Data="M13,0.5 v17 h29 v13 M62,30.5 v-13 h55 M117,0.5 v86" 
-                   hacs:View.Component="CT2" AutomationProperties.HelpText="Coil trap 2" />
+                   Data="M13,0.5 v17 h29 v13 M62,30.5 v-13 h55 M117,0.5 v34" 
+                   hacs:View.Component="Section.CT2" AutomationProperties.HelpText="Coil trap 2" />
 
         <hacs:FTC Canvas.Left="91" Canvas.Top="151" Width="35" Height="42"
             Component="ftcCT2" HelpText="Coil trap 2 coldfinger" HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -51,11 +51,13 @@
             <hacs:Restriction Orientation="Horizontal" />
         </hacs:Valve>
 
-        <hacs:Valve Canvas.Left="60" Canvas.Top="99" Component="vCTF_CT2" HelpText="CTF-CT2 valve" d:ValveState="Opened" />
         <hacs:Valve Canvas.Left="60" Canvas.Top="21" Component="vCTF_CT1" HelpText="CTF-CT1 valve" d:ValveState="Opened" />
-
-        <hacs:Valve Canvas.Left="164" Canvas.Top="99" Component="vCT2_CTO" HelpText="CT2-CTO valve" d:ValveState="Opened" />
+        <hacs:Valve Canvas.Left="138" Canvas.Top="21" Component="vCT1_VM1" HelpText="CT1-VM1 valve" d:ValveState="Opened" />
         <hacs:Valve Canvas.Left="164" Canvas.Top="21" Component="vCT1_CTO" HelpText="CT1-CTO valve" d:ValveState="Opened" />
+
+        <hacs:Valve Canvas.Left="60" Canvas.Top="99" Component="vCTF_CT2" HelpText="CTF-CT2 valve" d:ValveState="Opened" />
+        <hacs:Valve Canvas.Left="164" Canvas.Top="151" Component="vCT2_VM1" HelpText="CT2-VM1 valve" d:ValveState="Opened" />
+        <hacs:Valve Canvas.Left="164" Canvas.Top="99" Component="vCT2_CTO" HelpText="CT2-CTO valve" d:ValveState="Opened" />
     </Canvas>
 
 </hacs:View>

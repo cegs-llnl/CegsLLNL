@@ -29,11 +29,11 @@
 
         <!--Gas supplies-->
         <Canvas Canvas.Left="184" Canvas.Top="52" Width="73" Height="95">
-            <hacs:GasSupply GasName="He" HelpText="Helium gas supply" Valve="vHe_VM2" FlowValve="vHeFlow" d:FlowValve=""
-                     Canvas.Left="0" Canvas.Top="0" Width="21" Background="Transparent" />
             <hacs:GasSupply GasName="H2" HelpText="Hydrogen gas supply" Valve="vH2_VM2" FlowValve="vH2Flow" d:FlowValve=""
-                     Canvas.Left="26" Canvas.Top="0" Width="21" Background="Transparent" />
+                     Canvas.Left="0" Canvas.Top="0" Width="21" Background="Transparent" />
             <hacs:GasSupply GasName="CO2" HelpText="Carbon dioxide gas supply" Valve="vCO2_VM2" FlowValve="vCO2Flow" d:FlowValve=""
+                     Canvas.Left="26" Canvas.Top="0" Width="21" Background="Transparent" />
+            <hacs:GasSupply GasName="He" HelpText="Helium gas supply" Valve="vHe_VM2" FlowValve="vHeFlow" d:FlowValve=""
                      Canvas.Left="52" Canvas.Top="0" Width="21" Background="Transparent" />
         </Canvas>
 

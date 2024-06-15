@@ -8,8 +8,8 @@
     mc:Ignorable="d"
     Background="{x:Null}">
     <Canvas Width="84" Height="95">
-        <Rectangle Fill="#42538B" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Width="84" />
-        <Rectangle Fill="#E8E2DF" Width="82" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Canvas.Top="20" Canvas.Left="1"/>
+        <Rectangle Fill="#42538B" Height="45" HorizontalAlignment="Center" VerticalAlignment="Top" Width="84" wpf:View.Component="CA1" />
+        <Rectangle Fill="#E8E2DF" Width="82" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Canvas.Top="20" Canvas.Left="1" IsHitTestVisible="False"/>
         <wpf:CustomGauge Canvas.Left="25" Canvas.Top="24" Width="56"
                        Component="CA1" DisplayMemberPath="CO2Ppm" ContentStringFormat="0.0"
                        d:Content="0.0" HorizontalAlignment="Left" VerticalAlignment="Center" />

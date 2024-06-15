@@ -8,15 +8,15 @@
         Background="{x:Null}">
 
     <Canvas Width="176" Height="183">
-        <hacs:Chamber Component="Section.AM" HelpText="Auxilary port manifold"
+        <hacs:Chamber Component="Section.AM" HelpText="Auxilary port manifold" 
                    Data="M0.5,17.5 h17 v147 m0,-17 h-17 m17,-26 h-17 m17,-26 h-17 m17,-26 h-17 m17,-26 h-17" Canvas.Right="0" />
 
-        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="7" Component="AP1" />
-        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="33" Component="AP2" />
-        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="59" Component="AP3" />
-        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="85" Component="AP4" />
-        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="111" Component="AP5" />
-        <hacs:AuxiliaryPort Orientation="Right" Canvas.Right="33" Canvas.Top="137" Component="AP6" />
+        <hacs:AuxiliaryPort PortType="Ampoule" Orientation="Right" Canvas.Right="33" Canvas.Top="7" Component="AP1" />
+        <hacs:AuxiliaryPort PortType="Ampoule" Orientation="Right" Canvas.Right="33" Canvas.Top="33" Component="AP2" />
+        <hacs:AuxiliaryPort PortType="Ampoule" Orientation="Right" Canvas.Right="33" Canvas.Top="59" Component="AP3" />
+        <hacs:AuxiliaryPort PortType="Ampoule" Orientation="Right" Canvas.Right="33" Canvas.Top="85" Component="AP4" />
+        <hacs:AuxiliaryPort PortType="Ampoule" Orientation="Right" Canvas.Right="33" Canvas.Top="111" Component="AP5" />
+        <hacs:AuxiliaryPort PortType="Ampoule" Orientation="Right" Canvas.Right="33" Canvas.Top="137" Component="AP6" />
         
         <hacs:Valve Component="vd13C_AM" d:ValveState="Opened"  HelpText="d13C-AM Valve" Canvas.Top="164" Canvas.Right="7" />
     </Canvas>
