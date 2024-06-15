@@ -9,7 +9,7 @@
     Background="{x:Null}"
     >
 
-    <Canvas Width="250" Height="182">
+    <Canvas Width="250" Height="216">
 
         <hacs:Chamber Canvas.Right="0" Canvas.Top="0"
                    Data="M0.5,16.5 h17 v156 h-17 M0.5,42.5 h17 M0.5,68.5 h17 M17.5,94.5 h69 M0.5,120.5 h17 M0.5,146.5 h17 M43.5,94.5 v17 M69.5,94.5 v-17"

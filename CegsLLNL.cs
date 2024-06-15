@@ -141,6 +141,7 @@ namespace AeonHacs.Components
             CT2 = Find<Section>("CT2");
             d13C = Find<Section>("d13C");
             AM = Find<Section>("AM");
+            d13CM = AM;
             FTG = Find<Section>("FTG");
             IP1 = Find<Section>("IP1");
 
