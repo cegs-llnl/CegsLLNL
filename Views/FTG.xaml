@@ -13,10 +13,9 @@
                    Component="Section.FTG" HelpText="FlowThrough Gas" />
         <hacs:Stub Orientation="Right" FittingSize="3/8" Canvas.Right="104" Canvas.Top="39" />
 
-        <hacs:Fitting Data="M3.5,0.5 v13 h13" FittingSize="3/8"
+        <!--<hacs:Fitting Data="M3.5,0.5 v13 h13" FittingSize="3/8"
                    IsHitTestVisible="False" Canvas.Right="141" Canvas.Top="108" />
-
-        <hacs:ConvolutedTubing TubingSize="3/8" Data="M0,0 h-5 m0,0 h-5 c -30,0 -36.5,28.5 -36.5,50.5 v9 m0,0 v5" Canvas.Right="108" Canvas.Top="39" />
+        <hacs:ConvolutedTubing TubingSize="3/8" Data="M0,0 h-5 m0,0 h-5 c -30,0 -36.5,28.5 -36.5,50.5 v9 m0,0 v5" Canvas.Right="108" Canvas.Top="39" />-->
         <hacs:GasSupply GasName="He" HelpText="Helium gas supply" Valve="vHe_FTG" 
                      Orientation="Right" Canvas.Right="33" Canvas.Top="7" />
         <hacs:GasSupply GasName="O2" HelpText="Oxygen gas supply" Valve="vO2_FTG"
