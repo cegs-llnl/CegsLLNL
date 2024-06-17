@@ -1,5 +1,8 @@
 ﻿using AeonHacs.Utilities;
+using AeonHacs.Wpf.ViewModels;
+using AeonHacs.Wpf.Views;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -595,8 +598,18 @@ namespace AeonHacs.Components
             if (ugCinMC.Value != ugC)
                 NotifyPropertyChanged(nameof(umolCinMC));
         }
-        
+
         #region Process Control Parameters
+
+        /// <summary>
+        /// The effective gas load below which a volume is considered leak free.
+        /// </summary>
+        public double LeakTightTorrLitersPerSecond => GetParameter("LeakTightTorrLitersPerSecond");
+
+        /// <summary>
+        /// The effective gas load below which a port's leak rate is acceptable.
+        /// </summary>
+        public double AcceptablePortTorrLitersPerSecond => GetParameter("AcceptablePortTorrLitersPerSecond");
 
         /// <summary>
         /// Inlet Port sample furnace working setpoint ramp rate (degrees per minute).
@@ -720,6 +733,7 @@ namespace AeonHacs.Components
         
         
         #region Process Steps
+
         /// <summary>
         /// Wait for timer minutes.
         /// </summary>
@@ -847,12 +861,12 @@ namespace AeonHacs.Components
         }
 
         /// <summary>
-        /// Start flowing O2 through the Inlet Port to vacuum.
+        /// Start flowing O2 through the Inlet Port and the (warm) coil trap to vacuum.
         /// </summary>
         protected virtual void StartFlowThroughToWaste() => StartFlowThrough(false);
 
         /// <summary>
-        /// Start flowing O2 through the Inlet Port to the coil trap.
+        /// Start flowing O2 through the Inlet Port and the frozen coil trap.
         /// </summary>
         protected virtual void StartFlowThroughToTrap() => StartFlowThrough(true);
 
@@ -863,40 +877,27 @@ namespace AeonHacs.Components
         {
             ProcessStep.Start($"Start flowing O2 through {InletPort.Name}");
 
-            var gasfm = FTG_IMFlowManager;
-            // Need to manage FTG gas source valve manually,
-            // because we want the shutoff to be
+            var destination = IM_CT;
+            var source = FTG_IP1;
+            var flowManager = FTG_IMFlowManager;
+            // Need to manage the upstream FTG gas supply valve manually, because we want the shutoff to be
             // downstream of the flow valve.
-            var o2 = Find<IValve>("vO2_FTG");
-            var destination = trap ? IM_CT : IM;
+            var supplyValve = Find<IValve>("vO2_FTG");
 
-            var section = FTG_IP1;
-            ProcessStep.Start($"Isolate and open {section.Name}");
-            section.Isolate();
-            section.Open();
+            ProcessStep.Start($"Isolate and open {source.Name}");
+            source.Isolate();
+            source.Open();
             ProcessStep.End();
 
             // prepare upstream
-            gasfm.FlowValve.CloseWait();
+            flowManager.FlowValve.CloseWait();
 
-            // join everything
-            if (trap)
-            {
-                StartCollecting();
-                o2.OpenWait();
-            }
-            else
-            {
-                destination.OpenAndEvacuate(OkPressure);
-                destination.Isolate();
-                o2.OpenWait();
-                InletPort.Open();
-                InletPort.State = LinePort.States.InProcess;
-                destination.Evacuate();
-            }
+            InletPort.State = LinePort.States.InProcess;
+            StartCtFlow(trap);
+            supplyValve.OpenWait();
 
             // regulate the gas flow to maintain pressure
-            gasfm.Start(IM.Pressure);
+            flowManager.Start(IM.Pressure);
 
             ProcessStep.End();   
         }
@@ -908,14 +909,14 @@ namespace AeonHacs.Components
         {
             ProcessStep.Start($"Stopping O2 flow into {InletPort.Name}");
 
-            var fm = FTG_IMFlowManager;
-            var o2 = Find<IValve>("vO2_FTG");
-            var gs = GasSupply("O2", IM);
+            var flowManager = FTG_IMFlowManager;
+            var supplyValve = Find<IValve>("vO2_FTG");
+            var gasSupply = GasSupply("O2", IM);
 
-            fm.Stop();
-            fm.FlowValve.CloseWait();
-            gs.ShutOff();
-            o2.CloseWait();
+            flowManager.Stop();
+            gasSupply.ShutOff();
+            supplyValve.CloseWait();
+            flowManager.FlowValve.CloseWait();
 
             ProcessStep.End();
         }
@@ -959,12 +960,18 @@ namespace AeonHacs.Components
         /// <summary>
         /// Start collecting sample into a coil trap.
         /// </summary>
-        protected virtual void StartCollecting()
+        protected virtual void StartCollecting() => StartCtFlow(true);
+
+        protected virtual void StartCtFlow(bool freezeTrap)
         {
-            ProcessStep.Start($"Trapping sample in {CurrentCT.Name}");
+            var status = freezeTrap ?
+                $"Start collecting sample in {CurrentCT.Name}" :
+                $"Start gas flow through {CurrentCT.Name}"; 
+            ProcessStep.Start(status);
 
             var ct = CurrentCT;
-            // TODO RESTORE DEBUG ct.WaitForFrozen(false);
+            if (freezeTrap)
+                ct.WaitForFrozen(false);
             ct.FlowValve.CloseWait();
             InletPort.Open();
             InletPort.State = LinePort.States.InProcess;
@@ -1000,7 +1007,7 @@ namespace AeonHacs.Components
                 if (CollectStopwatch.IsRunning && CollectStopwatch.ElapsedMilliseconds < 1000)
                     return false;
 
-                // TODO: what if flow manager becomes !Busy (because FlowValve is fully open)?
+                // TODO: what if flow manager becomes !Busy (because, e.g., FlowValve is fully open)?
                 // TODO: should we invoke DuringBleed()? When?
                 // TODO: should we disable/enable CT.VacuumSystem.Manometer?
 
@@ -1099,7 +1106,7 @@ namespace AeonHacs.Components
 
         /// <summary>
         /// Override CEGS Collect() to use parameter-driven methods.
-        /// TODO: refactor base to use this approach.
+        /// TODO: refactor the base class code to adopt this approach.
         /// </summary>
         protected override void Collect()
         {
@@ -1294,7 +1301,7 @@ namespace AeonHacs.Components
 
         #region Test functions
         /// <summary>
-        /// Moving the valves like this sometimes helps pinpoint vacuum performance problem areas.
+        /// Moving the valves like this sometimes helps pinpoint vacuum performance issues.
         /// </summary>
         protected void ExerciseValvesForever()
         {
@@ -1305,31 +1312,63 @@ namespace AeonHacs.Components
             }
         }
 
+        protected virtual bool IsPortLeaky(IPort port, double leakRateLimit) =>
+            PortLeakRate(port, leakRateLimit) > leakRateLimit;
+
+        protected virtual double PortLeakRate(IPort port, double leakRateLimit)
+        {
+            var manifold = Manifold(port);
+            if (manifold == null) return 0;     // can't check; assume ok
+
+            var testSeconds = 120;      // Aeon's standard rate-of-rise test duration
+
+            ProcessStep.Start($"Leak checking {port.Name}.");
+
+            ProcessSubStep.Start($"Evacuate {manifold.Name}+{port.Name} to below {OkPressure} Torr");
+            manifold.Isolate();
+            manifold.ClosePortsExcept(port);
+            manifold.Open();
+            port.Open();
+            manifold.Evacuate(OkPressure);
+            ProcessSubStep.End();
+
+            // For completeness, PathToVacuum's equivalent set of chambers should be included, too. It's
+            // neglected for now (it would add nothing because all Manifold(port)'s reach their VM except for MCP1 and MCP2).
+            var liters = (manifold.CurrentVolume(true) + manifold.VacuumSystem.VacuumManifold.MilliLiters) / 1000;  // volume in Liters
+            var torr = testSeconds * leakRateLimit / liters;          // detection pressure in Torr
+            var torrLiters = torr * liters;
+            var torrLimit = leakRateLimit * testSeconds / liters;
+
+            var p0 = manifold.VacuumSystem.Pressure;
+            manifold.VacuumSystem.Isolate();
+            torrLimit += p0;
+            ProcessSubStep.Start($"Wait up to {testSeconds:0} seconds for {torrLimit:0.0e0} Torr");
+            var leaky = WaitFor(() => manifold.VacuumSystem.Pressure > torrLimit, testSeconds * 1000, 1000);
+            var elapsed = ProcessSubStep.Elapsed.TotalSeconds;
+            torr = manifold.VacuumSystem.Pressure - p0;
+            ProcessSubStep.End();
+
+            ProcessStep.End();
+            return torr * liters / elapsed;
+        }
 
         protected void RampedOxidation()
         {
-            IncludeCO2Analyzer();
             SelectCT1();
+            IncludeCO2Analyzer();
             UseIpFlow();
 
+            var port = Find<InletPort>("IP1");
             IM.ClosePorts();
 
-            ProcessStep.Start($"Evacuate FTG_IM to {OkPressure} Torr");
+            ProcessStep.Start($"Join {FTG_IM.Name} to {port.Name}");
             FTG_IM.FlowValve.OpenWait();
-            FTG_IM.OpenAndEvacuate(OkPressure);
+            FTG_IP1.Open();
             ProcessStep.End();
 
-            ProcessStep.Start($"Leak check; 5 minutes");
-            IM.Manometer.ZeroNow();
-            WaitFor(() => !IM.Manometer.Zeroing);   // Now, it's zeroed
-            IM.Isolate();
-            IP1.Open();
-            if (WaitFor(() => IM.Pressure > 2, 1 * 60 * 1000, 1000))
-            {
-                IP1.Close();
-                Pause("Sample Alert", "IM Pressure too high. Process Paused.");
-            }
-            ProcessStep.End();
+            while (IsPortLeaky(port, AcceptablePortTorrLitersPerSecond))
+                Pause("Sample Alert", $"{port.Name} is leaking. Process Paused.");
+
 
             // YOU ARE HERE
             var o2 = Find<IValve>("vO2_FTG");
@@ -1363,12 +1402,18 @@ namespace AeonHacs.Components
             OpenLine();
         }
 
-
-        /// <summary>
+         /// <summary>
         /// General-purpose code tester. Put whatever you want here.
         /// </summary>
         protected override void Test()
         {
+            var ports = FindAll<IPort>();
+            ports.ForEach(port =>
+            {
+                var rate = PortLeakRate(port, LeakTightTorrLitersPerSecond);
+                SampleLog.Record($"{port.Name} leak rate: {rate:0.0e0} Torr L/s");
+            });
+
         }
 
         #endregion Test functions
