@@ -1,8 +1,5 @@
 ﻿using AeonHacs.Utilities;
-using AeonHacs.Wpf.ViewModels;
-using AeonHacs.Wpf.Views;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -427,24 +424,33 @@ namespace AeonHacs.Components
         {
             Separators.Clear();
 
+            // Running samples
             ProcessDictionary["Run samples"] = RunSamples;
             Separators.Add(ProcessDictionary.Count);
 
+            // Preparation for running samples
+            ProcessDictionary["Prepare loaded inlet ports for collection"] = PrepareIPsForCollection;
             ProcessDictionary["Prepare GRs for new iron and desiccant"] = PrepareGRsForService;
             ProcessDictionary["Precondition GR iron"] = PreconditionGRs;
             ProcessDictionary["Replace iron in sulfur traps"] = ChangeSulfurFe;
-            Separators.Add(ProcessDictionary.Count);
-
-            ProcessDictionary["Prepare loaded inlet ports for collection"] = PrepareIPsForCollection;
             ProcessDictionary["Prepare carbonate sample for acid"] = PrepareCarbonateSample;
             ProcessDictionary["Load acidified carbonate sample"] = LoadCarbonateSample;
             Separators.Add(ProcessDictionary.Count);
 
+            // Open line
             ProcessDictionary["Open and evacuate line"] = OpenLine;
             ProcessDictionary["Open and evacuate VS1"] = OpenVS1Line;
             ProcessDictionary["Open and evacuate VS2"] = OpenVS2Line;
             Separators.Add(ProcessDictionary.Count);
 
+            // Main process continuations
+            ProcessDictionary["Collect, etc."] = CollectEtc;
+            ProcessDictionary["Extract, etc."] = ExtractEtc;
+            ProcessDictionary["Measure, etc."] = MeasureEtc;
+            ProcessDictionary["Graphitize, etc."] = GraphitizeEtc;
+            Separators.Add(ProcessDictionary.Count);
+
+            // Top-level steps for main process sequence
             ProcessDictionary["Admit sealed CO2 to InletPort"] = AdmitSealedCO2IP;
             ProcessDictionary["Collect CO2 from InletPort"] = Collect;
             ProcessDictionary["Extract"] = Extract;
@@ -455,12 +461,7 @@ namespace AeonHacs.Components
             ProcessDictionary["Graphitize aliquots"] = GraphitizeAliquots;
             Separators.Add(ProcessDictionary.Count);
 
-            ProcessDictionary["Collect, etc."] = CollectEtc;
-            ProcessDictionary["Extract, etc."] = ExtractEtc;
-            ProcessDictionary["Measure, etc."] = MeasureEtc;
-            ProcessDictionary["Graphitize, etc."] = GraphitizeEtc;
-            Separators.Add(ProcessDictionary.Count);
-
+            // Secondary-level process sub-steps
             ProcessDictionary["Evacuate Inlet Port"] = EvacuateIP;
             ProcessDictionary["Flush Inlet Port"] = FlushIP;
             ProcessDictionary["Admit O2 into Inlet Port"] = AdmitIPO2;
@@ -468,51 +469,62 @@ namespace AeonHacs.Components
             ProcessDictionary["Turn off IP furnaces"] = TurnOffIPFurnaces;
             ProcessDictionary["Discard IP gases"] = DiscardIPGases;
             ProcessDictionary["Close IP"] = CloseIP;
-            ProcessDictionary["Bleed IP gas through frozen CT"] = FrozenBleed;
-            ProcessDictionary["Bleed IP gas through CT (no temperature control)"] = Bleed;
             ProcessDictionary["Evacuate and Freeze VTT"] = FreezeVtt;
             ProcessDictionary["Admit Dead CO2 into MC"] = AdmitDeadCO2;
-            ProcessDictionary["Purify CO2 in MC"] = CleanupCO2InMC;            
+            ProcessDictionary["Purify CO2 in MC"] = CleanupCO2InMC;
             ProcessDictionary["Discard MC gases"] = DiscardMCGases;
             ProcessDictionary["Divide sample into aliquots"] = DivideAliquots;
-            ProcessDictionary["Wait for operator"] = WaitForOperator;
             Separators.Add(ProcessDictionary.Count);
 
+            // Granular inlet port & sample process control
+            ProcessDictionary["Turn on quartz furnace"] = TurnOnIpQuartzFurnace;
+            ProcessDictionary["Turn off quartz furnace"] = TurnOffIpQuartzFurnace;
+            ProcessDictionary["Disable sample setpoint ramping"] = DisableIpRamp;
+            ProcessDictionary["Enable sample setpoint ramping"] = EnableIpRamp;
+            ProcessDictionary["Turn on sample furnace"] = TurnOnIpSampleFurnace;
+            ProcessDictionary["Adjust sample setpoint"] = AdjustIpSetpoint;
+            ProcessDictionary["Adjust sample ramp rate"] = AdjustIpRampRate;
+            ProcessDictionary["Wait for sample to rise to setpoint"] = WaitIpRiseToSetpoint;
+            ProcessDictionary["Wait for sample to fall to setpoint"] = WaitIpFallToSetpoint;
+            ProcessDictionary["Turn off sample furnace"] = TurnOffIpSampleFurnace;
+            Separators.Add(ProcessDictionary.Count);
+
+            // General-purpose process control actions
+            ProcessDictionary["Wait for timer"] = WaitForTimer;
+            ProcessDictionary["Wait for operator"] = WaitForOperator;
+            ProcessDictionary["Wait for CEGS to be free"] = WaitForCegs;
+            Separators.Add(ProcessDictionary.Count);
+
+            // Transferring CO2
             ProcessDictionary["Transfer CO2 from CT to VTT"] = TransferCO2FromCTToVTT;
             ProcessDictionary["Transfer CO2 from MC to VTT"] = TransferCO2FromMCToVTT;
             ProcessDictionary["Transfer CO2 from MC to GR"] = TransferCO2FromMCToGR;
             ProcessDictionary["Transfer CO2 from prior GR to MC"] = TransferCO2FromGRToMC;
             Separators.Add(ProcessDictionary.Count);
 
-            ProcessDictionary["Wait for timer"] = WaitForTimer;
+            // Flow control steps
+            ProcessDictionary["No IP flow"] = NoIpFlow;
+            ProcessDictionary["Use IP flow"] = UseIpFlow;
             ProcessDictionary["Include CO2 analyzer"] = IncludeCO2Analyzer;
             ProcessDictionary["Bypass CO2 analyzer"] = BypassCO2Analyzer;
-            ProcessDictionary["Use IP flow"] = UseIpFlow;
-            ProcessDictionary["No IP flow"] = NoIpFlow;
             ProcessDictionary["Select CT1"] = SelectCT1;
             ProcessDictionary["Select CT2"] = SelectCT2;
-            ProcessDictionary["Toggle CT collection"] = ToggleCT;
             ProcessDictionary["Start collecting"] = StartCollecting;
             ProcessDictionary["Clear collection conditions"] = ClearCollectionConditions;
             ProcessDictionary["Collect until condition met"] = CollectUntilConditionMet;
+            ProcessDictionary["Toggle CT collection"] = ToggleCT;
             ProcessDictionary["Stop collecting"] = StopCollecting;
             ProcessDictionary["Stop collecting after bleed down"] = StopCollectingAfterBleedDown;
-            ProcessDictionary["Turn on quartz furnace"] = TurnOnIpQuartzFurnace;
-            ProcessDictionary["Turn off quartz furnace"] = TurnOffIpQuartzFurnace;
-            ProcessDictionary["Adjust sample setpoint"] = AdjustIpSetpoint;
-            ProcessDictionary["Turn on sample furnace"] = TurnOnIpSampleFurnace;
-            ProcessDictionary["Turn off sample furnace"] = TurnOffIpSampleFurnace;
-            ProcessDictionary["Disable sample setpoint ramping"] = DisableIpRamp;
-            ProcessDictionary["Enable sample setpoint ramping"] = EnableIpRamp;
-            ProcessDictionary["Adjust sample ramp rate"] = AdjustIpRampRate;
-            ProcessDictionary["Wait for sample to rise to setpoint"] = WaitIpRiseToSetpoint;
-            ProcessDictionary["Wait for sample to fall to setpoint"] = WaitIpFallToSetpoint;
+            ProcessDictionary["Start Extract, Etc"] = StartExtractEtc;
+            Separators.Add(ProcessDictionary.Count);
+
+            // Flow control sub-steps
             ProcessDictionary["Start flow through to trap"] = StartFlowThroughToTrap;
             ProcessDictionary["Start flow through to waste"] = StartFlowThroughToWaste;
             ProcessDictionary["Stop flow-through gas"] = StopFlowThroughGas;
-            ProcessDictionary["Wait for CEGS to be free"] = WaitForCegs;
-            ProcessDictionary["Start Extract, Etc"] = StartExtractEtc;
+            Separators.Add(ProcessDictionary.Count);
 
+            // Utilities (generally not for sample processing)
             Separators.Add(ProcessDictionary.Count);
             ProcessDictionary["Exercise all Opened valves"] = ExerciseAllValves;
             ProcessDictionary["Close all Opened valves"] = CloseAllValves;
@@ -525,6 +537,7 @@ namespace AeonHacs.Components
             ProcessDictionary["Measure Extraction efficiency"] = MeasureExtractEfficiency;
             ProcessDictionary["Measure IP collection efficiency"] = MeasureIpCollectionEfficiency;
 
+            // Test functions
             Separators.Add(ProcessDictionary.Count);
             ProcessDictionary["Test"] = Test;
             base.BuildProcessDictionary();
@@ -559,12 +572,25 @@ namespace AeonHacs.Components
         /// </summary>
         protected virtual void FastOpenLine()
         {
+            ProcessStep.Start("Close gas supplies");
             CloseGasSupplies();
+            ProcessStep.End();
+
             OpenVS1Line();
             OpenVS2Line();
+
+            ProcessStep.Start($"Wait for both VacuumSystems to reach {OkPressure} Torr");
             WaitFor(() => VS1All.VacuumSystem.Pressure <= OkPressure && VS2All.VacuumSystem.Pressure <= OkPressure);
+            ProcessStep.End();
+
+            ProcessStep.Start("Join VacuumSystem1 and VacuumSystem2 lines");
             Section.Connections(VS1All, VS2All).Open();
+            ProcessStep.End();
+
+            ProcessStep.Start($"Isolate {CA.Name} (temp. due to leak)");
             CA.Isolate();
+            ProcessStep.End();
+
         }
 
         /// <summary>
@@ -572,8 +598,10 @@ namespace AeonHacs.Components
         /// </summary>
         protected virtual void OpenVS1Line()
         {
+            ProcessStep.Start("Open VacuumSystem1 line");
             if (!VS1All.IsOpened || !VS1All.PathToVacuum.IsOpened())
                 VS1All.OpenAndEvacuate();
+            ProcessStep.End();
         }
 
         /// <summary>
@@ -581,8 +609,10 @@ namespace AeonHacs.Components
         /// </summary>
         protected virtual void OpenVS2Line()
         {
+            ProcessStep.Start("Open VacuumSystem2 line");
             if (!VS2All.IsOpened || !VS2All.PathToVacuum.IsOpened())
                 VS2All.OpenAndEvacuate();
+            ProcessStep.End();
         }
 
         #endregion OpenLine
@@ -1110,6 +1140,7 @@ namespace AeonHacs.Components
         /// </summary>
         protected override void Collect()
         {
+            VS1All.Isolate();
             IM_CT.Isolate();
             IM_CT.FlowValve.OpenWait();
             IM_CT.OpenAndEvacuate(OkPressure);
@@ -1419,13 +1450,15 @@ namespace AeonHacs.Components
         /// </summary>
         protected override void Test()
         {
-            //var ports = FindAll<IPort>();
-            //ports.ForEach(port =>
-            //{
-            //    var rate = PortLeakRate(port, LeakTightTorrLitersPerSecond);
-            //    SampleLog.Record($"{port.Name} leak rate: {rate:0.0e0} Torr L/s");
-            //});
-            Alert("test", "Test");
+            var ports = FindAll<IPort>();
+            ports.ForEach(port =>
+            {
+                if (port.Name != "MCP1" && port.Name != "MCP2")
+                {
+                    var rate = PortLeakRate(port, LeakTightTorrLitersPerSecond);
+                    SampleLog.Record($"{port.Name} leak rate: {rate:0.0e0} Torr L/s");
+                }
+            });
         }
 
         #endregion Test functions

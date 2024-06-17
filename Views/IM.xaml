@@ -23,7 +23,7 @@
                 Component="pIM" ContentStringFormat="0"/>
         </Grid>
 
-        <wpf:View Height="87" Width="77" Canvas.Right="108" HorizontalAlignment="Center" Canvas.Left="12" VerticalAlignment="Top" Canvas.Top="-66"
+        <wpf:View Component="Chamber.IP1" HelpText="Inlet Port 1" Height="87" Width="77" Canvas.Right="108" HorizontalAlignment="Center" Canvas.Left="12" VerticalAlignment="Top" Canvas.Top="-66"
                   Tag="{Binding PortType, ElementName=ip1}"
                   d:Tag="{x:Static hacs:InletPortType.FlowThrough}">
             <wpf:View.Resources>
