@@ -1312,9 +1312,21 @@ namespace AeonHacs.Components
             }
         }
 
+        /// <summary>
+        /// Checks whether the port's leak rate is above the given limit.
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="leakRateLimit"></param>
+        /// <returns></returns>
         protected virtual bool IsPortLeaky(IPort port, double leakRateLimit) =>
             PortLeakRate(port, leakRateLimit) > leakRateLimit;
 
+        /// <summary>
+        /// Measures the leak rate using a 2-minute rate of rise test.
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="leakRateLimit"></param>
+        /// <returns></returns>
         protected virtual double PortLeakRate(IPort port, double leakRateLimit)
         {
             var manifold = Manifold(port);
@@ -1329,23 +1341,23 @@ namespace AeonHacs.Components
             manifold.ClosePortsExcept(port);
             manifold.Open();
             port.Open();
-            manifold.Evacuate(OkPressure);
+            // OkPressure is a convenient but high starting pressure; ideally, ror tests start at ultimate pressure.
+            manifold.Evacuate(OkPressure);      
             ProcessSubStep.End();
 
             // For completeness, PathToVacuum's equivalent set of chambers should be included, too. It's
-            // neglected for now (it would add nothing because all Manifold(port)'s reach their VM except for MCP1 and MCP2).
+            // neglected for now (it would add little because all Manifold(port)'s reach their VM except for MCP1 and MCP2).
             var liters = (manifold.CurrentVolume(true) + manifold.VacuumSystem.VacuumManifold.MilliLiters) / 1000;  // volume in Liters
-            var torr = testSeconds * leakRateLimit / liters;          // detection pressure in Torr
+            var torr = testSeconds * leakRateLimit / liters;    // change in pressure at leakRateLimit for testSeconds
             var torrLiters = torr * liters;
-            var torrLimit = leakRateLimit * testSeconds / liters;
 
             var p0 = manifold.VacuumSystem.Pressure;
             manifold.VacuumSystem.Isolate();
-            torrLimit += p0;
+            var torrLimit = p0 + torr;
             ProcessSubStep.Start($"Wait up to {testSeconds:0} seconds for {torrLimit:0.0e0} Torr");
             var leaky = WaitFor(() => manifold.VacuumSystem.Pressure > torrLimit, testSeconds * 1000, 1000);
             var elapsed = ProcessSubStep.Elapsed.TotalSeconds;
-            torr = manifold.VacuumSystem.Pressure - p0;
+            torr = manifold.VacuumSystem.Pressure - p0;     // actual change in pressure
             ProcessSubStep.End();
 
             ProcessStep.End();
@@ -1407,13 +1419,13 @@ namespace AeonHacs.Components
         /// </summary>
         protected override void Test()
         {
-            var ports = FindAll<IPort>();
-            ports.ForEach(port =>
-            {
-                var rate = PortLeakRate(port, LeakTightTorrLitersPerSecond);
-                SampleLog.Record($"{port.Name} leak rate: {rate:0.0e0} Torr L/s");
-            });
-
+            //var ports = FindAll<IPort>();
+            //ports.ForEach(port =>
+            //{
+            //    var rate = PortLeakRate(port, LeakTightTorrLitersPerSecond);
+            //    SampleLog.Record($"{port.Name} leak rate: {rate:0.0e0} Torr L/s");
+            //});
+            Alert("test", "Test");
         }
 
         #endregion Test functions

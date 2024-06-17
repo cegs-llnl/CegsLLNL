@@ -61,7 +61,7 @@
         <wpf:Switch Canvas.Right="109" Canvas.Top="9" Width="24" Height="67"
                      Component="IpFan1-3" HelpText="Trap fan for IP1..IP3"
                      IsOn="{Binding Component.Fan.IsOn, RelativeSource={RelativeSource Self}}"/>
-        <wpf:InletPort PortType="FlowThrough" x:Name="ip1" Orientation="Right" d:PortType="FlowThrough" Canvas.Right="86" Canvas.Top="6" Component="IP1" HelpText="Inlet port 1" d:QuartzFurnace="" d:SampleFurnace="" MouseLeftButtonDown="InletPort_MouseLeftButtonDown" />
+        <wpf:InletPort x:Name="ip1" Orientation="Right" d:PortType="FlowThrough" Canvas.Right="86" Canvas.Top="6" Component="IP1" HelpText="Inlet port 1" d:QuartzFurnace="" d:SampleFurnace="" MouseLeftButtonDown="InletPort_MouseLeftButtonDown" />
         <wpf:InletPort Orientation="Right" d:PortType="Manual" Canvas.Right="86" Canvas.Top="32" Component="IP2" HelpText="Inlet port 2" MouseLeftButtonDown="InletPort_MouseLeftButtonDown" />
         <wpf:InletPort Orientation="Right" d:PortType="Manual" Canvas.Right="86" Canvas.Top="58" Component="IP3" HelpText="Inlet port 3" MouseLeftButtonDown="InletPort_MouseLeftButtonDown" />
 
