@@ -11,10 +11,10 @@
         <hacs:Chamber Component="Section.GM" HelpText="Graphite manifold" 
            Data="M0.5,16.5 h43 m0,-17 v34 m-26,-17 v17" Canvas.Top="182" />
 
-        <hacs:Chamber Component="Section.GML_GMC" HelpText="Graphite manifold" 
+        <hacs:Chamber Component="Section.GML" HelpText="Graphite manifold Left" 
                    Data="M16.5,0.5 v147 h17 m-17,-26 h17 m-17,-26 h17 m-17,-26 h17 m-17,-26 h17 m-17,-26 h17" Canvas.Left="27" Canvas.Top="233" />
 
-        <hacs:Chamber Component="Section.GMR_GMC" HelpText="Graphite manifold" 
+        <hacs:Chamber Component="Section.GMR" HelpText="Graphite manifold Right" 
                    Data="M33.5,16.5 h-17 v147 m0,-17 h17 m-17,-26 h17 m-17,-26 h17 m-17,-26 h17 m-17,-26 h17" Canvas.Left="27" />
 
         <hacs:Valve Canvas.Left="34" Canvas.Top="163" d:ValveState="Opened" 
