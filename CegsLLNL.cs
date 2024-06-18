@@ -1453,7 +1453,7 @@ namespace AeonHacs.Components
             var ports = FindAll<IPort>();
             ports.ForEach(port =>
             {
-                if (port.Name != "MCP1" && port.Name != "MCP2")
+                if (port.Name != "MCP1" && port.Name != "MCP2" && port.Name != "DeadCO2")
                 {
                     var rate = PortLeakRate(port, LeakTightTorrLitersPerSecond);
                     SampleLog.Record($"{port.Name} leak rate: {rate:0.0e0} Torr L/s");
