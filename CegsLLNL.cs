@@ -2,7 +2,6 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using static AeonHacs.Components.CegsPreferences;
@@ -265,12 +264,7 @@ namespace AeonHacs.Components
         /// </summary>
         public ISection CT2 { get; set; }
 
-        /// <summary>
-        /// d13C section
-        /// </summary>
-        public ISection d13C { get; set; }
-
-        /// <summary>
+         /// <summary>
         /// Auxiliary Manifold section (ampoule port manifold)
         /// </summary>
         public ISection AM { get; set; }
@@ -1154,6 +1148,7 @@ namespace AeonHacs.Components
             StartCollecting();
             CollectUntilConditionMet();
             StopCollecting(false);
+            InletPort.State = LinePort.States.Complete;
 
             TransferCO2FromCTToVTT();
         }
@@ -1492,7 +1487,8 @@ namespace AeonHacs.Components
             var nH2 = nCO2 * aliquot.H2CO2PressureRatio;    // H2 particles introduced
             var TorrCO2 = Pressure(nCO2, gr.MilliLiters, grTemperature);  // Torr
             var TorrH2 = Pressure(nH2, gr.MilliLiters, grTemperature);  // Torr
-            var TorrTotal = Pressure(nCO2 + nH2, gr.MilliLiters, grTemperature);  // Torr
+            var TorrTotalExp = Pressure(nCO2 + nH2, gr.MilliLiters, grTemperature);  // Torr
+            var TorrTotalMeas = aliquot.GRStartPressure;
             var kelvins = grTemperature + ZeroDegreesC;
             var TorrResExp = aliquot.ExpectedResidualPressure * kelvins;
             var TorrRes = aliquot.ResidualMeasured ? aliquot.ResidualPressure * kelvins : grPressure;   // Torr
@@ -1518,7 +1514,8 @@ namespace AeonHacs.Components
             sampleRecord.Append($"\t{aliquot.MicrogramsCarbon}:0.0");
             sampleRecord.Append($"\t{TorrCO2}:0");
             sampleRecord.Append($"\t{TorrH2}:0");
-            sampleRecord.Append($"\t{TorrTotal}:0");
+            sampleRecord.Append($"\t{TorrTotalExp}:0");
+            sampleRecord.Append($"\t{TorrTotalMeas}:0");
             sampleRecord.Append($"\t{TorrResExp}:0");
             sampleRecord.Append($"\t{TorrRes}:0");
 
