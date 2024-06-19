@@ -2,6 +2,8 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
+using System.Text;
 using System.Threading.Tasks;
 using static AeonHacs.Components.CegsPreferences;
 using static AeonHacs.Utilities.Utility;
@@ -18,6 +20,7 @@ namespace AeonHacs.Components
             #region Logs
 
             SampleLog = Find<HacsLog>("SampleLog");
+            SampleRecords = Find<HacsLog>("SampleRecords");
 
             VM1PressureLog = Find<DataLog>("VM1PressureLog");
             VM1PressureLog.Changed = (col) => col.Resolution > 0 && col.Source is Manometer m ?
@@ -174,7 +177,10 @@ namespace AeonHacs.Components
         #endregion HacsComponent
 
         #region System configuration
+
         #region HacsComponents
+        public virtual HacsLog SampleRecords { get; set; }
+
         public IVacuumSystem VacuumSystem2 { get; set; }
         public DataLog VM2PressureLog { get; set; }
        // TODO: Many of these can be omitted (along with the code that uses them)
@@ -399,20 +405,20 @@ namespace AeonHacs.Components
                     (s.PathToVacuum?.IsOpened() ?? false);
 
             if (OkToZeroManometer(MC))
-                ZeroIfNeeded(MC?.Manometer, 15);
+                ZeroIfNeeded(MC?.Manometer, 5);
 
             if (OkToZeroManometer(CTF))
                 ZeroIfNeeded(CTF?.Manometer, 5);
 
             if (OkToZeroManometer(IM))
-                ZeroIfNeeded(IM?.Manometer, 10);
+                ZeroIfNeeded(IM?.Manometer, 2);
 
             if (OkToZeroManometer(GM))
             {
-                ZeroIfNeeded(GM?.Manometer, 10);
+                ZeroIfNeeded(GM?.Manometer, 2);
                 foreach (var gr in GraphiteReactors)
                     if (Manifold(gr).PathToVacuum.IsOpened() && gr.IsOpened)
-                        ZeroIfNeeded(gr.Manometer, 5);
+                        ZeroIfNeeded(gr.Manometer, 2);
             }
         }
 
@@ -430,6 +436,7 @@ namespace AeonHacs.Components
 
             // Preparation for running samples
             ProcessDictionary["Prepare loaded inlet ports for collection"] = PrepareIPsForCollection;
+            ProcessDictionary["Service d13C ports"] = Service_d13CPorts;
             ProcessDictionary["Prepare GRs for new iron and desiccant"] = PrepareGRsForService;
             ProcessDictionary["Precondition GR iron"] = PreconditionGRs;
             ProcessDictionary["Replace iron in sulfur traps"] = ChangeSulfurFe;
@@ -522,6 +529,14 @@ namespace AeonHacs.Components
             ProcessDictionary["Start flow through to trap"] = StartFlowThroughToTrap;
             ProcessDictionary["Start flow through to waste"] = StartFlowThroughToWaste;
             ProcessDictionary["Stop flow-through gas"] = StopFlowThroughGas;
+            Separators.Add(ProcessDictionary.Count);
+
+            // d13C port service routines
+            ProcessDictionary["Freeze completed d13C ports"] = FreezeCompleted_d13CPorts;
+            ProcessDictionary["Empty completed d13C ports"] = EmptyCompleted_d13CPorts;
+            ProcessDictionary["Thaw frozen d13C ports"] = ThawFrozen_d13CPorts;
+            ProcessDictionary["Load empty d13C ports"] = LoadEmpty_d13CPorts;
+            ProcessDictionary["Prepare loaded d13C ports"] = PrepareLoaded_d13CPorts;
             Separators.Add(ProcessDictionary.Count);
 
             // Utilities (generally not for sample processing)
@@ -630,16 +645,6 @@ namespace AeonHacs.Components
         }
 
         #region Process Control Parameters
-
-        /// <summary>
-        /// The effective gas load below which a volume is considered leak free.
-        /// </summary>
-        public double LeakTightTorrLitersPerSecond => GetParameter("LeakTightTorrLitersPerSecond");
-
-        /// <summary>
-        /// The effective gas load below which a port's leak rate is acceptable.
-        /// </summary>
-        public double AcceptablePortTorrLitersPerSecond => GetParameter("AcceptablePortTorrLitersPerSecond");
 
         /// <summary>
         /// Inlet Port sample furnace working setpoint ramp rate (degrees per minute).
@@ -1004,6 +1009,7 @@ namespace AeonHacs.Components
                 ct.WaitForFrozen(false);
             ct.FlowValve.CloseWait();
             InletPort.Open();
+            Sample.CoilTrap = ct.Name;
             InletPort.State = LinePort.States.InProcess;
             CollectStopwatch.Restart();
             ct.FlowManager.Start(FirstTrapBleedPressure);
@@ -1196,6 +1202,13 @@ namespace AeonHacs.Components
             ProcessStep.End();
         }
 
+        protected override void PrepareIPsForCollection()
+        {
+            VS1All.Isolate();
+            base.PrepareIPsForCollection();
+            OpenLine();
+        }
+
         protected override void PreconditionGRs()
         {
             var grs = GraphiteReactors.FindAll(gr => gr.State == GraphiteReactor.States.WaitPrep);
@@ -1228,9 +1241,9 @@ namespace AeonHacs.Components
             ProcessSubStep.Start("Evacuate graphite reactors");
             GM.Isolate();
             grs.ForEach(gr => gr.Open());
-            GM.OpenAndEvacuate(OkPressure);
+            GM.OpenAndEvacuate();
             WaitForStablePressure(GM.VacuumSystem, OkPressure);
-            WaitMinutes(10);
+            WaitMinutes((int)GRFirstEvacuationMinutes);
             ProcessSubStep.End();
 
             ProcessSubStep.Start($"Zero GR manometers.");
@@ -1318,10 +1331,199 @@ namespace AeonHacs.Components
             Alert("Operator Needed", "Graphite reactor preconditioning complete");
         }
 
-        protected override void PrepareIPsForCollection()
+
+
+
+        /// <summary>
+        /// To torch them off
+        /// </summary>
+        protected void FreezeCompleted_d13CPorts()
         {
-            VS1All.Isolate();
-            base.PrepareIPsForCollection();
+            var ports = d13CPorts.FindAll(p => p.State == LinePort.States.Complete);
+            ProcessStep.Start("Freeze completed d13C ports");
+            ports.ForEach(p => p.Coldfinger.Freeze());
+            WaitFor(() => ports.All(p => p.Coldfinger.Frozen));
+            ProcessStep.End();
+        }
+
+        /// <summary>
+        /// After torch-off
+        /// </summary>
+        protected void ThawFrozen_d13CPorts()
+        {
+            var ports = d13CPorts.FindAll(p => p.Coldfinger.IsActivelyCooling);
+            ports.ForEach(p => p.Coldfinger.Thaw());
+        }
+
+        /// <summary>
+        /// Mark the completed ports empty.
+        /// </summary>
+        protected void EmptyCompleted_d13CPorts()
+        {
+            var ports = d13CPorts.FindAll(p => p.State == LinePort.States.Complete);
+            ports.ForEach(p => p.State = LinePort.States.Empty);
+        }
+
+        /// <summary>
+        /// Mark the Empty ports loaded.
+        /// </summary>
+        protected void LoadEmpty_d13CPorts()
+        {
+            var ports = d13CPorts.FindAll(p => p.State == LinePort.States.Empty);
+            ports.ForEach(p => p.State = LinePort.States.Loaded);
+        }
+
+        /// <summary>
+        /// Prepare the loaded d13CPorts.
+        /// </summary>
+        protected void PrepareLoaded_d13CPorts()
+        {
+            var ports = d13CPorts.FindAll(p => p.State == LinePort.States.Loaded);
+            if (ports.Count < 1)
+            {
+                Notice.Send("Nothing to do", "No d13C ports are awaiting preparation.", Notice.Type.Tell);
+                return;
+            }
+            var gsInert = InertGasSupply(AM);
+            if (gsInert == null)
+            {
+                Notice.Send("Configuration Error", "Can't find inert gas supply for AM.", Notice.Type.Tell);
+                return;
+            }
+
+            ProcessStep.Start("Evacuate loaded d13C ports");
+            AM.Isolate();
+            ports.ForEach((p) => p.Open());
+            AM.Evacuate(OkPressure);
+            ProcessStep.End();
+
+            ProcessStep.Start("Flush loaded d13C ports");
+            Flush(AM, 3);
+            ProcessStep.End();
+
+            ProcessStep.Start("Evacuate loaded d13C ports");
+            WaitForStablePressure(AM.VacuumSystem, CleanPressure);
+            ProcessStep.End();
+
+            ProcessStep.Start("Check ports for leaks");
+            HoldForLeakTightness(AM);
+            ProcessStep.End();
+
+            ProcessStep.Start("Close prepared d13C ports");
+            AM.ClosePorts();
+            ProcessStep.End();
+
+            ports.ForEach(p => p.State = LinePort.States.Prepared);
+            OpenVS2Line();
+        }
+
+        /// <summary>
+        /// Remove and replace d13C ampoules
+        /// </summary>
+        protected void Service_d13CPorts()
+        {
+            var ports = d13CPorts.FindAll(p => p.State == LinePort.States.Complete);
+            if (ports.Count > 0)
+            {
+                FreezeCompleted_d13CPorts();
+                Notice.Send("Operator needed.",
+                    "Torch off the completed d13C splits.\r\n" +
+                    "Then press Ok to continue");
+                EmptyCompleted_d13CPorts();
+            }
+            ThawFrozen_d13CPorts();
+            ports = d13CPorts.FindAll(p => p.State == LinePort.States.Empty);
+            if (ports.Count > 0)
+            {
+                Notice.Send("Operator needed.",
+                "Load new ampoules into the empty ports.\r\n" +
+                "Then press Ok to continue");
+                LoadEmpty_d13CPorts();
+            }
+            PrepareLoaded_d13CPorts();
+        }
+
+
+
+        protected override void GraphitizeAliquots()
+        {
+            GM.IsolateFromVacuum();
+            foreach (Aliquot aliquot in Sample.Aliquots)
+            {
+                ProcessStep.Start("Graphitize aliquot " + aliquot.Name);
+                AddH2ToGR(aliquot);
+
+                // Thaw GR before heating
+                var gr = Find<IGraphiteReactor>(aliquot.GraphiteReactor);
+                ProcessSubStep.Start($"Wait for {gr.Name} to thaw");
+                gr.Coldfinger.Thaw();
+                WaitFor(() => gr.Coldfinger.IsNearAirTemperature);
+                ProcessStep.End();
+
+                gr.Start();
+            }
+            GM.ClosePorts();
+            GM.OpenAndEvacuate();
+        }
+
+
+        StringBuilder sampleRecord = new StringBuilder();
+        /// <summary>
+        /// Record the Sample data in LLNL's preferred format
+        /// </summary>
+        /// <param name="aliquot"></param>
+        protected override void SampleRecord(IAliquot aliquot)
+        {
+            if (aliquot == null) return;
+
+            var gr = Find<IGraphiteReactor>(aliquot.GraphiteReactor);
+            if (gr == null || IsSulfurTrap(gr)) return;
+
+            var sample = aliquot.Sample;
+
+            var grPressure = gr.Pressure;       // Torr
+            var grTemperature = gr.SampleTemperature;
+            var grMilliLiters = gr.MilliLiters;
+
+            var nTotalC = sample.TotalMicrogramsCarbon * CarbonAtomsPerMicrogram;  // total number of carbon atoms in the sample
+            var TorrMC = Pressure(nTotalC, MC.MilliLiters, MC.Temperature);
+            var PercentC = 100 * Sample.TotalMicrogramsCarbon / Sample.Micrograms;
+            var nCO2 = aliquot.MicrogramsCarbon * CarbonAtomsPerMicrogram;  // number of CO2 particles in the aliquot
+            var nH2 = nCO2 * aliquot.H2CO2PressureRatio;    // H2 particles introduced
+            var TorrCO2 = Pressure(nCO2, gr.MilliLiters, grTemperature);  // Torr
+            var TorrH2 = Pressure(nH2, gr.MilliLiters, grTemperature);  // Torr
+            var TorrTotal = Pressure(nCO2 + nH2, gr.MilliLiters, grTemperature);  // Torr
+            var kelvins = grTemperature + ZeroDegreesC;
+            var TorrResExp = aliquot.ExpectedResidualPressure * kelvins;
+            var TorrRes = aliquot.ResidualMeasured ? aliquot.ResidualPressure * kelvins : grPressure;   // Torr
+
+            var excessH2Particles = nH2 - H2_CO2StoichiometricRatio * nCO2; // introduced
+            var residualParticles = Particles(TorrRes, grMilliLiters, grTemperature);
+            var residualCO2Particles = (residualParticles - excessH2Particles) / 3;
+            var graphitizationYield = 100 * (nCO2 - residualCO2Particles) / nCO2;
+
+            sampleRecord.Append(sample.LabId);
+            sampleRecord.Append($"\t{sample.Milligrams}");
+            sampleRecord.Append($"\t{sample.InletPort.Name}");
+            sampleRecord.Append($"\t{sample.CoilTrap}");
+            sampleRecord.Append($"\t{sample.TotalMicrogramsCarbon:0.0}"); // TCO2
+            sampleRecord.Append($"\t{TorrMC:0.00}");
+            sampleRecord.Append($"\t{PercentC:0.00}");
+            sampleRecord.Append($"\t{sample.Discards}");
+            sampleRecord.Append($"\t{sample.SelectedMicrogramsCarbon}:0.0");
+            sampleRecord.Append($"\t{sample.Micrograms_d13C}:0.0");
+            sampleRecord.Append($"\t{sample.d13CPort.Name}");
+            sampleRecord.Append($"\t{aliquot.GraphiteReactor}");
+            sampleRecord.Append($"\t{aliquot.Name}");
+            sampleRecord.Append($"\t{aliquot.MicrogramsCarbon}:0.0");
+            sampleRecord.Append($"\t{TorrCO2}:0");
+            sampleRecord.Append($"\t{TorrH2}:0");
+            sampleRecord.Append($"\t{TorrTotal}:0");
+            sampleRecord.Append($"\t{TorrResExp}:0");
+            sampleRecord.Append($"\t{TorrRes}:0");
+
+            SampleRecords.Record(sampleRecord.ToString());
+            sampleRecord.Clear();
         }
 
 
@@ -1343,57 +1545,6 @@ namespace AeonHacs.Components
             }
         }
 
-        /// <summary>
-        /// Checks whether the port's leak rate is above the given limit.
-        /// </summary>
-        /// <param name="port"></param>
-        /// <param name="leakRateLimit"></param>
-        /// <returns></returns>
-        protected virtual bool IsPortLeaky(IPort port, double leakRateLimit) =>
-            PortLeakRate(port, leakRateLimit) > leakRateLimit;
-
-        /// <summary>
-        /// Measures the leak rate using a 2-minute rate of rise test.
-        /// </summary>
-        /// <param name="port"></param>
-        /// <param name="leakRateLimit"></param>
-        /// <returns></returns>
-        protected virtual double PortLeakRate(IPort port, double leakRateLimit)
-        {
-            var manifold = Manifold(port);
-            if (manifold == null) return 0;     // can't check; assume ok
-
-            var testSeconds = 120;      // Aeon's standard rate-of-rise test duration
-
-            ProcessStep.Start($"Leak checking {port.Name}.");
-
-            ProcessSubStep.Start($"Evacuate {manifold.Name}+{port.Name} to below {OkPressure} Torr");
-            manifold.Isolate();
-            manifold.ClosePortsExcept(port);
-            manifold.Open();
-            port.Open();
-            // OkPressure is a convenient but high starting pressure; ideally, ror tests start at ultimate pressure.
-            manifold.Evacuate(OkPressure);      
-            ProcessSubStep.End();
-
-            // For completeness, PathToVacuum's equivalent set of chambers should be included, too. It's
-            // neglected for now (it would add little because all Manifold(port)'s reach their VM except for MCP1 and MCP2).
-            var liters = (manifold.CurrentVolume(true) + manifold.VacuumSystem.VacuumManifold.MilliLiters) / 1000;  // volume in Liters
-            var torr = testSeconds * leakRateLimit / liters;    // change in pressure at leakRateLimit for testSeconds
-            var torrLiters = torr * liters;
-
-            var p0 = manifold.VacuumSystem.Pressure;
-            manifold.VacuumSystem.Isolate();
-            var torrLimit = p0 + torr;
-            ProcessSubStep.Start($"Wait up to {testSeconds:0} seconds for {torrLimit:0.0e0} Torr");
-            var leaky = WaitFor(() => manifold.VacuumSystem.Pressure > torrLimit, testSeconds * 1000, 1000);
-            var elapsed = ProcessSubStep.Elapsed.TotalSeconds;
-            torr = manifold.VacuumSystem.Pressure - p0;     // actual change in pressure
-            ProcessSubStep.End();
-
-            ProcessStep.End();
-            return torr * liters / elapsed;
-        }
 
         protected void RampedOxidation()
         {
@@ -1409,7 +1560,7 @@ namespace AeonHacs.Components
             FTG_IP1.Open();
             ProcessStep.End();
 
-            while (IsPortLeaky(port, AcceptablePortTorrLitersPerSecond))
+            while (PortLeakRate(port) > LeakTightTorrLitersPerSecond)
                 Pause("Sample Alert", $"{port.Name} is leaking. Process Paused.");
 
 
@@ -1455,7 +1606,7 @@ namespace AeonHacs.Components
             {
                 if (port.Name != "MCP1" && port.Name != "MCP2" && port.Name != "DeadCO2")
                 {
-                    var rate = PortLeakRate(port, LeakTightTorrLitersPerSecond);
+                    var rate = PortLeakRate(port);
                     SampleLog.Record($"{port.Name} leak rate: {rate:0.0e0} Torr L/s");
                 }
             });

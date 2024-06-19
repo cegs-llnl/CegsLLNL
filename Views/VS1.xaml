@@ -30,7 +30,7 @@
         <!--Gas supplies-->
         <hacs:GasSupply GasName="O2" HelpText="Oxygen gas supply" Valve="vO2_VM1"
                      Canvas.Left="-1" Canvas.Top="52" Width="21" Background="Transparent"/>
-        <hacs:GasSupply GasName="He" HelpText="Helium gas supply" Valve="vHe_VM1" 
+        <hacs:GasSupply GasName="N2" HelpText="Inert gas supply" Valve="vN2_VM1" 
                         Canvas.Top="52" Canvas.Left="233" Width="21" Background="Transparent" />
         <!--Vacuum system-->
         <Canvas Canvas.Left="75" Canvas.Top="52" Width="129" Height="138">

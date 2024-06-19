@@ -33,7 +33,7 @@
                      Canvas.Left="0" Canvas.Top="0" Width="21" Background="Transparent" />
             <hacs:GasSupply GasName="CO2" HelpText="Carbon dioxide gas supply" Valve="vCO2_VM2" FlowValve="vCO2Flow" d:FlowValve=""
                      Canvas.Left="26" Canvas.Top="0" Width="21" Background="Transparent" />
-            <hacs:GasSupply GasName="He" HelpText="Helium gas supply" Valve="vHe_VM2" FlowValve="vHeFlow" d:FlowValve=""
+            <hacs:GasSupply GasName="N2" HelpText="Inert gas supply" Valve="vN2_VM2" FlowValve="vN2Flow" d:FlowValve=""
                      Canvas.Left="52" Canvas.Top="0" Width="21" Background="Transparent" />
         </Canvas>
 
