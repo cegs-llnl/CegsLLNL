@@ -1,5 +1,6 @@
 ﻿using AeonHacs.Utilities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -1594,10 +1595,7 @@ namespace AeonHacs.Components
             OpenLine();
         }
 
-         /// <summary>
-        /// General-purpose code tester. Put whatever you want here.
-        /// </summary>
-        protected override void Test()
+        protected void LeakCheckAllPorts()
         {
             var ports = FindAll<IPort>();
             ports.ForEach(port =>
@@ -1608,6 +1606,33 @@ namespace AeonHacs.Components
                     SampleLog.Record($"{port.Name} leak rate: {rate:0.0e0} Torr L/s");
                 }
             });
+        }
+
+        /// <summary>
+        /// General-purpose code tester. Put whatever you want here.
+        /// </summary>
+        protected override void Test()
+        {
+            // nothing to see here...
+
+            List<IAliquot> toDelete = new List<IAliquot>();
+            Samples.Values.ToList().ForEach(s =>
+            {
+                s.Aliquots.ForEach(a => 
+                {
+                    if (!a.GraphiteReactor.IsBlank())
+                        toDelete.Add(a);
+                });
+            });
+            toDelete.ForEach(a =>
+            {
+                if (a?.Sample is ISample s)
+                {
+                    s.Aliquots.Remove(a);
+                    a.Name = null;          // remove the aliquot from the NamedObject Dictionary.
+                }
+            });
+
         }
 
         #endregion Test functions
