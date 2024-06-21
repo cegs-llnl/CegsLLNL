@@ -1482,7 +1482,7 @@ namespace AeonHacs.Components
 
             var nTotalC = sample.TotalMicrogramsCarbon * CarbonAtomsPerMicrogram;  // total number of carbon atoms in the sample
             var TorrMC = Pressure(nTotalC, MC.MilliLiters, MC.Temperature);
-            var PercentC = 100 * Sample.TotalMicrogramsCarbon / Sample.Micrograms;
+            var PercentC = 100 * sample.TotalMicrogramsCarbon / sample.Micrograms;
             var nCO2 = aliquot.MicrogramsCarbon * CarbonAtomsPerMicrogram;  // number of CO2 particles in the aliquot
             var nH2 = nCO2 * aliquot.H2CO2PressureRatio;    // H2 particles introduced
             var TorrCO2 = Pressure(nCO2, gr.MilliLiters, grTemperature);  // Torr
@@ -1498,7 +1498,8 @@ namespace AeonHacs.Components
             var residualCO2Particles = (residualParticles - excessH2Particles) / 3;
             var graphitizationYield = 100 * (nCO2 - residualCO2Particles) / nCO2;
 
-            sampleRecord.Append(sample.LabId);
+            sampleRecord.Append($"{sample.DateTime:yyyy-MM-dd HH:mm:ss}");
+            sampleRecord.Append($"\t{sample.LabId}");
             sampleRecord.Append($"\t{sample.Milligrams}");
             sampleRecord.Append($"\t{sample.InletPort.Name}");
             sampleRecord.Append($"\t{sample.CoilTrap}");
@@ -1506,20 +1507,20 @@ namespace AeonHacs.Components
             sampleRecord.Append($"\t{TorrMC:0.00}");
             sampleRecord.Append($"\t{PercentC:0.00}");
             sampleRecord.Append($"\t{sample.Discards}");
-            sampleRecord.Append($"\t{sample.SelectedMicrogramsCarbon}:0.0");
-            sampleRecord.Append($"\t{sample.Micrograms_d13C}:0.0");
-            sampleRecord.Append($"\t{sample.d13CPort.Name}");
+            sampleRecord.Append($"\t{sample.SelectedMicrogramsCarbon:0.0}");
+            sampleRecord.Append($"\t{sample.Micrograms_d13C:0.0}");
+            sampleRecord.Append($"\t{sample.d13CPort?.Name ?? ""}");
             sampleRecord.Append($"\t{aliquot.GraphiteReactor}");
             sampleRecord.Append($"\t{aliquot.Name}");
-            sampleRecord.Append($"\t{aliquot.MicrogramsCarbon}:0.0");
-            sampleRecord.Append($"\t{TorrCO2}:0");
-            sampleRecord.Append($"\t{TorrH2}:0");
-            sampleRecord.Append($"\t{TorrTotalExp}:0");
-            sampleRecord.Append($"\t{TorrTotalMeas}:0");
-            sampleRecord.Append($"\t{TorrResExp}:0");
-            sampleRecord.Append($"\t{TorrRes}:0");
+            sampleRecord.Append($"\t{aliquot.MicrogramsCarbon:0.0}");
+            sampleRecord.Append($"\t{TorrCO2:0}");
+            sampleRecord.Append($"\t{TorrH2:0}");
+            sampleRecord.Append($"\t{TorrTotalExp:0}");
+            sampleRecord.Append($"\t{TorrTotalMeas:0}");
+            sampleRecord.Append($"\t{TorrResExp:0}");
+            sampleRecord.Append($"\t{TorrRes:0}");
 
-            SampleRecords.Record(sampleRecord.ToString());
+            SampleRecords.WriteLine(sampleRecord.ToString());
             sampleRecord.Clear();
         }
 
