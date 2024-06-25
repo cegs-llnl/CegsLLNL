@@ -1614,24 +1614,7 @@ namespace AeonHacs.Components
         protected override void Test()
         {
             // nothing to see here...
-
-            List<IAliquot> toDelete = new List<IAliquot>();
-            Samples.Values.ToList().ForEach(s =>
-            {
-                s.Aliquots.ForEach(a => 
-                {
-                    if (!a.GraphiteReactor.IsBlank())
-                        toDelete.Add(a);
-                });
-            });
-            toDelete.ForEach(a =>
-            {
-                if (a?.Sample is ISample s)
-                {
-                    s.Aliquots.Remove(a);
-                    a.Name = null;          // remove the aliquot from the NamedObject Dictionary.
-                }
-            });
+            Alert("Alert Test", "Testing Alert");
 
         }
 
