@@ -1,6 +1,6 @@
 ﻿using AeonHacs.Wpf.Views;
 
-namespace CegsLL6.Views
+namespace CegsLLNL.Views
 {
     /// <summary>
     /// Interaction logic for CT.xaml
