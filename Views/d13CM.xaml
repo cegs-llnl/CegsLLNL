@@ -1,0 +1,21 @@
+﻿<wpf:View x:Class="CegsLLNL.Views.d13CM" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:wpf="http://schemas.aeonhacs.com/wpf"
+        mc:Ignorable="d"
+        Background="{x:Null}">
+
+    <Canvas Width="176" Height="160">
+        <wpf:Chamber Component="Section.d13CM" Canvas.Top="8" Canvas.Right="8"
+                   Data="M0.5,17.5 h17 v147 m0,-17 h-17 m17,-26 h-17 m17,-26 h-17 m17,-26 h-17 m17,-26 h-17" />
+
+        <wpf:AuxiliaryPort PortType="Ampoule" Orientation="Left" Component="d13C6" Canvas.Right="29" Canvas.Top="2"/>
+        <wpf:AuxiliaryPort PortType="Ampoule" Orientation="Left" Component="d13C5" Canvas.Right="29" Canvas.Top="28" />
+        <wpf:AuxiliaryPort PortType="Ampoule" Orientation="Left" Component="d13C4" Canvas.Right="29" Canvas.Top="54" />
+        <wpf:AuxiliaryPort PortType="Ampoule" Orientation="Left" Component="d13C3" Canvas.Right="29" Canvas.Top="80" />
+        <wpf:AuxiliaryPort PortType="Ampoule" Orientation="Left" Component="d13C2" Canvas.Right="29" Canvas.Top="106" />
+        <wpf:AuxiliaryPort PortType="Ampoule" Orientation="Left" Component="d13C1" Canvas.Right="29" Canvas.Top="132" />
+
+    </Canvas>
+</wpf:View>

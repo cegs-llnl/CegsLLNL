@@ -1,0 +1,54 @@
+﻿<wpf:View x:Class="CegsLLNL.Views.FTG"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:wpf="http://schemas.aeonhacs.com/wpf"
+    xmlns:core="clr-namespace:AeonHacs;assembly=AeonHacs.Core"
+    mc:Ignorable="d"
+    Background="{x:Null}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <wpf:View.Resources>
+        <wpf:MatchConverter x:Key="MismatchVisibleHidden" MatchValue="{x:Static Visibility.Hidden}" MismatchValue="{x:Static Visibility.Visible}" />
+    </wpf:View.Resources>
+    <Canvas Width="189" Height="118">
+        <wpf:Chamber Component="Section.FTG" Canvas.Right="0" Canvas.Top="6"
+            Data="M0,43 h34 M52,17 h17 v52 h-17 m0,-26 h17" />
+
+        <wpf:Stub Orientation="Left" Canvas.Right="92" Canvas.Top="33" />
+
+        <Canvas Canvas.Right="96" Canvas.Top="33" Width="50" Height="85"
+            Visibility="{Binding InletPort.PortType, Converter={x:Static wpf:MatchConverter.VisibleHidden}, ConverterParameter={x:Static core:InletPortType.FlowThrough}}">
+            <wpf:Fitting Data="M12,0 h-12 v-5" FittingSize="3/8" Canvas.Top="75" />
+            <wpf:Fitting Data="M0,0 v7" Canvas.Top="68" Canvas.Left="1" />
+            <wpf:ConvolutedTubing AutomationProperties.HelpText="Flow-through gas flex tube to Inlet port"
+                                  Data="M0,0 h-5 m0,0 h-4 c -30,0 -36.5,28.5 -36.5,50.5 v9 m0,0 v5"
+                                  Canvas.Right="0" Canvas.Top="0" />
+        </Canvas>
+        <Canvas Canvas.Right="96" Canvas.Bottom="6" Width="93" Height="59" d:Visibility="Hidden"
+            Visibility="{Binding InletPort.PortType, Converter={StaticResource MismatchVisibleHidden}, ConverterParameter={x:Static core:InletPortType.FlowThrough}}" Canvas.Top="33">
+            <Canvas Canvas.Right="76" Canvas.Bottom="56" Width="17" Height="17" Canvas.Top="35">
+                <Canvas.RenderTransform>
+                    <RotateTransform Angle="30" CenterX="3.9" CenterY="17.3" />
+                </Canvas.RenderTransform>
+                <wpf:Fitting Data="M12,0 h-12 v-5" FittingSize="3/8" Canvas.Left="0" Canvas.Bottom="0" />
+                <wpf:Fitting Data="M0,0 v7" Canvas.Left="1" Canvas.Top="0" />
+            </Canvas>
+            <wpf:ConvolutedTubing AutomationProperties.HelpText="Flow-through gas flex tube to Inlet port"
+                                  Data="M0,0 h-5 m0,0 h-4 c -30,0 -54.4,3 -64.25,22 l-4.5,7.8 m0,0 l-2.5,4.33"
+                                  Canvas.Right="0" Canvas.Bottom="0" Canvas.Top="0" />
+        </Canvas>
+
+        <wpf:GasSupply GasName="He" Valve="vHe_FTG" Orientation="Left"
+                       Background="Transparent" Canvas.Right="21" />
+        <wpf:GasSupply GasName="O2" Valve="vO2_FTG" Orientation="Left"
+                       Background="Transparent" Canvas.Right="21" Canvas.Top="52" />
+
+        <wpf:Valve Component="vFtgFlow"
+                   Canvas.Right="21" Canvas.Top="27" d:ValveState="Closed">
+            <wpf:Restriction Orientation="Horizontal" />
+        </wpf:Valve>
+        <wpf:Valve Component="vFTG_IP1"
+                   Canvas.Right="73" Canvas.Top="27" d:ValveState="Closed"/>
+    </Canvas>
+</wpf:View>
