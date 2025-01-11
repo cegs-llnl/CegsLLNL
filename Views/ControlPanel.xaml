@@ -92,7 +92,7 @@
 
         <!-- Sample Info -->
         <StackPanel Orientation="Horizontal" AutomationProperties.HelpText="Active or Prior Sample"
-                Background="Transparent" Margin="0,600, 0, 0" Grid.Row="1">
+                Background="Transparent" Margin="10, 0, 0, 3" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
             <StackPanel.Style>
                 <Style TargetType="{x:Type StackPanel}">
                     <Style.Triggers>
