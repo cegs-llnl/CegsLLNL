@@ -7778,16 +7778,11 @@
       "VacuumManifold": "VM1",
       "MySection": "VS1All",
       "State": "Evacuate",
-      "TargetPressure": 0.005,
       "BaselinePressure": 0.0005,
       "GoodBackingPressure": 4.0,
       "HighVacuumPreferredPressure": 7.0,
       "HighVacuumRequiredPressure": 5.0,
       "LowVacuumRequiredPressure": 8.0,
-      "StateStopwatch": {
-        "IsRunning": true,
-        "Accumulated": 6498
-      },
       "IdleTimeout": 50
     },
     "VacuumSystem2": {
@@ -7805,16 +7800,11 @@
       "VacuumManifold": "VM2",
       "MySection": "VS2All",
       "State": "Evacuate",
-      "TargetPressure": 0.005,
       "BaselinePressure": 0.0005,
       "GoodBackingPressure": 4.0,
       "HighVacuumPreferredPressure": 7.0,
       "HighVacuumRequiredPressure": 5.0,
       "LowVacuumRequiredPressure": 8.0,
-      "StateStopwatch": {
-        "IsRunning": true,
-        "Accumulated": 6498
-      },
       "IdleTimeout": 50
     }
   },
@@ -12817,8 +12807,7 @@
       "$type": "AeonHacs.Components.FlowMonitor, AeonHacs.Core",
       "Name": "CtFlowMonitor",
       "Description": "Coil trap flow monitor",
-      "FlowRateMeter": "CtFlowRateMeter",
-      "TrackedFlow": 0.3867743106983334
+      "FlowRateMeter": "CtFlowRateMeter"
     },
     "Power": {
       "$type": "AeonHacs.Components.Power, AeonHacs.Core",
@@ -13178,6 +13167,7 @@
   "Power": "Power",
   "SampleLog": "SampleLog",
   "TestLog": "TestLog",
+  "SampleRecords": "SampleRecords",
   "Ambient": "Ambient",
   "InletManifold": "IM",
   "CoilTrap": "CT1",
