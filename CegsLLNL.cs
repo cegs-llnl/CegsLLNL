@@ -20,6 +20,7 @@ public partial class CegsLLNL : Cegs
     {
         base.Connect();
 
+        SampleRecords = Find<HacsLog>("SampleRecords");
         ChamberCT1 = Find<IChamber>("CT1");
 
         // Sections
@@ -816,20 +817,14 @@ public partial class CegsLLNL : Cegs
         if (ports.Count > 0)
         {
             FreezeCompleted_d13CPorts();
-            Subject = "Operator needed";
-            Message = $"Torch off the completed d13C splits.\r\n" +
-                "Then press Ok to continue";
-            Ask(Message, Subject);
+            WaitForOperator($"Torch off the completed d13C splits.");
             EmptyCompleted_d13CPorts();
         }
         ThawFrozen_d13CPorts();
         ports = d13CPorts.FindAll(p => p.State == LinePort.States.Empty);
         if (ports.Count > 0)
         {
-            Subject = "Operator needed";
-            Message = "Load new ampoules into the empty ports.\r\n" +
-                "Then press Ok to continue";
-            Ask(Message, Subject);
+            WaitForOperator("Load new ampoules into the empty ports.");
             LoadEmpty_d13CPorts();
         }
         PrepareLoaded_d13CPorts();
@@ -876,7 +871,7 @@ public partial class CegsLLNL : Cegs
         sampleRecord.Append($"\t{sample.LabId}");
         sampleRecord.Append($"\t{sample.Milligrams}");
         sampleRecord.Append($"\t{sample.InletPort.Name}");
-        sampleRecord.Append($"\t{sample.Traps[0]}");    //first trap, usually CT, CT1 or CT2
+        sampleRecord.Append($"\t{sample.Traps}");    //first trap, usually CT, CT1 or CT2
         sampleRecord.Append($"\t{sample.TotalMicrogramsCarbon:0.0}"); // TCO2
         sampleRecord.Append($"\t{TorrMC:0.00}");
         sampleRecord.Append($"\t{PercentC:0.00}");
@@ -910,12 +905,10 @@ public partial class CegsLLNL : Cegs
         IM.ClosePortsExcept(InletPort);
         while (PortLeakRate(InletPort) > LeakTightTorrLitersPerSecond)
         {
-            Message = $"{InletPort.Name} is leaking. Process Paused.\r\n" +
-                "Ok to try again.\r\n" +
-                "Cancel to skip the leak test and continue the process.\r\n" +
-                "Restart to abort the process.";
-            Subject = "Process Exception";
-            if (Warn(Message, Subject).Cancelled())
+            if (Warn($"{InletPort.Name} is leaking.",
+                "Process Paused.\r\n" +
+                $"Ok to try again or Cancel to move on.\r\n" +
+                $"Restart the application to abort the process.").Cancelled())
                 break;
         }
 
