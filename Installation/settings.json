@@ -1257,7 +1257,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.013453487451446165"
+            "Argument": "x-0.013015723234278437"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -1305,7 +1305,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x+0.002980110221159678"
+            "Argument": "x-0.00025396920140674837"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -1449,7 +1449,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.47490626891426213"
+            "Argument": "x-0.47653419182922463"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -1919,7 +1919,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.47645543376718"
+            "Argument": "x-0.47521441308855683"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -1961,7 +1961,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.49138401452116953"
+            "Argument": "x-0.4903116784060008"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -2003,7 +2003,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.48596849844262036"
+            "Argument": "x-0.48361406060441314"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -2045,7 +2045,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.4886358671648428"
+            "Argument": "x-0.4871383219846394"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -2087,7 +2087,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.48082771716029693"
+            "Argument": "x-0.478870277675937"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -2129,7 +2129,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.4803957459757596"
+            "Argument": "x-0.4751769278349644"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -2171,7 +2171,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.48658510072822997"
+            "Argument": "x-0.4885102530465248"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -2213,7 +2213,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.48070409256751095"
+            "Argument": "x-0.47712278788713475"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -2255,7 +2255,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.4573055732772073"
+            "Argument": "x-0.4600185574087086"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -2297,7 +2297,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.47453574693590633"
+            "Argument": "x-0.47708594785777686"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -2339,7 +2339,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.46729723097322295"
+            "Argument": "x-0.46569347216289525"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -2381,7 +2381,7 @@
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
             "Name": "ZeroOffset",
-            "Argument": "x-0.49689012379719116"
+            "Argument": "x-0.4934008530637445"
           },
           {
             "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
@@ -4201,7 +4201,7 @@
       "Name": "vO2_FTG",
       "Description": "O2-FTG gas shutoff valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1650,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4224,7 +4224,7 @@
       "Name": "vHe_FTG",
       "Description": "He-FTG gas shutoff valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1800,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4365,7 +4365,7 @@
       "Name": "vIP1_IM",
       "Description": "IP1-IM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1680,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4388,7 +4388,7 @@
       "Name": "vIP2_IM",
       "Description": "IP2-IM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1685,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4411,7 +4411,7 @@
       "Name": "vIP3_IM",
       "Description": "IP3-IM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1640,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4434,7 +4434,7 @@
       "Name": "vIP4_IM",
       "Description": "IP4-IM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1655,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4457,7 +4457,7 @@
       "Name": "vIP5_IM",
       "Description": "IP5-IM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1625,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4480,7 +4480,7 @@
       "Name": "vIP6_IM",
       "Description": "IP6_IM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1730,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4617,8 +4617,8 @@
       "$type": "AeonHacs.Components.CpwValve, AeonHacs.Core",
       "Name": "vCT2_CTO",
       "Description": "CT2-CTO valve",
-      "ValveState": "Opened",
-      "Position": 1100,
+      "ValveState": "Closed",
+      "Position": 1650,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4686,8 +4686,8 @@
       "$type": "AeonHacs.Components.CpwValve, AeonHacs.Core",
       "Name": "vCT1_CTO",
       "Description": "CT1-CTO valve",
-      "ValveState": "Opened",
-      "Position": 1100,
+      "ValveState": "Closed",
+      "Position": 1650,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4871,7 +4871,7 @@
       "Name": "vGR1_GML",
       "Description": "GR1-GML valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1760,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4894,7 +4894,7 @@
       "Name": "vGR2_GML",
       "Description": "GR2-GML valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1695,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4917,7 +4917,7 @@
       "Name": "vGR3_GML",
       "Description": "GR3-GML valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1730,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4940,7 +4940,7 @@
       "Name": "vGR4_GML",
       "Description": "GR4-GML valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1715,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4963,7 +4963,7 @@
       "Name": "vGR5_GML",
       "Description": "GR5-GML valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1715,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -4986,7 +4986,7 @@
       "Name": "vGR6_GML",
       "Description": "GR6-GML valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1685,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5032,7 +5032,7 @@
       "Name": "vGR7_GMR",
       "Description": "GR7-GMR valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1715,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5055,7 +5055,7 @@
       "Name": "vGR8_GMR",
       "Description": "GR8-GMR valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1735,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5078,7 +5078,7 @@
       "Name": "vGR9_GMR",
       "Description": "GR9-GMR valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1775,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5101,7 +5101,7 @@
       "Name": "vGR10_GMR",
       "Description": "GR10-GMR valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1675,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5124,7 +5124,7 @@
       "Name": "vGR11_GMR",
       "Description": "GR11-GMR valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1655,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5147,7 +5147,7 @@
       "Name": "vGR12_GMR",
       "Description": "GR12-GMR valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1750,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5216,7 +5216,7 @@
       "Name": "vd13C1_d13CM",
       "Description": "d13C1-d13CM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1640,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5239,7 +5239,7 @@
       "Name": "vd13C2_d13CM",
       "Description": "d13C2-d13CM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1750,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5262,7 +5262,7 @@
       "Name": "vd13C3_d13CM",
       "Description": "d13C3-d13CM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1690,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5285,7 +5285,7 @@
       "Name": "vd13C4_d13CM",
       "Description": "d13C4-d13CM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1670,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5308,7 +5308,7 @@
       "Name": "vd13C5_d13CM",
       "Description": "d13C5-d13CM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1650,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5331,7 +5331,7 @@
       "Name": "vd13C6_d13CM",
       "Description": "d13C6-d13CM valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 1600,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5354,7 +5354,7 @@
       "Name": "vLN_CT2",
       "Description": "CT2 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5383,7 +5383,7 @@
       "Name": "vLN_CT1",
       "Description": "CT1 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5412,7 +5412,7 @@
       "Name": "vLN_VTT",
       "Description": "VTC LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5453,7 +5453,7 @@
       "Name": "vLN_MC",
       "Description": "MC LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5482,7 +5482,7 @@
       "Name": "vLN_GR1",
       "Description": "GR1 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5511,7 +5511,7 @@
       "Name": "vLN_GR2",
       "Description": "GR2 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5540,7 +5540,7 @@
       "Name": "vLN_GR3",
       "Description": "GR3 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5569,7 +5569,7 @@
       "Name": "vLN_GR4",
       "Description": "GR4 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5598,7 +5598,7 @@
       "Name": "vLN_GR5",
       "Description": "GR5 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5627,7 +5627,7 @@
       "Name": "vLN_GR6",
       "Description": "GR6 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5656,7 +5656,7 @@
       "Name": "vLN_GR7",
       "Description": "GR7 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5685,7 +5685,7 @@
       "Name": "vLN_GR8",
       "Description": "GR8 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5714,7 +5714,7 @@
       "Name": "vLN_GR9",
       "Description": "GR9 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5743,7 +5743,7 @@
       "Name": "vLN_GR10",
       "Description": "GR10 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5772,7 +5772,7 @@
       "Name": "vLN_GR11",
       "Description": "GR11 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5801,7 +5801,7 @@
       "Name": "vLN_GR12",
       "Description": "GR12 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5830,7 +5830,7 @@
       "Name": "vLN_d13C1",
       "Description": "d13C1 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5859,7 +5859,7 @@
       "Name": "vLN_d13C2",
       "Description": "d13C2 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5888,7 +5888,7 @@
       "Name": "vLN_d13C3",
       "Description": "d13C3 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5917,7 +5917,7 @@
       "Name": "vLN_d13C4",
       "Description": "d13C4 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5946,7 +5946,7 @@
       "Name": "vLN_d13C5",
       "Description": "d13C5 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -5975,7 +5975,7 @@
       "Name": "vLN_d13C6",
       "Description": "d13C6 LN valve",
       "ValveState": "Closed",
-      "Position": 0,
+      "Position": 2000,
       "OpenedVolumeDelta": 0.0,
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
@@ -8061,7 +8061,7 @@
         "Manual",
         "FlowThrough"
       ],
-      "PortType": "FlowThrough",
+      "PortType": "Manual",
       "NotifySampleFurnaceNeeded": false,
       "WarmTemperature": 40,
       "QuartzFurnace": "hIP1CCQ",
@@ -8089,9 +8089,9 @@
       "WarmTemperature": 40,
       "QuartzFurnace": null,
       "SampleFurnace": null,
-      "State": "Complete",
+      "State": "Empty",
       "MilliLiters": 6.1574427299500645,
-      "Sample": "Sample47",
+      "Sample": null,
       "Aliquot": 0,
       "Valve": "vIP2_IM",
       "Manometer": null,
@@ -8112,9 +8112,9 @@
       "WarmTemperature": 40,
       "QuartzFurnace": null,
       "SampleFurnace": null,
-      "State": "Loaded",
+      "State": "Empty",
       "MilliLiters": 6.1574427299500645,
-      "Sample": "Sample48",
+      "Sample": null,
       "Aliquot": 0,
       "Valve": "vIP3_IM",
       "Manometer": null,
@@ -8135,9 +8135,9 @@
       "WarmTemperature": 40,
       "QuartzFurnace": null,
       "SampleFurnace": null,
-      "State": "Loaded",
+      "State": "Empty",
       "MilliLiters": 6.1574427299500645,
-      "Sample": "Sample49",
+      "Sample": null,
       "Aliquot": 0,
       "Valve": "vIP4_IM",
       "Manometer": null,
@@ -8158,9 +8158,9 @@
       "WarmTemperature": 40,
       "QuartzFurnace": null,
       "SampleFurnace": null,
-      "State": "Loaded",
+      "State": "Empty",
       "MilliLiters": 6.1574427299500645,
-      "Sample": "Sample50",
+      "Sample": null,
       "Aliquot": 0,
       "Valve": "vIP5_IM",
       "Manometer": null,
@@ -8181,9 +8181,9 @@
       "WarmTemperature": 40,
       "QuartzFurnace": null,
       "SampleFurnace": null,
-      "State": "Loaded",
+      "State": "Empty",
       "MilliLiters": 6.1574427299500645,
-      "Sample": "Sample51",
+      "Sample": null,
       "Aliquot": 0,
       "Valve": "vIP6_IM",
       "Manometer": null,
@@ -8238,7 +8238,7 @@
       },
       "PriorPressure": 71.2,
       "PressurePeak": 556,
-      "MilliLiters": 2.860799633356159,
+      "MilliLiters": 2.819111834318674,
       "Valve": "vGR1_GML",
       "Manometer": "pGR1",
       "Thermometer": "tGR1",
@@ -8252,10 +8252,10 @@
       "State": "Prepared",
       "Size": "Standard",
       "Sample": null,
-      "Aliquot": 1,
+      "Aliquot": 0,
       "GraphitizingTemperature": 570,
       "SampleTemperatureOffset": 0,
-      "SampleSetpoint": 570.0,
+      "SampleSetpoint": 400.0,
       "StateStopwatch": {
         "IsRunning": false,
         "Accumulated": 0
@@ -8270,7 +8270,7 @@
       },
       "PriorPressure": 48.300000000000004,
       "PressurePeak": 500,
-      "MilliLiters": 2.8618807654423675,
+      "MilliLiters": 2.8699643237158683,
       "Valve": "vGR2_GML",
       "Manometer": "pGR2",
       "Thermometer": "tGR2",
@@ -8287,7 +8287,7 @@
       "Aliquot": 0,
       "GraphitizingTemperature": 570,
       "SampleTemperatureOffset": 0,
-      "SampleSetpoint": 570.0,
+      "SampleSetpoint": 400.0,
       "StateStopwatch": {
         "IsRunning": false,
         "Accumulated": 0
@@ -8302,7 +8302,7 @@
       },
       "PriorPressure": 286.5,
       "PressurePeak": 1662,
-      "MilliLiters": 2.8660757379369968,
+      "MilliLiters": 2.8967515480753425,
       "Valve": "vGR3_GML",
       "Manometer": "pGR3",
       "Thermometer": "tGR3",
@@ -8319,7 +8319,7 @@
       "Aliquot": 0,
       "GraphitizingTemperature": 570,
       "SampleTemperatureOffset": 0,
-      "SampleSetpoint": 570.0,
+      "SampleSetpoint": 400.0,
       "StateStopwatch": {
         "IsRunning": false,
         "Accumulated": 0
@@ -8334,7 +8334,7 @@
       },
       "PriorPressure": 0.0,
       "PressurePeak": 1250,
-      "MilliLiters": 2.9047099500628457,
+      "MilliLiters": 2.9621533026014997,
       "Valve": "vGR4_GML",
       "Manometer": "pGR4",
       "Thermometer": "tGR4",
@@ -8351,7 +8351,7 @@
       "Aliquot": 0,
       "GraphitizingTemperature": 570,
       "SampleTemperatureOffset": 0,
-      "SampleSetpoint": 570.0,
+      "SampleSetpoint": 400.0,
       "StateStopwatch": {
         "IsRunning": false,
         "Accumulated": 0
@@ -8366,7 +8366,7 @@
       },
       "PriorPressure": 0.0,
       "PressurePeak": 1250,
-      "MilliLiters": 2.9599548817582164,
+      "MilliLiters": 2.8511106928065026,
       "Valve": "vGR5_GML",
       "Manometer": "pGR5",
       "Thermometer": "tGR5",
@@ -8383,7 +8383,7 @@
       "Aliquot": 0,
       "GraphitizingTemperature": 570,
       "SampleTemperatureOffset": 0,
-      "SampleSetpoint": 570.0,
+      "SampleSetpoint": 400.0,
       "StateStopwatch": {
         "IsRunning": false,
         "Accumulated": 0
@@ -8398,7 +8398,7 @@
       },
       "PriorPressure": 0.0,
       "PressurePeak": 1250,
-      "MilliLiters": 3.0045376824105396,
+      "MilliLiters": 2.8814757542992187,
       "Valve": "vGR6_GML",
       "Manometer": "pGR6",
       "Thermometer": "tGR6",
@@ -8430,7 +8430,7 @@
       },
       "PriorPressure": 71.2,
       "PressurePeak": 556,
-      "MilliLiters": 2.9292177731089115,
+      "MilliLiters": 2.857471213663355,
       "Valve": "vGR7_GMR",
       "Manometer": "pGR7",
       "Thermometer": "tGR7",
@@ -8443,11 +8443,11 @@
       "Description": "Graphite reactor 8",
       "State": "Prepared",
       "Size": "Standard",
-      "Sample": "Sample47",
+      "Sample": null,
       "Aliquot": 0,
       "GraphitizingTemperature": 570,
       "SampleTemperatureOffset": 0,
-      "SampleSetpoint": 570.0,
+      "SampleSetpoint": 400.0,
       "StateStopwatch": {
         "IsRunning": false,
         "Accumulated": 0
@@ -8462,7 +8462,7 @@
       },
       "PriorPressure": 71.2,
       "PressurePeak": 556,
-      "MilliLiters": 3.0040613585719953,
+      "MilliLiters": 2.813818767623362,
       "Valve": "vGR8_GMR",
       "Manometer": "pGR8",
       "Thermometer": "tGR8",
@@ -8494,7 +8494,7 @@
       },
       "PriorPressure": 71.2,
       "PressurePeak": 556,
-      "MilliLiters": 2.994870735294572,
+      "MilliLiters": 2.838205573654914,
       "Valve": "vGR9_GMR",
       "Manometer": "pGR9",
       "Thermometer": "tGR9",
@@ -8526,7 +8526,7 @@
       },
       "PriorPressure": 71.2,
       "PressurePeak": 556,
-      "MilliLiters": 2.983001110491928,
+      "MilliLiters": 2.844233811974564,
       "Valve": "vGR10_GMR",
       "Manometer": "pGR10",
       "Thermometer": "tGR10",
@@ -8558,7 +8558,7 @@
       },
       "PriorPressure": 71.2,
       "PressurePeak": 556,
-      "MilliLiters": 2.9649770595808453,
+      "MilliLiters": 2.8532400844440757,
       "Valve": "vGR11_GMR",
       "Manometer": "pGR11",
       "Thermometer": "tGR11",
@@ -8590,7 +8590,7 @@
       },
       "PriorPressure": 71.2,
       "PressurePeak": 556,
-      "MilliLiters": 2.941082185992434,
+      "MilliLiters": 2.856077530611508,
       "Valve": "vGR12_GMR",
       "Manometer": "pGR12",
       "Thermometer": "tGR12",
@@ -8643,9 +8643,9 @@
       "$type": "AeonHacs.Components.d13CPort, AeonHacs.Core",
       "Name": "d13C4",
       "Description": "d13C port 1",
-      "State": "Complete",
+      "State": "Empty",
       "MilliLiters": 9.533251444913702,
-      "Sample": "Sample5",
+      "Sample": null,
       "Aliquot": 0,
       "Valve": "vd13C4_d13CM",
       "Manometer": null,
@@ -10616,24 +10616,24 @@
   },
   "FlowManagers": {
     "CTFlowManager": {
-        "$type": "AeonHacs.Components.FlowManager, AeonHacs.Core",
-        "Name": "CTFlowManager",
-        "Description": "Coil trap flow manager",
-        "FlowValve": "vCTFlow",
-        "Meter": "pCT",
-        "MillisecondsTimeout": 200,
-        "SecondsCycle": 4.0,
-        "StartingMovement": 0,
-        "MaximumMovement": 96,
-        "MaximumRate": 0.04,
-        "Lag": 4.0,
-        "Deadband": 0.25,
-        "DeadbandIsFractionOfTarget": false,
-        "Gain": -1.5,
-        "DivideGainByDeadband": false,
-        "StopOnFullyOpened": false,
-        "StopOnFullyClosed": false,
-        "UseRateOfChange": false
+      "$type": "AeonHacs.Components.FlowManager, AeonHacs.Core",
+      "Name": "CTFlowManager",
+      "Description": "Coil trap flow manager",
+      "FlowValve": "vCTFlow",
+      "Meter": "pCT",
+      "MillisecondsTimeout": 200,
+      "SecondsCycle": 4.0,
+      "StartingMovement": 0,
+      "MaximumMovement": 96,
+      "MaximumRate": 0.04,
+      "Lag": 4.0,
+      "Deadband": 0.25,
+      "DeadbandIsFractionOfTarget": false,
+      "Gain": -1.5,
+      "DivideGainByDeadband": false,
+      "StopOnFullyOpened": false,
+      "StopOnFullyClosed": false,
+      "UseRateOfChange": false
     },
     "FTG_IMFlowManager": {
       "$type": "AeonHacs.Components.FlowManager, AeonHacs.Core",
@@ -11886,849 +11886,7 @@
       "ArchiveDaily": false
     }
   },
-  "Samples": {
-    "Sample1": {
-      "Name": "Sample1",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": null,
-      "DateTime": "0001-01-01T00:00:00",
-      "InletPort": "",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": null,
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.0,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 0.0,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 0.0,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "",
-          "Description": "",
-          "Sample": "Sample1",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 0.0,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample5": {
-      "Name": "Sample5",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "extra diesel",
-      "DateTime": "2024-06-19T09:54:16",
-      "InletPort": "IP4",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect, etc.",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": true,
-      "Grams": 0.00085,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 808.6999999999986,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 808.6999999999986,
-      "Micrograms_d13C": 32.32368353411128,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": []
-    },
-    "Sample32": {
-      "Name": "Sample32",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "small OX1 AEON test",
-      "DateTime": "2024-08-05T12:11:14.0042937-07:00",
-      "InletPort": "IP1",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00264,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 585.9950495049505,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 585.9950495049505,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "N134961",
-          "Description": "",
-          "Sample": "Sample32",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 585.9950495049505,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample33": {
-      "Name": "Sample33",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "small OX1 AEON test-remeasure",
-      "DateTime": "2024-08-05T13:14:05.3298044-07:00",
-      "InletPort": "IP2",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00264,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 566.6455445544551,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 566.6455445544551,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample33",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 566.6455445544551,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample34": {
-      "Name": "Sample34",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "OX2",
-      "DateTime": "2024-08-05T14:27:52.7869255-07:00",
-      "InletPort": "IP4",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.05133,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 2883.1554455445544,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 2883.1554455445544,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "N135079",
-          "Description": "",
-          "Sample": "Sample34",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 2883.1554455445544,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample35": {
-      "Name": "Sample35",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "MV-16",
-      "DateTime": "2024-08-08T15:34:28.9889744-07:00",
-      "InletPort": "IP6",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00037,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 180.0,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 180.0,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample35",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 180.00000000000003,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample36": {
-      "Name": "Sample36",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "MV-15",
-      "DateTime": "2024-08-08T09:59:39.9080629-07:00",
-      "InletPort": "IP5",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00044,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 177.10000000000008,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 177.10000000000008,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample36",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 177.10000000000005,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample37": {
-      "Name": "Sample37",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "MV-14",
-      "DateTime": "2024-08-07T19:10:55.0431183-07:00",
-      "InletPort": "IP4",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00037,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 188.70000000000036,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 188.70000000000036,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample37",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 188.70000000000036,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample38": {
-      "Name": "Sample38",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "MV-13",
-      "DateTime": "2024-08-07T18:50:27.736286-07:00",
-      "InletPort": "IP3",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00053,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 210.5,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 210.5,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample38",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 210.5,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample39": {
-      "Name": "Sample39",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "MV-12",
-      "DateTime": "2024-08-07T18:11:04.8699417-07:00",
-      "InletPort": "IP2",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00061,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 266.2999999999995,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 266.2999999999995,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample39",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 266.2999999999995,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample40": {
-      "Name": "Sample40",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "MV-11",
-      "DateTime": "2024-08-07T17:13:59.9974734-07:00",
-      "InletPort": "IP1",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00058,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 293.40000000000055,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 293.40000000000055,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample40",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 293.40000000000055,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample41": {
-      "Name": "Sample41",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "MV-11 REDO",
-      "DateTime": "2024-08-07T19:51:32.3709693-07:00",
-      "InletPort": "IP1",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00058,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 281.9000000000005,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 281.9000000000005,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample41",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 281.9000000000005,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample42": {
-      "Name": "Sample42",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "MV-12 REDO",
-      "DateTime": "2024-08-07T20:12:11.7247644-07:00",
-      "InletPort": "IP2",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00061,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 253.53861386138624,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 253.53861386138624,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample42",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 253.53861386138624,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample43": {
-      "Name": "Sample43",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "MV-20",
-      "DateTime": "2024-08-08T17:00:47.9936674-07:00",
-      "InletPort": "IP6",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00034,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 148.16200000000018,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 148.16200000000018,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample43",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 148.16200000000018,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample44": {
-      "Name": "Sample44",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "MV-19",
-      "DateTime": "2024-08-08T16:41:19.819273-07:00",
-      "InletPort": "IP5",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00043,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 178.29999999999967,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 178.29999999999967,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample44",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 178.29999999999967,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample45": {
-      "Name": "Sample45",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "MV-17",
-      "DateTime": "2024-08-08T16:21:18.7562595-07:00",
-      "InletPort": "IP3",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Collect & Measure",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00045,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 198.65643564356424,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 198.65643564356424,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "NA",
-          "Description": "",
-          "Sample": "Sample45",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 198.65643564356424,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample46": {
-      "Name": "Sample46",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "ANU-1",
-      "DateTime": "2025-01-08T11:28:43.2923318-08:00",
-      "InletPort": "IP1",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Sealed CO2",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.0024100000000000002,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 0.0,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 0.0,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "ANU-1",
-          "Description": "",
-          "Sample": "Sample46",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 0.0,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample47": {
-      "Name": "Sample47",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "ANU-2",
-      "DateTime": "2025-01-08T11:31:58.0440612-08:00",
-      "InletPort": "IP2",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Sealed CO2",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00219,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 971.7940000000013,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 971.7940000000013,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "ANU-2",
-          "Description": "",
-          "Sample": "Sample47",
-          "GraphiteReactor": "GR8",
-          "MicrogramsCarbon": 971.7940000000013,
-          "InitialGmH2Pressure": 1015.50693069307,
-          "FinalGmH2Pressure": 793.9831683168316,
-          "GRStartPressure": 1562.7,
-          "H2CO2PressureRatio": 2.4638676468849603,
-          "ExpectedResidualPressure": 0.7791325554928379,
-          "ResidualPressure": 0.4730026709943538,
-          "ResidualMeasured": true,
-          "Tries": 1
-        }
-      ]
-    },
-    "Sample48": {
-      "Name": "Sample48",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "ANU-3",
-      "DateTime": "0001-01-01T00:00:00",
-      "InletPort": "IP3",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Sealed CO2",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.00257,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 0.0,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 0.0,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "ANU-3",
-          "Description": "",
-          "Sample": "Sample48",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 0.0,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample49": {
-      "Name": "Sample49",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "ANU-4",
-      "DateTime": "0001-01-01T00:00:00",
-      "InletPort": "IP4",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Sealed CO2",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.0025499999999999997,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 0.0,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 0.0,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "ANU-4",
-          "Description": "",
-          "Sample": "Sample49",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 0.0,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample50": {
-      "Name": "Sample50",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "ANU-5",
-      "DateTime": "0001-01-01T00:00:00",
-      "InletPort": "IP5",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Sealed CO2",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.0025,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 0.0,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 0.0,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "ANU-5",
-          "Description": "",
-          "Sample": "Sample50",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 0.0,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    },
-    "Sample51": {
-      "Name": "Sample51",
-      "Description": "",
-      "State": "Unknown",
-      "LabId": "ANU-6",
-      "DateTime": "0001-01-01T00:00:00",
-      "InletPort": "IP6",
-      "Traps": null,
-      "d13CPort": "",
-      "Process": "Sealed CO2",
-      "Parameters": [],
-      "SulfurSuspected": false,
-      "Take_d13C": false,
-      "Grams": 0.002,
-      "MicrogramsDilutionCarbon": 0.0,
-      "TotalMicrogramsCarbon": 0.0,
-      "Discards": 0,
-      "SelectedMicrogramsCarbon": 0.0,
-      "Micrograms_d13C": 0.0,
-      "d13CPartsPerMillion": 0.0,
-      "Aliquots": [
-        {
-          "$type": "AeonHacs.Components.Aliquot, AeonHacs.Core",
-          "Name": "ANU-6",
-          "Description": "",
-          "Sample": "Sample51",
-          "GraphiteReactor": "",
-          "MicrogramsCarbon": 0.0,
-          "InitialGmH2Pressure": 0.0,
-          "FinalGmH2Pressure": 0.0,
-          "GRStartPressure": 0.0,
-          "H2CO2PressureRatio": 0.0,
-          "ExpectedResidualPressure": 0.0,
-          "ResidualPressure": 0.0,
-          "ResidualMeasured": false,
-          "Tries": 0
-        }
-      ]
-    }
-  },
+  "Samples": {},
   "HacsComponents": {
     "IpFan1": {
       "$type": "AeonHacs.Components.IpFan, AeonHacs.Core",
@@ -12822,7 +11980,7 @@
       "$type": "AeonHacs.Components.AlertManager, AeonHacs.Core",
       "Name": "AlertManager",
       "Description": "Alert manager",
-      "AlertsEnabled": false,
+      "AlertsEnabled": true,
       "DuplicateMessageSuppressionDuration": "1.00:00:00"
     }
   },
@@ -12851,316 +12009,316 @@
     "CO2ExtractionTemperature": -140,
     "H2_CO2StoichiometricRatio": 2.0,
     "DefaultParameters": [
-        {
-            "ParameterName": "HoldSampleAtPorts",
-            "Value": "NaN",
-            "Description": "Set GR and d13C FTCs to Standby and hold to start reactions later."
-        },
-        {
-            "ParameterName": "NumberOfSplits",
-            "Value": 5.0,
-            "Description": "Number of splits to take for an RPO sample"
-        },
-        {
-            "ParameterName": "Split1TargetUgc",
-            "Value": 120.0,
-            "Description": "Target sample size (UgC) for the first split (lowest T)"
-        },
-        {
-            "ParameterName": "Split2TargetUgc",
-            "Value": 240.0,
-            "Description": "Target sample size (UgC) for the second split (second T range)"
-        },
-        {
-            "ParameterName": "Split3TargetUgc",
-            "Value": 240.0,
-            "Description": "Target sample size (UgC) for the third split (third T range)"
-        },
-        {
-            "ParameterName": "Split4TargetUgc",
-            "Value": 240.0,
-            "Description": "Target sample size (UgC) for the fourth split (fourth T range)"
-        },
-        {
-            "ParameterName": "Split5TargetUgc",
-            "Value": 240.0,
-            "Description": "Target sample size (UgC) for the fifth split (highest T range)"
-        },
-        {
-            "ParameterName": "MaximumSampleTemperature",
-            "Value": "NaN",
-            "Description": "End of reaction temperature."
-        },
-        {
-            "ParameterName": "MinutesAtMaximumTemperature",
-            "Value": 10.0,
-            "Description": "Stop collecting after this many minutes at the maximum temperature."
-        },
-        {
-            "ParameterName": "PressureOverAtm",
-            "Value": 770.0,
-            "Description": "Usually about 10 Torr over standard; should be slightly greater than the atmospheric pressure at any lab that will handle gas samples in septum-sealed vials (including external labs)."
-        },
-        {
-            "ParameterName": "LeakTestBasePressure",
-            "Value": 0.0005,
-            "Description": "Evacuate a section to this pressure when starting a leak test."
-        },
-        {
-            "ParameterName": "LeakTightTorrLitersPerSecond",
-            "Value": 3E-05,
-            "Description": "The effective gas load below which a volume is considered leak free."
-        },
-        {
-            "ParameterName": "OkPressure",
-            "Value": 0.005,
-            "Description": "Low enough to join sections for drying."
-        },
-        {
-            "ParameterName": "CleanPressure",
-            "Value": 0.0005,
-            "Description": "Low enough to start a new sample."
-        },
-        {
-            "ParameterName": "VPInitialPressure",
-            "Value": -555.0,
-            "Description": "An initial manifold pressure that will result in PressureOverAtm when expanded into an LN-frozen vial"
-        },
-        {
-            "ParameterName": "VPErrorPressure",
-            "Value": 18.0,
-            "Description": "The maximum value for abs(pVP - PressureOverAtm) that is considered nominal."
-        },
-        {
-            "ParameterName": "MaximumResidual",
-            "Value": 1.2,
-            "Description": "The maximum acceptable residual pressure for a completed graphite reaction, expressed as a multiple of the expected value."
-        },
-        {
-            "ParameterName": "IMO2Pressure",
-            "Value": 1350.0,
-            "Description": "An initial IM O2 pressure that will expand sufficient oxygen into the inlet port to fully combust a sample of maximum size. Typically, this means enough to fully oxidize about three mg C to CO2."
-        },
-        {
-            "ParameterName": "FirstTrapBleedPressure",
-            "Value": 2.0,
-            "Description": "The first trap pressure to maintain when collecting CO2 out of a carrier gas by \"bleeding\" the mixture through the FirstTrap."
-        },
-        {
-            "ParameterName": "FirstTrapEndPressure",
-            "Value": 0.03,
-            "Description": "The first trap pressure at which the process should stop the Bleed process."
-        },
-        {
-            "ParameterName": "FirstTrapFlowBypassPressure",
-            "Value": 5.0,
-            "Description": "The maximum pressure differential across the first trap for opening its flow bypass valve. Choose this pressure so that opening the bypass valve will not produce an excessive downstream pressure spike."
-        },
-        {
-            "ParameterName": "IronPreconditionH2Pressure",
-            "Value": 850.0,
-            "Description": "The initial H2 pressure to be used when preparing Fe in the GRs for use as the graphitization catalyst."
-        },
-        {
-            "ParameterName": "IMPluggedTorrPerSecond",
-            "Value": 5.0,
-            "Description": "The IM pressure rate of change, following a stable flow, used to detect that something has been put onto the IP needle (a vial or stopper)."
-        },
-        {
-            "ParameterName": "IMLoadedTorrPerSecond",
-            "Value": 4.0,
-            "Description": "An IM pressure rate of change, following \"plugged\" detection, that indicates the delayed slowing of the pressure increase characteristic of a vial being filled, as distinct from the rapid drop to stability that occurs when the needle is plugged by a stopper."
-        },
-        {
-            "ParameterName": "GRCompleteTorrPerMinute",
-            "Value": 0.3,
-            "Description": "The graphitization reaction is considered complete when the declining pressure rate of change falls below this value."
-        },
-        {
-            "ParameterName": "RoomTemperature",
-            "Value": 21.0,
-            "Description": "Typical room temperature in the lab."
-        },
-        {
-            "ParameterName": "SulfurTrapTemperature",
-            "Value": 400.0,
-            "Description": "Reaction temperature for trapping trace sulfur contamination in a CO2 sample onto iron powder."
-        },
-        {
-            "ParameterName": "IronPreconditioningTemperature",
-            "Value": 400.0,
-            "Description": "Reaction temperature for preparing iron powder with H2 for use as a CO2 reduction catalyst."
-        },
-        {
-            "ParameterName": "IronPreconditioningTemperatureCushion",
-            "Value": 10.0,
-            "Description": "Less than this error is near enough to the Fe Prep reaction temperature to begin the process."
-        },
-        {
-            "ParameterName": "CollectionMinutes",
-            "Value": 4.0,
-            "Description": "Time to wait for CO2 to move from InletPort to the FirstTrap."
-        },
-        {
-            "ParameterName": "ExtractionMinutes",
-            "Value": 4.0,
-            "Description": "Time to spend extracting CO2 from the VTT into the MC."
-        },
-        {
-            "ParameterName": "CO2TransferMinutes",
-            "Value": 4.0,
-            "Description": "Time to wait for CO2 transfer between chambers."
-        },
-        {
-            "ParameterName": "MeasurementSeconds",
-            "Value": 10.0,
-            "Description": "How long to average a measurement."
-        },
-        {
-            "ParameterName": "GRFirstEvacuationMinutes",
-            "Value": 10.0,
-            "Description": "How long to evacuate freshly serviced graphite reactors."
-        },
-        {
-            "ParameterName": "MinimumGRMinutes",
-            "Value": 300.0,
-            "Description": "Minimum Graphitization time."
-        },
-        {
-            "ParameterName": "ThawBeforeGraphitizing",
-            "Value": 1.0,
-            "Description": "Thaw the CO2 in the graphite reactor before starting the furnace."
-        },
-        {
-            "ParameterName": "SplitEquilibrationSeconds",
-            "Value": 120.0,
-            "Description": "After expanding a sample into a larger section, how long to wait before subdividing it."
-        },
-        {
-            "ParameterName": "IronPreconditioningMinutes",
-            "Value": 60.0,
-            "Description": "Duration of iron powder preparation process."
-        },
-        {
-            "ParameterName": "QuartzFurnaceWarmupMinutes",
-            "Value": 10.0,
-            "Description": "How long after turn-on the quartz media takes to reach its functional temperature range."
-        },
-        {
-            "ParameterName": "SulfurTrapMinutes",
-            "Value": 20.0,
-            "Description": "Duration of the sulfur trapping process."
-        },
-        {
-            "ParameterName": "H2_CO2GraphitizationRatio",
-            "Value": 2.3,
-            "Description": "Target H2:CO2 ratio for graphitization, providing excess hydogen to speed reaction."
-        },
-        {
-            "ParameterName": "H2DensityAdjustment",
-            "Value": 0.7,
-            "Description": "Estimated appropriate initial GM H2 pressure reduction to compensate for higher density of H2 in frozen standard GR coldfinger."
-        },
-        {
-            "ParameterName": "SmallSampleMicrogramsCarbon",
-            "Value": 10.0,
-            "Description": "A sample with less than this much carbon is processed as \"small.\""
-        },
-        {
-            "ParameterName": "MinimumUgCThatPermits_d13CSplit",
-            "Value": 110.0,
-            "Description": "The minimum Aliquot mass (in micrograms) sufficient to provide a d13C split."
-        },
-        {
-            "ParameterName": "DilutedSampleMicrogramsCarbon",
-            "Value": 0.0,
-            "Description": "The minimum final mass for a diluted sample. Dilution is disabled unless DilutedSampleMicrogramsCarbon > SmallSampleMicrogramsCarbon"
-        },
-        {
-            "ParameterName": "MaximumSampleMicrogramsCarbon",
-            "Value": 1100.0,
-            "Description": "Discard CO2 splits as long as the sample contains more than this much carbon."
-        },
-        {
-            "ParameterName": "IpEvacuationPressure",
-            "Value": 0.5,
-            "Description": "Pressure to use when evacuating an IP."
-        },
-        {
-            "ParameterName": "CollectUntilTemperatureRises",
-            "Value": "NaN",
-            "Description": "Stop collecting into the coil trap when the Inlet Port temperature rises to this value, provided that it is a number (i.e., not NaN)."
-        },
-        {
-            "ParameterName": "CollectUntilTemperatureFalls",
-            "Value": "NaN",
-            "Description": "Stop collecting into the coil trap when the Inlet Port temperature falls to this value, provided that it is a number (i.e., not NaN)."
-        },
-        {
-            "ParameterName": "CollectCloseIpAtPressure",
-            "Value": "NaN",
-            "Description": "During sample collection, close the Inlet Port when the Inlet Manifold pressure falls to this value, provided that it is a number (i.e., not NaN)."
-        },
-        {
-            "ParameterName": "CollectCloseIpAtCtPressure",
-            "Value": "NaN",
-            "Description": "During sample collection, close the Inlet Port when the Coil Trap pressure falls to this value, provided that it is a number (i.e., not NaN)."
-        },
-        {
-            "ParameterName": "CollectUntilUgc",
-            "Value": "NaN",
-            "Description": "Stop collecting into the coil trap when amount of carbon in the Coil Trap reaches this value, provided that it is a number (i.e., not NaN)."
-        },
-        {
-            "ParameterName": "CollectUntilMinutes",
-            "Value": "NaN",
-            "Description": "Stop collecting into the coil trap when this much time has elapsed, provided that the value is a number (i.e., not NaN)."
-        },
-        {
-            "ParameterName": "CollectUntilCtPressureFalls",
-            "Value": 0.2,
-            "Description": "Stop collecting when the Coil Trap pressure falls to or below this value, provided that it is a number (i.e., not NaN)."
-        },
-        {
-            "ParameterName": "IpSetpoint",
-            "Value": 1000.0,
-            "Description": "The Inlet Port sample furnace's target setpoint (the final setpoint when ramping)."
-        },
-        {
-            "ParameterName": "WaitTimerMinutes",
-            "Value": 10.0,
-            "Description": "How many minutes to wait."
-        },
-        {
-            "ParameterName": "MaximumMinutesGrToReachTemperature",
-            "Value": 20.0,
-            "Description": "The maximum time a graphite reactor should take to reach its setpoint."
-        },
-        {
-            "ParameterName": "MaximumMinutesIpToReachTemperature",
-            "Value": 10.0,
-            "Description": "The maximum time an inlet port should take to reach its setpoint."
-        },
-        {
-            "ParameterName": "IpMinutes",
-            "Value": 60.0,
-            "Description": "Set time for the IP Timer."
-        },
-        {
-            "ParameterName": "IpTemperatureCushion",
-            "Value": 20.0,
-            "Description": "The acceptable range around IpSetpoint considered at temperature."
-        },
-        {
-            "ParameterName": "MaximumSecondsAdmitGas",
-            "Value": 60.0,
-            "Description": "The longest time allowed for admitting gas."
-        },
-        {
-            "ParameterName": "KeepFeUnderH2",
-            "Value": 0.0,
-            "Description": "Whether to evacuate H2 after preconditioning graphite reactors."
-        }
+      {
+        "ParameterName": "CO2TransferMinutes",
+        "Value": 4.0,
+        "Description": "Time to wait for CO2 transfer between chambers."
+      },
+      {
+        "ParameterName": "CleanPressure",
+        "Value": 0.001,
+        "Description": "Low enough to start a new sample."
+      },
+      {
+        "ParameterName": "CollectCloseIpAtCtPressure",
+        "Value": "NaN",
+        "Description": "During sample collection, close the Inlet Port when the Coil Trap pressure falls to this value, provided that it is a number (i.e., not NaN)."
+      },
+      {
+        "ParameterName": "CollectCloseIpAtPressure",
+        "Value": "NaN",
+        "Description": "During sample collection, close the Inlet Port when the Inlet Manifold pressure falls to this value, provided that it is a number (i.e., not NaN)."
+      },
+      {
+        "ParameterName": "CollectUntilCtPressureFalls",
+        "Value": 0.2,
+        "Description": "Stop collecting when the Coil Trap pressure falls to or below this value, provided that it is a number (i.e., not NaN)."
+      },
+      {
+        "ParameterName": "CollectUntilMinutes",
+        "Value": "NaN",
+        "Description": "Stop collecting into the coil trap when this much time has elapsed, provided that the value is a number (i.e., not NaN)."
+      },
+      {
+        "ParameterName": "CollectUntilTemperatureFalls",
+        "Value": "NaN",
+        "Description": "Stop collecting into the coil trap when the Inlet Port temperature falls to this value, provided that it is a number (i.e., not NaN)."
+      },
+      {
+        "ParameterName": "CollectUntilTemperatureRises",
+        "Value": "NaN",
+        "Description": "Stop collecting into the coil trap when the Inlet Port temperature rises to this value, provided that it is a number (i.e., not NaN)."
+      },
+      {
+        "ParameterName": "CollectUntilUgc",
+        "Value": "NaN",
+        "Description": "Stop collecting into the coil trap when amount of carbon in the Coil Trap reaches this value, provided that it is a number (i.e., not NaN)."
+      },
+      {
+        "ParameterName": "CollectionMinutes",
+        "Value": 4.0,
+        "Description": "Time to wait for CO2 to move from InletPort to the FirstTrap."
+      },
+      {
+        "ParameterName": "DilutedSampleMicrogramsCarbon",
+        "Value": 0.0,
+        "Description": "The minimum final mass for a diluted sample. Dilution is disabled unless DilutedSampleMicrogramsCarbon > SmallSampleMicrogramsCarbon"
+      },
+      {
+        "ParameterName": "ExtractionMinutes",
+        "Value": 4.0,
+        "Description": "Time to spend extracting CO2 from the VTT into the MC."
+      },
+      {
+        "ParameterName": "FirstTrapBleedPressure",
+        "Value": 2.0,
+        "Description": "The first trap pressure to maintain when collecting CO2 out of a carrier gas by \"bleeding\" the mixture through the FirstTrap."
+      },
+      {
+        "ParameterName": "FirstTrapEndPressure",
+        "Value": 0.03,
+        "Description": "The first trap pressure at which the process should stop the Bleed process."
+      },
+      {
+        "ParameterName": "FirstTrapFlowBypassPressure",
+        "Value": 5.0,
+        "Description": "The maximum pressure differential across the first trap for opening its flow bypass valve. Choose this pressure so that opening the bypass valve will not produce an excessive downstream pressure spike."
+      },
+      {
+        "ParameterName": "GRCompleteTorrPerMinute",
+        "Value": 0.3,
+        "Description": "The graphitization reaction is considered complete when the declining pressure rate of change falls below this value."
+      },
+      {
+        "ParameterName": "GRFirstEvacuationMinutes",
+        "Value": 10.0,
+        "Description": "How long to evacuate freshly serviced graphite reactors."
+      },
+      {
+        "ParameterName": "H2DensityAdjustment",
+        "Value": 0.7,
+        "Description": "Estimated appropriate initial GM H2 pressure reduction to compensate for higher density of H2 in frozen standard GR coldfinger."
+      },
+      {
+        "ParameterName": "H2_CO2GraphitizationRatio",
+        "Value": 2.3,
+        "Description": "Target H2:CO2 ratio for graphitization, providing excess hydogen to speed reaction."
+      },
+      {
+        "ParameterName": "HoldSampleAtPorts",
+        "Value": "NaN",
+        "Description": "Set GR and d13C FTCs to Standby and hold to start reactions later."
+      },
+      {
+        "ParameterName": "IMLoadedTorrPerSecond",
+        "Value": 4.0,
+        "Description": "An IM pressure rate of change, following \"plugged\" detection, that indicates the delayed slowing of the pressure increase characteristic of a vial being filled, as distinct from the rapid drop to stability that occurs when the needle is plugged by a stopper."
+      },
+      {
+        "ParameterName": "IMO2Pressure",
+        "Value": 1350.0,
+        "Description": "An initial IM O2 pressure that will expand sufficient oxygen into the inlet port to fully combust a sample of maximum size. Typically, this means enough to fully oxidize about three mg C to CO2."
+      },
+      {
+        "ParameterName": "IMPluggedTorrPerSecond",
+        "Value": 5.0,
+        "Description": "The IM pressure rate of change, following a stable flow, used to detect that something has been put onto the IP needle (a vial or stopper)."
+      },
+      {
+        "ParameterName": "IpEvacuationPressure",
+        "Value": 0.5,
+        "Description": "Pressure to use when evacuating an IP."
+      },
+      {
+        "ParameterName": "IpMinutes",
+        "Value": 60.0,
+        "Description": "Set time for the IP Timer."
+      },
+      {
+        "ParameterName": "IpSetpoint",
+        "Value": 1000.0,
+        "Description": "The Inlet Port sample furnace's target setpoint (the final setpoint when ramping)."
+      },
+      {
+        "ParameterName": "IpTemperatureCushion",
+        "Value": 20.0,
+        "Description": "The acceptable range around IpSetpoint considered at temperature."
+      },
+      {
+        "ParameterName": "IronPreconditionH2Pressure",
+        "Value": 850.0,
+        "Description": "The initial H2 pressure to be used when preparing Fe in the GRs for use as the graphitization catalyst."
+      },
+      {
+        "ParameterName": "IronPreconditioningMinutes",
+        "Value": 60.0,
+        "Description": "Duration of iron powder preparation process."
+      },
+      {
+        "ParameterName": "IronPreconditioningTemperature",
+        "Value": 400.0,
+        "Description": "Reaction temperature for preparing iron powder with H2 for use as a CO2 reduction catalyst."
+      },
+      {
+        "ParameterName": "IronPreconditioningTemperatureCushion",
+        "Value": 10.0,
+        "Description": "Less than this error is near enough to the Fe Prep reaction temperature to begin the process."
+      },
+      {
+        "ParameterName": "KeepFeUnderH2",
+        "Value": 1.0,
+        "Description": "Whether to evacuate H2 after preconditioning graphite reactors."
+      },
+      {
+        "ParameterName": "LeakTestBasePressure",
+        "Value": 0.0005,
+        "Description": "Evacuate a section to this pressure when starting a leak test."
+      },
+      {
+        "ParameterName": "LeakTightTorrLitersPerSecond",
+        "Value": 3E-05,
+        "Description": "The effective gas load below which a volume is considered leak free."
+      },
+      {
+        "ParameterName": "MaximumMinutesGrToReachTemperature",
+        "Value": 20.0,
+        "Description": "The maximum time a graphite reactor should take to reach its setpoint."
+      },
+      {
+        "ParameterName": "MaximumMinutesIpToReachTemperature",
+        "Value": 10.0,
+        "Description": "The maximum time an inlet port should take to reach its setpoint."
+      },
+      {
+        "ParameterName": "MaximumResidual",
+        "Value": 1.2,
+        "Description": "The maximum acceptable residual pressure for a completed graphite reaction, expressed as a multiple of the expected value."
+      },
+      {
+        "ParameterName": "MaximumSampleMicrogramsCarbon",
+        "Value": 1100.0,
+        "Description": "Discard CO2 splits as long as the sample contains more than this much carbon."
+      },
+      {
+        "ParameterName": "MaximumSampleTemperature",
+        "Value": "NaN",
+        "Description": "End of reaction temperature."
+      },
+      {
+        "ParameterName": "MaximumSecondsAdmitGas",
+        "Value": 60.0,
+        "Description": "The longest time allowed for admitting gas."
+      },
+      {
+        "ParameterName": "MeasurementSeconds",
+        "Value": 10.0,
+        "Description": "How long to average a measurement."
+      },
+      {
+        "ParameterName": "MinimumGRMinutes",
+        "Value": 300.0,
+        "Description": "Minimum Graphitization time."
+      },
+      {
+        "ParameterName": "MinimumUgCThatPermits_d13CSplit",
+        "Value": 110.0,
+        "Description": "The minimum Aliquot mass (in micrograms) sufficient to provide a d13C split."
+      },
+      {
+        "ParameterName": "MinutesAtMaximumTemperature",
+        "Value": 10.0,
+        "Description": "Stop collecting after this many minutes at the maximum temperature."
+      },
+      {
+        "ParameterName": "NumberOfSplits",
+        "Value": 5.0,
+        "Description": "Number of splits to take for an RPO sample"
+      },
+      {
+        "ParameterName": "OkPressure",
+        "Value": 0.005,
+        "Description": "Low enough to join sections for drying."
+      },
+      {
+        "ParameterName": "PressureOverAtm",
+        "Value": 770.0,
+        "Description": "Usually about 10 Torr over standard; should be slightly greater than the atmospheric pressure at any lab that will handle gas samples in septum-sealed vials (including external labs)."
+      },
+      {
+        "ParameterName": "QuartzFurnaceWarmupMinutes",
+        "Value": 10.0,
+        "Description": "How long after turn-on the quartz media takes to reach its functional temperature range."
+      },
+      {
+        "ParameterName": "RoomTemperature",
+        "Value": 21.0,
+        "Description": "Typical room temperature in the lab."
+      },
+      {
+        "ParameterName": "SmallSampleMicrogramsCarbon",
+        "Value": 10.0,
+        "Description": "A sample with less than this much carbon is processed as \"small.\""
+      },
+      {
+        "ParameterName": "Split1TargetUgc",
+        "Value": 120.0,
+        "Description": "Target sample size (UgC) for the first split (lowest T)"
+      },
+      {
+        "ParameterName": "Split2TargetUgc",
+        "Value": 240.0,
+        "Description": "Target sample size (UgC) for the second split (second T range)"
+      },
+      {
+        "ParameterName": "Split3TargetUgc",
+        "Value": 240.0,
+        "Description": "Target sample size (UgC) for the third split (third T range)"
+      },
+      {
+        "ParameterName": "Split4TargetUgc",
+        "Value": 240.0,
+        "Description": "Target sample size (UgC) for the fourth split (fourth T range)"
+      },
+      {
+        "ParameterName": "Split5TargetUgc",
+        "Value": 240.0,
+        "Description": "Target sample size (UgC) for the fifth split (highest T range)"
+      },
+      {
+        "ParameterName": "SplitEquilibrationSeconds",
+        "Value": 120.0,
+        "Description": "After expanding a sample into a larger section, how long to wait before subdividing it."
+      },
+      {
+        "ParameterName": "SulfurTrapMinutes",
+        "Value": 20.0,
+        "Description": "Duration of the sulfur trapping process."
+      },
+      {
+        "ParameterName": "SulfurTrapTemperature",
+        "Value": 400.0,
+        "Description": "Reaction temperature for trapping trace sulfur contamination in a CO2 sample onto iron powder."
+      },
+      {
+        "ParameterName": "ThawBeforeGraphitizing",
+        "Value": 1.0,
+        "Description": "Thaw the CO2 in the graphite reactor before starting the furnace."
+      },
+      {
+        "ParameterName": "VPErrorPressure",
+        "Value": 18.0,
+        "Description": "The maximum value for abs(pVP - PressureOverAtm) that is considered nominal."
+      },
+      {
+        "ParameterName": "VPInitialPressure",
+        "Value": -555.0,
+        "Description": "An initial manifold pressure that will result in PressureOverAtm when expanded into an LN-frozen vial"
+      },
+      {
+        "ParameterName": "WaitTimerMinutes",
+        "Value": 10.0,
+        "Description": "How many minutes to wait."
+      }
     ]
   },
   "AutoFeedEnabled": false,
@@ -13181,5 +12339,5 @@
   "MC_Split": "MC_Split",
   "SampleMeter": "ugCinMC",
   "IpOvenRamper": "IpOvenRamper",
-  "Sample": "Sample47"
+  "Sample": null
 }
