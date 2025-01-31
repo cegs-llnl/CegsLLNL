@@ -12030,8 +12030,13 @@
         "Description": "During sample collection, close the Inlet Port when the Inlet Manifold pressure falls to this value, provided that it is a number (i.e., not NaN)."
       },
       {
+        "ParameterName": "CollectUntilCtFlowFullyOpen",
+        "Value": "NaN",
+        "Description": "Stop collecting into the coil trap when Coil Trap flow valve is fully open, if this value is a non-zero number."
+      },
+      {
         "ParameterName": "CollectUntilCtPressureFalls",
-        "Value": 0.2,
+        "Value": "NaN",
         "Description": "Stop collecting when the Coil Trap pressure falls to or below this value, provided that it is a number (i.e., not NaN)."
       },
       {
@@ -12070,6 +12075,11 @@
         "Description": "Time to spend extracting CO2 from the VTT into the MC."
       },
       {
+        "ParameterName": "FinishCollecting",
+        "Value": 1.0,
+        "Description": "Continue collecting into the coil trap until Coil Trap pressure stops falling, if this value is a non-zero number."
+      },
+      {
         "ParameterName": "FirstTrapBleedPressure",
         "Value": 2.0,
         "Description": "The first trap pressure to maintain when collecting CO2 out of a carrier gas by \"bleeding\" the mixture through the FirstTrap."
@@ -12081,8 +12091,13 @@
       },
       {
         "ParameterName": "FirstTrapFlowBypassPressure",
+        "Value": 2.0,
+        "Description": "Open the flow bypass valve when the pressure differential between the IM and the FirstTrap falls below this value. Choose this pressure to avoid an excessive downstream pressure spike."
+      },
+      {
+        "ParameterName": "FirstTrapOpenFlowPressure",
         "Value": 5.0,
-        "Description": "The maximum pressure differential across the first trap for opening its flow bypass valve. Choose this pressure so that opening the bypass valve will not produce an excessive downstream pressure spike."
+        "Description": "Fully open the flow valve when the pressure differential between the IM and the FirstTrap falls below this value. Choose this pressure to avoid an excessive downstream pressure spike."
       },
       {
         "ParameterName": "GRCompleteTorrPerMinute",
@@ -12093,6 +12108,11 @@
         "ParameterName": "GRFirstEvacuationMinutes",
         "Value": 10.0,
         "Description": "How long to evacuate freshly serviced graphite reactors."
+      },
+      {
+        "ParameterName": "GRFlushes",
+        "Value": 3.0,
+        "Description": "How many times to flush the GRs with a pure gas."
       },
       {
         "ParameterName": "H2DensityAdjustment",
@@ -12230,6 +12250,11 @@
         "Description": "Stop collecting after this many minutes at the maximum temperature."
       },
       {
+        "ParameterName": "MinutesCollectingTooLong",
+        "Value": "NaN",
+        "Description": "Something's wrong if collection takes this long; this check is disabled if the value is not a number."
+      },
+      {
         "ParameterName": "NumberOfSplits",
         "Value": 5.0,
         "Description": "Number of splits to take for an RPO sample"
@@ -12253,6 +12278,11 @@
         "ParameterName": "RoomTemperature",
         "Value": 21.0,
         "Description": "Typical room temperature in the lab."
+      },
+      {
+        "ParameterName": "SkipMeasuringGRs",
+        "Value": "NaN",
+        "Description": "Don't re-measure GR volumes during preconditioning."
       },
       {
         "ParameterName": "SmallSampleMicrogramsCarbon",
@@ -12286,7 +12316,7 @@
       },
       {
         "ParameterName": "SplitEquilibrationSeconds",
-        "Value": 120.0,
+        "Value": 0.0,
         "Description": "After expanding a sample into a larger section, how long to wait before subdividing it."
       },
       {
@@ -12303,6 +12333,11 @@
         "ParameterName": "ThawBeforeGraphitizing",
         "Value": 1.0,
         "Description": "Thaw the CO2 in the graphite reactor before starting the furnace."
+      },
+      {
+        "ParameterName": "UseH2ToFlushGRs",
+        "Value": "NaN",
+        "Description": "Use hydrogen instead of inert gas for flushing the GRs."
       },
       {
         "ParameterName": "VPErrorPressure",
