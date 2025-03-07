@@ -159,36 +159,6 @@ public partial class CegsLLNL : Cegs
     /// </summary>
     public ISection IM_CA_CT2 { get; set; }
 
-    /// <summary>
-    /// Coil Trap Flow..Coil Trap 1 section
-    /// </summary>
-    public ISection CTF_CT1 { get; set; }
-
-    /// <summary>
-    /// Coil Trap Flow..Coil Trap 2 section
-    /// </summary>
-    public ISection CTF_CT2 { get; set; }
-
-    /// <summary>
-    /// Coil Trap 1..Coil Trap Outlet section
-    /// </summary>
-    public ISection CT1_CTO { get; set; }
-
-    /// <summary>
-    /// Coil Trap 2..Coil Trap Outlet section
-    /// </summary>
-    public ISection CT2_CTO { get; set; }
-
-    /// <summary>
-    /// Coil Trap 1..Variable Temperature Trap section
-    /// </summary>
-    public ISection CT1_VTT { get; set; }
-
-    /// <summary>
-    /// Coil Trap 2..Variable Temperature Trap section
-    /// </summary>
-    public ISection CT2_VTT { get; set; }
-
     #endregion Sections
 
     /// <summary>
@@ -226,42 +196,42 @@ public partial class CegsLLNL : Cegs
 
         // Running samples
         ProcessDictionary["Run samples"] = RunSamples;
+        Separators.Add(ProcessDictionary.Count);
 
         // Preparation for running samples
-        Separators.Add(ProcessDictionary.Count);
         ProcessDictionary["Prepare GRs for new iron and desiccant"] = PrepareGRsForService;
         ProcessDictionary["Precondition GR iron"] = PreconditionGRs;
         ProcessDictionary["Replace iron in sulfur traps"] = ChangeSulfurFe;
-        //ProcessDictionary["Service d13C ports"] = Service_d13CPorts;
-        //ProcessDictionary["Load empty d13C ports"] = LoadEmpty_d13CPorts;
-        //ProcessDictionary["Prepare loaded d13C ports"] = PrepareLoaded_d13CPorts;
         ProcessDictionary["Prepare loaded inlet ports for collection"] = PrepareIPsForCollection;
-        
-        // d13C ports prep
         Separators.Add(ProcessDictionary.Count);
+
+        // d13C ports prep
         ProcessDictionary["Reload completed d13C ports"] = Reload_d13CPorts;
         ProcessDictionary["Prepare loaded d13C ports"] = PrepareLoaded_d13CPorts;
-        
-        // carbonate sample prep
         Separators.Add(ProcessDictionary.Count);
+
+        // carbonate sample prep
         ProcessDictionary["Prepare carbonate sample for acid"] = PrepareCarbonateSample;
         ProcessDictionary["Load acidified carbonate sample"] = LoadCarbonateSample;
+        Separators.Add(ProcessDictionary.Count);
 
         // Open line
-        Separators.Add(ProcessDictionary.Count);
         ProcessDictionary["Open and evacuate line"] = OpenLine;
         ProcessDictionary["Open and evacuate VS1"] = () => OpenLine(Find<VacuumSystem>("VacuumSystem1"));
         ProcessDictionary["Open and evacuate VS2"] = () => OpenLine(Find<VacuumSystem>("VacuumSystem2"));
+        Separators.Add(ProcessDictionary.Count);
+        // Sample Process Methods
+        ProcessDictionary["Ramped oxidation"] = RampedOxidation;
+        Separators.Add(ProcessDictionary.Count);
 
         // Main process continuations
-        Separators.Add(ProcessDictionary.Count);
         ProcessDictionary["Collect, etc."] = CollectEtc;
         ProcessDictionary["Extract, etc."] = ExtractEtc;
         ProcessDictionary["Measure, etc."] = MeasureEtc;
         ProcessDictionary["Graphitize, etc."] = GraphitizeEtc;
+        Separators.Add(ProcessDictionary.Count);
 
         // Top-level steps for main process sequence
-        Separators.Add(ProcessDictionary.Count);
         ProcessDictionary["Admit sealed CO2 to InletPort"] = AdmitSealedCO2IP;
         ProcessDictionary["Collect CO2 from InletPort"] = Collect;
         ProcessDictionary["Extract"] = Extract;
@@ -270,9 +240,9 @@ public partial class CegsLLNL : Cegs
         ProcessDictionary["Remove sulfur"] = RemoveSulfur;
         ProcessDictionary["Dilute small sample"] = Dilute;
         ProcessDictionary["Graphitize aliquots"] = GraphitizeAliquots;
+        Separators.Add(ProcessDictionary.Count);
 
         // Secondary-level process sub-steps
-        Separators.Add(ProcessDictionary.Count);
         ProcessDictionary["Evacuate Inlet Port"] = EvacuateIP;
         ProcessDictionary["Flush Inlet Port"] = FlushIP;
         ProcessDictionary["Admit O2 into Inlet Port"] = AdmitIPO2;
@@ -284,15 +254,16 @@ public partial class CegsLLNL : Cegs
         ProcessDictionary["Clear collection conditions"] = ClearCollectionConditions;
         ProcessDictionary["Collect until condition met"] = CollectUntilConditionMet;
         ProcessDictionary["Stop collecting"] = StopCollecting;
+        ProcessDictionary["Stop collecting immediately"] = StopCollectingImmediately;
         ProcessDictionary["Stop collecting after bleed down"] = StopCollectingAfterBleedDown;
         ProcessDictionary["Evacuate and Freeze VTT"] = FreezeVtt;
         ProcessDictionary["Admit Dead CO2 into MC"] = AdmitDeadCO2;
         ProcessDictionary["Purify CO2 in MC"] = CleanupCO2InMC;
         ProcessDictionary["Discard MC gases"] = DiscardMCGases;
         ProcessDictionary["Divide sample into aliquots"] = DivideAliquots;
+        Separators.Add(ProcessDictionary.Count);
 
         // Granular inlet port & sample process control
-        Separators.Add(ProcessDictionary.Count);
         ProcessDictionary["Turn on quartz furnace"] = TurnOnIpQuartzFurnace;
         ProcessDictionary["Turn off quartz furnace"] = TurnOffIpQuartzFurnace;
         ProcessDictionary["Disable sample setpoint ramping"] = DisableIpRamp;
@@ -303,24 +274,25 @@ public partial class CegsLLNL : Cegs
         ProcessDictionary["Wait for sample to rise to setpoint"] = WaitIpRiseToSetpoint;
         ProcessDictionary["Wait for sample to fall to setpoint"] = WaitIpFallToSetpoint;
         ProcessDictionary["Turn off sample furnace"] = TurnOffIpSampleFurnace;
+        Separators.Add(ProcessDictionary.Count);
 
         // General-purpose process control actions
-        Separators.Add(ProcessDictionary.Count);
         ProcessDictionary["Wait for timer"] = WaitForTimer;
-        ProcessDictionary["Wait for operator"] = WaitForOperator;
+        ProcessDictionary["Wait for IP timer"] = WaitIpMinutes;
+        ProcessDictionary["Wait for operator"] = Notify.WaitForOperator;
         ProcessDictionary["Wait for CEGS to be free"] = WaitForCegs;
         ProcessDictionary["Start Extract, Etc"] = StartExtractEtc;
+        Separators.Add(ProcessDictionary.Count);
 
         // Transferring CO2
-        Separators.Add(ProcessDictionary.Count);
         ProcessDictionary["Transfer CO2 from CT to VTT"] = TransferCO2FromCTToVTT;
         ProcessDictionary["Transfer CO2 from MC to VTT"] = TransferCO2FromMCToVTT;
         ProcessDictionary["Transfer CO2 from MC to GR"] = TransferCO2FromMCToGR;
         ProcessDictionary["Transfer CO2 from prior GR to MC"] = TransferCO2FromGRToMC;
+        Separators.Add(ProcessDictionary.Count);
 
         // Flow control steps & special collection operations
-        Separators.Add(ProcessDictionary.Count);
-        ProcessDictionary["Reset tracked flow and collected µgc."] = ResetUgcTracking;
+        ProcessDictionary["Reset tracked flow and collected µgC."] = ResetUgcTracking;
         ProcessDictionary["No IP flow"] = NoIpFlow;
         ProcessDictionary["Use IP flow"] = UseIpFlow;
         ProcessDictionary["Include CO2 analyzer"] = IncludeCO2Analyzer;
@@ -333,23 +305,23 @@ public partial class CegsLLNL : Cegs
         ProcessDictionary["Toggle CT collection"] = ToggleCT;
         ProcessDictionary["Stop collecting"] = StopCollecting;
         ProcessDictionary["Stop collecting after bleed down"] = StopCollectingAfterBleedDown;
+        Separators.Add(ProcessDictionary.Count);
 
         // Flow control sub-steps
-        Separators.Add(ProcessDictionary.Count);
         ProcessDictionary["Start flow through to trap"] = StartFlowThroughToTrap;
         ProcessDictionary["Start flow through to waste"] = StartFlowThroughToWaste;
         ProcessDictionary["Stop flow-through gas"] = StopFlowThroughGas;
+        Separators.Add(ProcessDictionary.Count);
 
         // d13C port service routines
-        //Separators.Add(ProcessDictionary.Count);
         //ProcessDictionary["Empty completed d13C ports"] = EmptyCompleted_d13CPorts;
         //ProcessDictionary["Thaw frozen d13C ports"] = ThawFrozen_d13CPorts;
         //ProcessDictionary["Load empty d13C ports"] = LoadEmpty_d13CPorts;
         //ProcessDictionary["Prepare loaded d13C ports"] = PrepareLoaded_d13CPorts;
+        //Separators.Add(ProcessDictionary.Count);
 
 
         // Utilities (generally not for sample processing)
-        Separators.Add(ProcessDictionary.Count);
         ProcessDictionary["Exercise all Opened valves"] = ExerciseAllValves;
         ProcessDictionary["Close all Opened valves"] = CloseAllValves;
         ProcessDictionary["Exercise all LN Manifold valves"] = ExerciseLNValves;
@@ -361,11 +333,10 @@ public partial class CegsLLNL : Cegs
         //ProcessDictionary["Calibrate VP N2 initial manifold pressure"] = CalibrateVPHeP0;
         ProcessDictionary["Measure Extraction efficiency"] = MeasureExtractEfficiency;
         ProcessDictionary["Measure IP collection efficiency"] = MeasureIpCollectionEfficiency;
+        Separators.Add(ProcessDictionary.Count);
 
         // Test functions
-        Separators.Add(ProcessDictionary.Count);
         ProcessDictionary["Test"] = Test;
-        base.BuildProcessDictionary();
     }
 
     #region OpenLine
@@ -579,137 +550,33 @@ public partial class CegsLLNL : Cegs
         ClearParameter("CollectUntilUgc");
     }
 
-
-    /// <summary>
-    /// Wait for a collection stop condition to occur.
-    /// </summary>
-    protected override void CollectUntilConditionMet()
+    protected override List<Func<string>> CollectionConditions()
     {
-        ProcessStep.Start($"Wait for a collection stop condition");
+        var CollectionConditions = base.CollectionConditions();
+        if (FirstTrap is null) return CollectionConditions;    // collection requires a trap
+
         IpIm(out ISection im);
+        double p;
 
-        var maximumSampleTemperatureStopwatch = new Stopwatch();
-        var maximumSampleTemperature = GetParameter("MaximumSampleTemperature");
-        var minutesAtMaximumTemperature = GetParameter("MinutesAtMaximumTemperature");
-
-        string stoppedBecause = "";
-        bool shouldStop()
+        p = GetParameter("CollectUntilUgc");
+        if (p.IsANumber() && InletPort is not null)
         {
-            if (CollectStopwatch.IsRunning && CollectStopwatch.ElapsedMilliseconds < 1000)
-                return false;
-
-            // TODO: what if flow manager becomes !Busy (because, e.g., FlowValve is fully open)?
-            // TODO: should we invoke DuringBleed()? When?
-            // TODO: should we disable/enable CT.VacuumSystem.Manometer?
-
-            // Open flow bypass when conditions allow it without producing an excessive
-            // downstream pressure spike.
-            if (im != null && im.Pressure - FirstTrap.Pressure < FirstTrapFlowBypassPressure)
-                FirstTrap.Open();   // open bypass if available
-                                    // (REVISIT THIS, normally we don't want Open to
-                                    // open the flow valve or bypass....
-
-
-            if (CollectCloseIpAtPressure.IsANumber() && InletPort.IsOpened && im != null && im.Pressure <= CollectCloseIpAtPressure)
-            {
-                var p = im.Pressure;
-                InletPort.Close();
-                SampleLog.Record($"{Sample.LabId}\tClosed {InletPort.Name} at {im.Manometer.Name} = {p:0} Torr");
-            }
-            if (CollectCloseIpAtCtPressure.IsANumber() && InletPort.IsOpened && FirstTrap.Pressure <= CollectCloseIpAtCtPressure)
-            {
-                var p = FirstTrap.Pressure;
-                InletPort.Close();
-                SampleLog.Record($"{Sample.LabId}\tClosed {InletPort.Name} at {FirstTrap.Manometer.Name} = {p:0} Torr");
-            }
-
-            if (Stopping)
-            {
-                stoppedBecause = "CEGS is shutting down";
-                return true;
-            }
-
-            if (maximumSampleTemperature.IsANumber() && minutesAtMaximumTemperature.IsANumber())
-            {
-                if (maximumSampleTemperatureStopwatch.IsRunning)
-                {
-                    if (maximumSampleTemperatureStopwatch.Elapsed.TotalMinutes > minutesAtMaximumTemperature)
-                    {
-                        stoppedBecause = $"Reached {minutesAtMaximumTemperature} minutes at maximum temperature ({maximumSampleTemperature} °C)";
-                        return true;
-                    }
-                }
-                else if (InletPort.Temperature >= maximumSampleTemperature)
-                    maximumSampleTemperatureStopwatch.Restart();
-            }
-
-            if (CollectUntilTemperatureRises.IsANumber() && InletPort.Temperature >= CollectUntilTemperatureRises)
-            {
-                stoppedBecause = $"InletPort.Temperature rose to {CollectUntilTemperatureRises:0} °C";
-                return true;
-            }
-            if (CollectUntilTemperatureFalls.IsANumber() && InletPort.Temperature <= CollectUntilTemperatureFalls)
-            {
-                stoppedBecause = $"InletPort.Temperature fell to {CollectUntilTemperatureFalls:0} °C";
-                return true;
-            }
-
-            if (CollectUntilCtPressureFalls.IsANumber() &&
-                FirstTrap.Pressure <= CollectUntilCtPressureFalls &&
-                (im == null || im.Pressure < Math.Ceiling(CollectUntilCtPressureFalls) + 2))
-            {
-                stoppedBecause = $"{FirstTrap.Name}.Pressure fell to {CollectUntilCtPressureFalls:0.00} Torr";
-                return true;
-            }
-
-            // old?: FirstTrap.Pressure < FirstTrapEndPressure;
-            if (FirstTrapEndPressure.IsANumber() &&
-                FirstTrap.Pressure <= FirstTrapEndPressure &&
-                (im == null || im.Pressure < Math.Ceiling(FirstTrapEndPressure) + 2))
-            {
-                stoppedBecause = $"{FirstTrap.Name}.Pressure fell to {FirstTrapEndPressure:0.00} Torr";
-                return true;
-            }
-            if (CollectUntilUgc.IsANumber() && CollectedUgc >= CollectUntilUgc)
-            {
-                stoppedBecause = $"Collected {CollectUntilUgc:0} µg C";
-                return true;
-            }
-            if (CollectUntilMinutes.IsANumber() && CollectStopwatch.Elapsed.TotalMinutes >= CollectUntilMinutes)
-            {
-                stoppedBecause = $"{MinutesString((int)CollectUntilMinutes)} elapsed";
-                return true;
-            }
-
-            stoppedBecause = "";
-            return false;
+            var value = p;
+            CollectionConditions.Add(() => CollectedUgc >= value ?
+                $"Collected {value:0} µg C" : "");
         }
-        WaitFor(shouldStop, -1, 1000);
-        SampleLog.Record($"{Sample.LabId}\tStopped collecting:\t{stoppedBecause}");
 
-        ProcessStep.End();
+        return CollectionConditions;
     }
 
-
-    // TODO take a look at trying to use or extend the base version.
     /// <summary>
     /// Stop collecting. If 'immediately' is false, wait for CT pressure to bleed down after closing IP
     /// </summary>
     /// <param name="immediately">If false, wait for CT pressure to bleed down after closing IP</param>
     protected override void StopCollecting(bool immediately = true)
     {
-        ProcessStep.Start("Stop Collecting");
-
         CT = CurrentCT;     // The VTT will take it from here
-        IM_FirstTrap.FlowManager?.Stop();
-        InletPort.Close();
-        if (!immediately)
-            FinishCollecting();
-        IM_FirstTrap.Close();
-        CT.Isolate();
-        IM_FirstTrap.FlowValve.CloseWait();
-
-        ProcessStep.End();
+        base.StopCollecting(immediately);
     }
 
 
@@ -905,8 +772,7 @@ public partial class CegsLLNL : Cegs
         IM.ClosePortsExcept(InletPort);
         while (PortLeakRate(InletPort) > LeakTightTorrLitersPerSecond)
         {
-            if (Warn($"{InletPort.Name} is leaking.",
-                "Process Paused.\r\n" +
+            if (Warn($"The gas load at {InletPort.Name} is too high.",
                 $"Ok to try again or Cancel to move on.\r\n" +
                 $"Restart the application to abort the process.").Cancelled())
                 break;
