@@ -402,7 +402,7 @@ public partial class CegsLLNL : Cegs
     /// <summary>
     /// The coil trap currently being used to trap sample gas.
     /// </summary>
-    public ISection CurrentCT => base.IM_FirstTrap.Chambers.Contains(ChamberCT1) ? CT1 : CT2;
+    public ISection CurrentCT => IM_FirstTrap.Chambers.Contains(ChamberCT1) ? CT1 : CT2;
 
     /// <summary>
     /// A CEGS task dispatched to run concurrently while the main 
@@ -1016,7 +1016,6 @@ public partial class CegsLLNL : Cegs
     /// </summary>
     protected override void Test()
     {
-        ResetUgcTracking();
     }
 
     #endregion Test functions
