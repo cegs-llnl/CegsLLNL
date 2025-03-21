@@ -1255,14 +1255,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.012293543971669261"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "CompensatedGain",
-            "Argument": "x*15.007"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.016655486803451903,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 6.8324,
+                "Item2": 104.4
+              }
+            ]
           }
         ]
       },
@@ -1303,14 +1307,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x+0.003402092756201866"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "CompensatedGain",
-            "Argument": "x*1.222"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.006641828845705464,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 8.3502,
+                "Item2": 10.45
+              }
+            ]
           }
         ]
       },
@@ -1351,62 +1359,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4809"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*391.2431"
-          }
-        ]
-      },
-      "RateOfChange": {
-        "Name": "",
-        "Description": "",
-        "FilterLength": 13,
-        "MaxIntervalMilliseconds": 1000.0,
-        "Resolution": 0.01
-      },
-      "Stable": 0.5,
-      "Falling": -0.5,
-      "Rising": 0.5,
-      "ZerosToAverage": 30
-    },
-    "pForeline2": {
-      "$type": "AeonHacs.Components.AIManometer, AeonHacs.Core",
-      "Name": "pForeline2",
-      "Description": "VS2 Foreline pressure",
-      "MaximumVoltage": 10.0,
-      "AnalogInputMode": "SingleEnded",
-      "MinimumVoltage": 0.0,
-      "UnitSymbol": "Torr",
-      "Ratiometric": true,
-      "MaxValue": 1551.0,
-      "MinValue": 0.0,
-      "Sensitivity": 0.1,
-      "Resolution": 0.1,
-      "ResolutionIsProportional": false,
-      "Filter": {
-        "$type": "AeonHacs.ExponentialFilter, AeonHacs.Core",
-        "Name": "",
-        "Description": "",
-        "Power": 2.0,
-        "StepChange": 0.02
-      },
-      "Conversion": {
-        "Name": "VoltageConversion",
-        "Operations": [
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.471"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*388.7022"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.49621754928716183,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 2.3398,
+                "Item2": 699.6
+              }
+            ]
           }
         ]
       },
@@ -1447,14 +1411,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.47653419182922463"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*390.3333"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.49621754928716183,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 2.3398,
+                "Item2": 699.6
+              }
+            ]
           }
         ]
       },
@@ -1495,62 +1463,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4772740710926722"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*388.4773"
-          }
-        ]
-      },
-      "RateOfChange": {
-        "Name": "",
-        "Description": "",
-        "FilterLength": 13,
-        "MaxIntervalMilliseconds": 1000.0,
-        "Resolution": 0.01
-      },
-      "Stable": 0.5,
-      "Falling": -0.5,
-      "Rising": 0.5,
-      "ZerosToAverage": 30
-    },
-    "pVM1_GP": {
-      "$type": "AeonHacs.Components.AIManometer, AeonHacs.Core",
-      "Name": "pVM1_GP",
-      "Description": "Vacuum manifold 1 gross pressure",
-      "MaximumVoltage": 10.0,
-      "AnalogInputMode": "SingleEnded",
-      "MinimumVoltage": -10.0,
-      "UnitSymbol": "Torr",
-      "Ratiometric": true,
-      "MaxValue": 1551.0,
-      "MinValue": 0.0,
-      "Sensitivity": 0.1,
-      "Resolution": 0.1,
-      "ResolutionIsProportional": false,
-      "Filter": {
-        "$type": "AeonHacs.ExponentialFilter, AeonHacs.Core",
-        "Name": "",
-        "Description": "",
-        "Power": 2.0,
-        "StepChange": 0.008
-      },
-      "Conversion": {
-        "Name": "VoltageConversion",
-        "Operations": [
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4927730909663277"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*388.9256"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.5063379152492451,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 2.3542,
+                "Item2": 699.6
+              }
+            ]
           }
         ]
       },
@@ -1591,14 +1515,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4848316349394263"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*390.3898"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.491840002790119,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 2.3385,
+                "Item2": 699.6
+              }
+            ]
           }
         ]
       },
@@ -1803,60 +1731,14 @@
                 "Argument": "x-10.75"
               },
               {
-                "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-                "Name": "SensorExponentialGain",
-                "Argument": "10^x"
+                "Item1": 0.0,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 8.0091,
+                "Item2": 9.98
               }
             ]
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "UnitConversion",
-            "Argument": "x*0.750061683"
-          }
-        ]
-      },
-      "RateOfChange": null,
-      "Stable": 0.0,
-      "Falling": 0.0,
-      "Rising": 0.0,
-      "ZerosToAverage": 30
-    },
-    "pVM2_IG": {
-      "$type": "AeonHacs.Components.EdwardsAimX, AeonHacs.Core",
-      "Name": "pVM2_IG",
-      "Description": "Vacuum manifold 2 ion gauge pressure",
-      "ErrorSignalVoltage": 2.0,
-      "AnalogInputMode": "SingleEnded",
-      "DigitalOutput": "pVM2_IG.Enable",
-      "MillisecondsToValid": 5000,
-      "MinimumMillisecondsOff": 2000,
-      "UnitSymbol": "Torr",
-      "Ratiometric": false,
-      "MaxValue": 0.01,
-      "MinValue": 1E-09,
-      "Sensitivity": 1E-09,
-      "Resolution": 0.01,
-      "ResolutionIsProportional": true,
-      "Filter": {
-        "$type": "AeonHacs.ExponentialFilter, AeonHacs.Core",
-        "Name": "",
-        "Description": "",
-        "Power": 2.5,
-        "StepChange": 0.08
-      },
-      "Conversion": {
-        "Name": "",
-        "Operations": [
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x+0"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "VoltageCorrection",
-            "Argument": "x*1.2252"
           },
           {
             "$type": "AeonHacs.Utilities.OperationSet, AeonHacs.Core",
@@ -1917,14 +1799,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4746046705580911"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*391.0591139895905"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.5024755306109031,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 2.3584,
+                "Item2": 699.6
+              }
+            ]
           }
         ]
       },
@@ -1959,14 +1845,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.49170324233491314"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*388.95504174376447"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.48502904717936063,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 2.3389,
+                "Item2": 699.6
+              }
+            ]
           }
         ]
       },
@@ -2001,14 +1891,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4816190124307334"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*391.17186718629966"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.511582771212074,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 2.351,
+                "Item2": 699.6
+              }
+            ]
           }
         ]
       },
@@ -2043,14 +1937,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.48754703478030526"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*388.66051461517344"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.513530566543172,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 2.3726,
+                "Item2": 699.6
+              }
+            ]
           }
         ]
       },
@@ -2169,98 +2067,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4873543483128975"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*387.74556428512"
-          }
-        ]
-      },
-      "RateOfChange": null,
-      "Stable": 0.0,
-      "Falling": 0.0,
-      "Rising": 0.0,
-      "ZerosToAverage": 30
-    },
-    "pGR8": {
-      "$type": "AeonHacs.Components.AIManometer, AeonHacs.Core",
-      "Name": "pGR8",
-      "Description": "Graphite reactor 8 pressure",
-      "MaximumVoltage": 10.0,
-      "AnalogInputMode": "SingleEnded",
-      "MinimumVoltage": 0.0,
-      "UnitSymbol": "Torr",
-      "Ratiometric": true,
-      "MaxValue": 1551.0,
-      "MinValue": 0.0,
-      "Sensitivity": 0.1,
-      "Resolution": 0.1,
-      "ResolutionIsProportional": false,
-      "Filter": {
-        "$type": "AeonHacs.ExponentialFilter, AeonHacs.Core",
-        "Name": "",
-        "Description": "",
-        "Power": 2.0,
-        "StepChange": 0.05
-      },
-      "Conversion": {
-        "Name": "VoltageConversion",
-        "Operations": [
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4780838574898082"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*389.59669032511056"
-          }
-        ]
-      },
-      "RateOfChange": null,
-      "Stable": 0.0,
-      "Falling": 0.0,
-      "Rising": 0.0,
-      "ZerosToAverage": 30
-    },
-    "pGR9": {
-      "$type": "AeonHacs.Components.AIManometer, AeonHacs.Core",
-      "Name": "pGR9",
-      "Description": "Graphite reactor 9 pressure",
-      "MaximumVoltage": 10.0,
-      "AnalogInputMode": "SingleEnded",
-      "MinimumVoltage": 0.0,
-      "UnitSymbol": "Torr",
-      "Ratiometric": true,
-      "MaxValue": 1551.0,
-      "MinValue": 0.0,
-      "Sensitivity": 0.1,
-      "Resolution": 0.1,
-      "ResolutionIsProportional": false,
-      "Filter": {
-        "$type": "AeonHacs.ExponentialFilter, AeonHacs.Core",
-        "Name": "",
-        "Description": "",
-        "Power": 2.0,
-        "StepChange": 0.015
-      },
-      "Conversion": {
-        "Name": "VoltageConversion",
-        "Operations": [
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.45593180874489797"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*389.6874623351027"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.509687309190977,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 2.3634,
+                "Item2": 699.6
+              }
+            ]
           }
         ]
       },
@@ -2295,98 +2113,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4747610916421241"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*390.68703392722756"
-          }
-        ]
-      },
-      "RateOfChange": null,
-      "Stable": 0.0,
-      "Falling": 0.0,
-      "Rising": 0.0,
-      "ZerosToAverage": 30
-    },
-    "pGR11": {
-      "$type": "AeonHacs.Components.AIManometer, AeonHacs.Core",
-      "Name": "pGR11",
-      "Description": "Graphite reactor 11 pressure",
-      "MaximumVoltage": 10.0,
-      "AnalogInputMode": "SingleEnded",
-      "MinimumVoltage": 0.0,
-      "UnitSymbol": "Torr",
-      "Ratiometric": true,
-      "MaxValue": 1551.0,
-      "MinValue": 0.0,
-      "Sensitivity": 0.1,
-      "Resolution": 0.1,
-      "ResolutionIsProportional": false,
-      "Filter": {
-        "$type": "AeonHacs.ExponentialFilter, AeonHacs.Core",
-        "Name": "",
-        "Description": "",
-        "Power": 2.0,
-        "StepChange": 0.02
-      },
-      "Conversion": {
-        "Name": "VoltageConversion",
-        "Operations": [
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4641904195585136"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*390.9637627893219"
-          }
-        ]
-      },
-      "RateOfChange": null,
-      "Stable": 0.0,
-      "Falling": 0.0,
-      "Rising": 0.0,
-      "ZerosToAverage": 30
-    },
-    "pGR12": {
-      "$type": "AeonHacs.Components.AIManometer, AeonHacs.Core",
-      "Name": "pGR12",
-      "Description": "Graphite reactor 12 pressure",
-      "MaximumVoltage": 10.0,
-      "AnalogInputMode": "SingleEnded",
-      "MinimumVoltage": 0.0,
-      "UnitSymbol": "Torr",
-      "Ratiometric": true,
-      "MaxValue": 1551.0,
-      "MinValue": 0.0,
-      "Sensitivity": 0.1,
-      "Resolution": 0.1,
-      "ResolutionIsProportional": false,
-      "Filter": {
-        "$type": "AeonHacs.ExponentialFilter, AeonHacs.Core",
-        "Name": "",
-        "Description": "",
-        "Power": 2.0,
-        "StepChange": 0.015
-      },
-      "Conversion": {
-        "Name": "VoltageConversion",
-        "Operations": [
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4931617775682098"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*391.4178259589889"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.499810463714926,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 2.3489,
+                "Item2": 699.6
+              }
+            ]
           }
         ]
       },
@@ -2421,14 +2159,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.4884"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*389.6499"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToTorr",
+            "CalibrationData": [
+              {
+                "Item1": 0.503,
+                "Item2": 0.0
+              },
+              {
+                "Item1": 2.3616,
+                "Item2": 699.6
+              }
+            ]
           }
         ]
       },
@@ -2463,14 +2205,18 @@
         "Name": "VoltageConversion",
         "Operations": [
           {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "ZeroOffset",
-            "Argument": "x-0.432"
-          },
-          {
-            "$type": "AeonHacs.Utilities.Arithmetic, AeonHacs.Core",
-            "Name": "Gain",
-            "Argument": "x*50.75"
+            "$type": "AeonHacs.PchipInterpolator, AeonHacs.Core",
+            "Name": "VoltsToDegC",
+            "CalibrationData": [
+              {
+                "Item1": 0.692,
+                "Item2": 15.0
+              },
+              {
+                "Item1": 0.985,
+                "Item2": 30.0
+              }
+            ]
           }
         ]
       },
@@ -3861,8 +3607,8 @@
       "IdleCurrentLimit": 80,
       "ActuatorOperations": [
         {
-          "Name": "Close",
-          "Value": 1690,
+          "Name": "Open 45",
+          "Value": 1200,
           "Incremental": false,
           "Configuration": "t1.0"
         },
@@ -12248,8 +11994,13 @@
         "Description": "Time to wait for CO2 transfer between chambers."
       },
       {
+        "ParameterName": "CheckGrCO2Pressure",
+        "Value": "NaN",
+        "Description": "Observe CO2 pressure in reactor before adding H2."
+      },
+      {
         "ParameterName": "CleanPressure",
-        "Value": 0.001,
+        "Value": 0.0005,
         "Description": "Low enough to start a new sample."
       },
       {
@@ -12334,12 +12085,12 @@
       },
       {
         "ParameterName": "GRCompleteTorrPerMinute",
-        "Value": 0.3,
+        "Value": 0.4,
         "Description": "The graphitization reaction is considered complete when the declining pressure rate of change falls below this value."
       },
       {
         "ParameterName": "GRFirstEvacuationMinutes",
-        "Value": 10.0,
+        "Value": 0.0,
         "Description": "How long to evacuate freshly serviced graphite reactors."
       },
       {
@@ -12349,7 +12100,7 @@
       },
       {
         "ParameterName": "H2DensityAdjustment",
-        "Value": 0.7,
+        "Value": 0.76,
         "Description": "Estimated appropriate initial GM H2 pressure reduction to compensate for higher density of H2 in frozen standard GR coldfinger."
       },
       {
@@ -12379,7 +12130,7 @@
       },
       {
         "ParameterName": "IpEvacuationPressure",
-        "Value": 0.5,
+        "Value": 0.1,
         "Description": "Pressure to use when evacuating an IP."
       },
       {
@@ -12399,17 +12150,17 @@
       },
       {
         "ParameterName": "IronPreconditionH2Pressure",
-        "Value": 850.0,
+        "Value": 0.0,
         "Description": "The initial H2 pressure to be used when preparing Fe in the GRs for use as the graphitization catalyst."
       },
       {
         "ParameterName": "IronPreconditioningMinutes",
-        "Value": 60.0,
+        "Value": 15.0,
         "Description": "Duration of iron powder preparation process."
       },
       {
         "ParameterName": "IronPreconditioningTemperature",
-        "Value": 400.0,
+        "Value": 580.0,
         "Description": "Reaction temperature for preparing iron powder with H2 for use as a CO2 reduction catalyst."
       },
       {
@@ -12419,7 +12170,7 @@
       },
       {
         "ParameterName": "KeepFeUnderH2",
-        "Value": 1.0,
+        "Value": 0.0,
         "Description": "Whether to evacuate H2 after preconditioning graphite reactors."
       },
       {
@@ -12438,9 +12189,19 @@
         "Description": "The maximum time a graphite reactor should take to reach its setpoint."
       },
       {
+        "ParameterName": "MaximumMinutesGraphitizing",
+        "Value": 240.0,
+        "Description": "Notify if reaction time exceeds this."
+      },
+      {
         "ParameterName": "MaximumMinutesIpToReachTemperature",
         "Value": 10.0,
         "Description": "The maximum time an inlet port should take to reach its setpoint."
+      },
+      {
+        "ParameterName": "MaximumMinutesWaitFalling",
+        "Value": 30.0,
+        "Description": "Notify if graphite reaction remains undetected for longer than this."
       },
       {
         "ParameterName": "MaximumResidual",
@@ -12449,7 +12210,7 @@
       },
       {
         "ParameterName": "MaximumSampleMicrogramsCarbon",
-        "Value": 1100.0,
+        "Value": 1000.0,
         "Description": "Discard CO2 splits as long as the sample contains more than this much carbon."
       },
       {
@@ -12468,13 +12229,13 @@
         "Description": "How long to average a measurement."
       },
       {
-        "ParameterName": "MinimumGRMinutes",
-        "Value": 300.0,
-        "Description": "Minimum Graphitization time."
+        "ParameterName": "MinimumMinutesGraphitizing",
+        "Value": 0.0,
+        "Description": "Minimum graphitization time."
       },
       {
         "ParameterName": "MinimumUgCThatPermits_d13CSplit",
-        "Value": 110.0,
+        "Value": 1000.0,
         "Description": "The minimum Aliquot mass (in micrograms) sufficient to provide a d13C split."
       },
       {
@@ -12486,11 +12247,6 @@
         "ParameterName": "MinutesCollectingTooLong",
         "Value": "NaN",
         "Description": "Something's wrong if collection takes this long; this check is disabled if the value is not a number."
-      },
-      {
-        "ParameterName": "NumberOfSplits",
-        "Value": 5.0,
-        "Description": "Number of splits to take for an RPO sample"
       },
       {
         "ParameterName": "OkPressure",
@@ -12523,31 +12279,6 @@
         "Description": "A sample with less than this much carbon is processed as \"small.\""
       },
       {
-        "ParameterName": "Split1TargetUgc",
-        "Value": 120.0,
-        "Description": "Target sample size (UgC) for the first split (lowest T)"
-      },
-      {
-        "ParameterName": "Split2TargetUgc",
-        "Value": 240.0,
-        "Description": "Target sample size (UgC) for the second split (second T range)"
-      },
-      {
-        "ParameterName": "Split3TargetUgc",
-        "Value": 240.0,
-        "Description": "Target sample size (UgC) for the third split (third T range)"
-      },
-      {
-        "ParameterName": "Split4TargetUgc",
-        "Value": 240.0,
-        "Description": "Target sample size (UgC) for the fourth split (fourth T range)"
-      },
-      {
-        "ParameterName": "Split5TargetUgc",
-        "Value": 240.0,
-        "Description": "Target sample size (UgC) for the fifth split (highest T range)"
-      },
-      {
         "ParameterName": "SplitEquilibrationSeconds",
         "Value": 0.0,
         "Description": "After expanding a sample into a larger section, how long to wait before subdividing it."
@@ -12564,12 +12295,12 @@
       },
       {
         "ParameterName": "ThawBeforeGraphitizing",
-        "Value": 1.0,
+        "Value": "NaN",
         "Description": "Thaw the CO2 in the graphite reactor before starting the furnace."
       },
       {
         "ParameterName": "UseH2ToFlushGRs",
-        "Value": 1.0,
+        "Value": "NaN",
         "Description": "Use hydrogen instead of inert gas for flushing the GRs."
       },
       {
