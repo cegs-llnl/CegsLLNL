@@ -24,7 +24,6 @@ public partial class CegsLLNL : Cegs
         SampleRecords = Find<HacsLog>("SampleRecords");
         ChamberCT1 = Find<IChamber>("CT1");
         IP1 = Find<InletPort>("IP1");
-        //        IP2 = Find<InletPort>("IP2");
 
         // Sections
         CA = Find<Section>("CA");
