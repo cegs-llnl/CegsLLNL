@@ -13,7 +13,7 @@
 
         <UseWPF>true</UseWPF>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0-windows</TargetFramework>
+        <TargetFramework>net10.0-windows7.0</TargetFramework>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <PlatformTarget>AnyCPU</PlatformTarget>
         <Deterministic>true</Deterministic>

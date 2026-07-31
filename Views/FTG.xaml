@@ -11,44 +11,63 @@
     <wpf:View.Resources>
         <wpf:MatchConverter x:Key="MismatchVisibleHidden" MatchValue="{x:Static Visibility.Hidden}" MismatchValue="{x:Static Visibility.Visible}" />
     </wpf:View.Resources>
-    <Canvas Width="189" Height="118">
-        <wpf:Chamber Component="Section.FTG" Canvas.Right="0" Canvas.Top="6"
-            Data="M0,43 h34 M52,17 h17 v52 h-17 m0,-26 h17" />
+    <Canvas Width="187" Height="171">
+        <wpf:Chamber Component="Section.FTG" Canvas.Right="0" Canvas.Bottom="71"
+            Data="M0,43 h54 M40,17 h17 v52 h-17" />
 
-        <wpf:Stub Orientation="Left" Canvas.Right="92" Canvas.Top="33" />
+        <wpf:Stub Orientation="Left" Canvas.Right="80" Canvas.Bottom="98" />
+        <wpf:Valve Component="vFTG_IP1" Canvas.Right="61" Canvas.Bottom="92" d:ValveState="Closed"/>
 
-        <Canvas Canvas.Right="96" Canvas.Top="33" Width="50" Height="85"
+        <Canvas Canvas.Right="84" Canvas.Bottom="0" Width="70" Height="105"
             Visibility="{Binding InletPort.PortType, Converter={x:Static wpf:MatchConverter.VisibleHidden}, ConverterParameter={x:Static core:InletPortType.FlowThrough}}">
-            <wpf:Fitting Data="M12,0 h-12 v-5" FittingSize="3/8" Canvas.Top="75" />
-            <wpf:Fitting Data="M0,0 v7" Canvas.Top="68" Canvas.Left="1" />
+            <wpf:Fitting Data="M12,0 h-12 v-5" FittingSize="3/8" Canvas.Right="53" Canvas.Bottom="0" />
+            <wpf:Fitting Data="M0,0 v7" Canvas.Bottom="9" Canvas.Right="62" />
             <wpf:ConvolutedTubing AutomationProperties.HelpText="Flow-through gas flex tube to Inlet port"
-                                  Data="M0,0 h-5 m0,0 h-4 c -30,0 -36.5,28.5 -36.5,50.5 v9 m0,0 v5"
-                                  Canvas.Right="0" Canvas.Top="0" />
+                                  Data="M0,0 h-5 m0,0 h-24 c -30,0 -36.5,28.5 -36.5,50.5 v29 m0,0 v5"
+                                  Canvas.Right="0" Canvas.Bottom="17"/>
         </Canvas>
-        <Canvas Canvas.Right="96" Canvas.Bottom="6" Width="93" Height="59" d:Visibility="Hidden"
-            Visibility="{Binding InletPort.PortType, Converter={StaticResource MismatchVisibleHidden}, ConverterParameter={x:Static core:InletPortType.FlowThrough}}" Canvas.Top="33">
-            <Canvas Canvas.Right="76" Canvas.Bottom="56" Width="17" Height="17" Canvas.Top="35">
+        <Canvas Canvas.Right="84" Canvas.Bottom="28" Width="93" Height="59" d:Visibility="Hidden"
+            Visibility="{Binding InletPort.PortType, Converter={StaticResource MismatchVisibleHidden}, ConverterParameter={x:Static core:InletPortType.FlowThrough}}">
+            <Canvas Canvas.Right="87" Canvas.Bottom="6.4" Width="17" Height="17">
                 <Canvas.RenderTransform>
                     <RotateTransform Angle="30" CenterX="3.9" CenterY="17.3" />
                 </Canvas.RenderTransform>
-                <wpf:Fitting Data="M12,0 h-12 v-5" FittingSize="3/8" Canvas.Left="0" Canvas.Bottom="0" />
-                <wpf:Fitting Data="M0,0 v7" Canvas.Left="1" Canvas.Top="0" />
+                <wpf:Fitting Data="M12,0 h-12 v-5" FittingSize="3/8" Canvas.Right="0" Canvas.Bottom="0" />
+                <wpf:Fitting Data="M0,0 v7" Canvas.Left="1" Canvas.Bottom="9" />
             </Canvas>
             <wpf:ConvolutedTubing AutomationProperties.HelpText="Flow-through gas flex tube to Inlet port"
-                                  Data="M0,0 h-5 m0,0 h-4 c -30,0 -54.4,3 -64.25,22 l-4.5,7.8 m0,0 l-2.5,4.33"
-                                  Canvas.Right="0" Canvas.Bottom="0" Canvas.Top="0" />
+                                  Data="M0,0 h-5 m0,0 h-4 c -30,0 -54.4,3 -64.25,22 l-15,26 m0,0 l-2.5,4.33"
+                                  Canvas.Right="0" Canvas.Bottom="19" />
         </Canvas>
 
-        <wpf:GasSupply GasName="He" Valve="vHe_FTG" Orientation="Left"
-                       Background="Transparent" Canvas.Right="21" />
-        <wpf:GasSupply GasName="O2" Valve="vO2_FTG" Orientation="Left"
-                       Background="Transparent" Canvas.Right="21" Canvas.Top="52" />
+        <wpf:StackingPanel Height="21" Orientation="Right" Canvas.Right="21" Canvas.Bottom="117">
+            <TextBlock Text="He" LineHeight="14" LineStackingStrategy="BlockLineHeight"/>
+            <wpf:StackingPanel Offset="3" IsHitTestVisible="False">
+                <wpf:Arrow IsHitTestVisible="False" Orientation="Right" />
+                <wpf:Break IsHitTestVisible="False" Orientation="Left"/>
+            </wpf:StackingPanel>
+            <wpf:StackingPanel Offset="30">
+                <wpf:Connection IsHitTestVisible="False" />
+                <wpf:Valve Component="vHe_FTG" d:ValveState="Closed" />
+            </wpf:StackingPanel>
+        </wpf:StackingPanel>
+        <wpf:MassFlowController Component="mfcHe" Orientation="Up" Canvas.Right="47" Canvas.Bottom="122" />
+        <wpf:FlowGauge Component="mfcHe" Canvas.Right="10" Canvas.Bottom="142" ContentStringFormat="0.00"/>
 
-        <wpf:Valve Component="vFtgFlow"
-                   Canvas.Right="21" Canvas.Top="27" d:ValveState="Closed">
-            <wpf:Restriction Orientation="Horizontal" />
-        </wpf:Valve>
-        <wpf:Valve Component="vFTG_IP1"
-                   Canvas.Right="73" Canvas.Top="27" d:ValveState="Closed"/>
+        <wpf:StackingPanel Height="21" Orientation="Right" Canvas.Right="21" Canvas.Bottom="65">
+            <TextBlock Text="O₂" LineHeight="14" LineStackingStrategy="BlockLineHeight"/>
+            <wpf:StackingPanel Offset="3" IsHitTestVisible="False">
+                <wpf:Arrow IsHitTestVisible="False" Orientation="Right" />
+                <wpf:Break IsHitTestVisible="False" Orientation="Left"/>
+            </wpf:StackingPanel>
+            <wpf:StackingPanel Offset="30">
+                <wpf:Connection IsHitTestVisible="False" />
+                <wpf:Valve Component="vO2_FTG" d:ValveState="Closed" />
+            </wpf:StackingPanel>
+        </wpf:StackingPanel>
+        <wpf:MassFlowController Component="mfcO2" Orientation="Down" Canvas.Right="47" Canvas.Bottom="32" />
+        <wpf:FlowGauge Component="mfcO2" Canvas.Right="10" Canvas.Bottom="43" ContentStringFormat="0.00"/>
+
+        
     </Canvas>
 </wpf:View>

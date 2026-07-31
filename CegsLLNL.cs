@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AeonHacs.Wpf.Views;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -22,6 +23,8 @@ public partial class CegsLLNL : Cegs
 
         SampleRecords = Find<HacsLog>("SampleRecords");
         ChamberCT1 = Find<IChamber>("CT1");
+        IP1 = Find<InletPort>("IP1");
+        //        IP2 = Find<InletPort>("IP2");
 
         // Sections
         CA = Find<Section>("CA");
@@ -37,7 +40,9 @@ public partial class CegsLLNL : Cegs
         IM_CA_CT2 = Find<Section>("IM_CA_CT2");
 
         CA1 = Find<SableCA10>("CA1");
-        FTG_IMFlowManager = Find<FlowManager>("FTG_IMFlowManager");
+        mfcHe = Find<ManagedMFC>("mfcHe");
+        mfcO2 = Find<ManagedMFC>("mfcO2");
+
         CtFlowMonitor = Find<FlowMonitor>("CtFlowMonitor");
         CollectedUgc = Find<Meter>("CollectedUgc");
 
@@ -49,39 +54,29 @@ public partial class CegsLLNL : Cegs
     protected override void PostConnect()
     {
         base.PostConnect();
-        
         CA1.PropertyChanged += UpdateCollectedCO2;
         CtFlowMonitor.PropertyChanged += UpdateCollectedCO2;
 
-        IM.Manometer.PropertyChanged += UpdateFlowRate;
-        // Assume all of these sections share the same flow valve?
-        IM_CT1.FlowValve.PropertyChanged -= UpdateFlowRate;
-        //IM_CT1.FlowValve.PropertyChanged += UpdateFlowRate;
-        //IM_CT2.FlowValve.PropertyChanged -= UpdateFlowRate;
-        //IM_CT2.FlowValve.PropertyChanged += UpdateFlowRate;
-        //IM_CA_CT1.FlowValve.PropertyChanged -= UpdateFlowRate;
-        //IM_CA_CT1.FlowValve.PropertyChanged += UpdateFlowRate;
-        //IM_CA_CT2.FlowValve.PropertyChanged -= UpdateFlowRate;
-        //IM_CA_CT2.FlowValve.PropertyChanged += UpdateFlowRate;
+        mfcHe.PropertyChanged += UpdateFlowRate;
+        mfcO2.PropertyChanged += UpdateFlowRate;
     }
+
     #endregion HacsComponent
 
     #region System configuration
+
     #region HacsComponents
+
     IChamber ChamberCT1 { get; set; }
+    InletPort IP1 { get; set; }
     public virtual HacsLog SampleRecords { get; set; }
 
     #region Sections
 
     /// <summary>
-    /// The CT section, either CT1 or CT2, from which the CEGS should transfer the sample to the VTT.
+    /// The CT section of the sample collection path IM_FirstTrap.
     /// </summary>
-    public override ISection CT
-    {
-        get => ct ?? CurrentCT;
-        set => ct = value;
-    }
-    ISection ct;
+    public override ISection CT => FirstTrap;
 
     /// <summary>
     /// The sample gas collection path; one of IM_CT1, IM_CT2, IM_CA_CT1, IM_CA_CT2;
@@ -117,7 +112,7 @@ public partial class CegsLLNL : Cegs
     /// <summary>
     /// Inlet Port 1 section
     /// </summary>
-    public ISection IP1 { get; set; }
+//    public ISection IP1 { get; set; }
 
     /// <summary>
     /// Flow-Through Gas..Inlet Port 1 section
@@ -130,14 +125,19 @@ public partial class CegsLLNL : Cegs
     public ISection FTG_IM { get; set; }
 
     /// <summary>
+    /// Flow-Through Gas..Carbon Analyzer section
+    /// </summary>
+    public ISection FTG_CA { get; set; }
+
+    /// <summary>
     /// Inlet Manifold..Coil Trap Flow section (bypasses CO2 analyzer)
     /// </summary>
-    public ISection IM_CTF { get; set; }
+//    public ISection IM_CTF { get; set; }
 
     /// <summary>
     /// Inlet Manifold..CO2 Analyzer..Coil Trap Flow section
     /// </summary>
-    public ISection IM_CA_CTF { get; set; }
+//    public ISection IM_CA_CTF { get; set; }
 
     /// <summary>
     /// Inlet Manifold..Coil Trap 1 section (bypasses CO2 Analyzer)
@@ -172,9 +172,15 @@ public partial class CegsLLNL : Cegs
     public IManometer pAmbient => Ambient.Manometer;
 
     /// <summary>
-    /// Flow manager for gas (He or O2) through Inlet Port 1 into the Inlet Manifold.
+    /// Mass Flow Controller for He to FTG section
     /// </summary>
-    public FlowManager FTG_IMFlowManager { get; set; }
+    public ManagedMFC mfcHe { get; set; }
+
+    /// <summary>
+    /// Mass Flow Controller for O2 to FTG section
+    /// </summary>
+    public ManagedMFC mfcO2 { get; set; }
+
     public FlowMonitor CtFlowMonitor { get; set; }
     public Meter CollectedUgc { get; set; }
 
@@ -202,12 +208,12 @@ public partial class CegsLLNL : Cegs
         ProcessDictionary["Prepare GRs for new iron and desiccant"] = PrepareGRsForService;
         ProcessDictionary["Precondition GR iron"] = PreconditionGRs;
         ProcessDictionary["Replace iron in sulfur traps"] = ChangeSulfurFe;
-        ProcessDictionary["Prepare loaded inlet ports for collection"] = PrepareIPsForCollection;
+        ProcessDictionary["Prepare active inlet port"] = PrepareInletPort;
+        ProcessDictionary["Prepare loaded inlet ports for collection"] = PrepareInletPorts;
         Separators.Add(ProcessDictionary.Count);
 
         // d13C ports prep
         ProcessDictionary["Reload completed d13C ports"] = Reload_d13CPorts;
-        ProcessDictionary["Prepare loaded d13C ports"] = PrepareLoaded_d13CPorts;
         Separators.Add(ProcessDictionary.Count);
 
         // carbonate sample prep
@@ -217,45 +223,49 @@ public partial class CegsLLNL : Cegs
 
         // Open line
         ProcessDictionary["Open and evacuate line"] = OpenLine;
-        ProcessDictionary["Open and evacuate VS1"] = () => OpenLine(Find<VacuumSystem>("VacuumSystem1"));
-        ProcessDictionary["Open and evacuate VS2"] = () => OpenLine(Find<VacuumSystem>("VacuumSystem2"));
-        Separators.Add(ProcessDictionary.Count);
-        // Sample Process Methods
-        ProcessDictionary["Ramped oxidation"] = RampedOxidation;
+        ProcessDictionary["Open and evacuate line (IM)"] = OpenLineIM;
+        ProcessDictionary["Open and evacuate line (MC)"] = OpenLineMC;
         Separators.Add(ProcessDictionary.Count);
 
         // Main process continuations
         ProcessDictionary["Collect, etc."] = CollectEtc;
+        ProcessDictionary["Transfer CO2 to VTT, etc."] = TransferCO2FromCTToVttEtc;
         ProcessDictionary["Extract, etc."] = ExtractEtc;
         ProcessDictionary["Measure, etc."] = MeasureEtc;
         ProcessDictionary["Graphitize, etc."] = GraphitizeEtc;
         Separators.Add(ProcessDictionary.Count);
 
-        // Top-level steps for main process sequence
+        // Top-level steps for standard protocol
         ProcessDictionary["Admit sealed CO2 to InletPort"] = AdmitSealedCO2IP;
         ProcessDictionary["Collect CO2 from InletPort"] = Collect;
+        ProcessDictionary["Transfer CO2 from CT to VTT"] = TransferCO2FromCTToVTT;
         ProcessDictionary["Extract"] = Extract;
         ProcessDictionary["Measure"] = Measure;
         ProcessDictionary["Discard excess CO2 by splits"] = DiscardSplit;
         ProcessDictionary["Remove sulfur"] = RemoveSulfur;
         ProcessDictionary["Dilute small sample"] = Dilute;
         ProcessDictionary["Graphitize aliquots"] = GraphitizeAliquots;
+        ProcessDictionary["Add d13C carrier"] = AddCarrierTo_d13C;
         Separators.Add(ProcessDictionary.Count);
 
         // Secondary-level process sub-steps
         ProcessDictionary["Evacuate Inlet Port"] = EvacuateIP;
         ProcessDictionary["Flush Inlet Port"] = FlushIP;
         ProcessDictionary["Admit O2 into Inlet Port"] = AdmitIPO2;
+        ProcessDictionary["Heat quartz media"] = HeatQuartz;
         ProcessDictionary["Heat Quartz and Open Line"] = HeatQuartzOpenLine;
         ProcessDictionary["Turn off IP furnaces"] = TurnOffIPFurnaces;
         ProcessDictionary["Discard IP gases"] = DiscardIPGases;
         ProcessDictionary["Close IP"] = CloseIP;
+        ProcessDictionary["Isolate IP"] = IsolateIP;
+        ProcessDictionary["Prepare for collection"] = PrepareForCollection;
         ProcessDictionary["Start collecting"] = StartCollecting;
         ProcessDictionary["Clear collection conditions"] = ClearCollectionConditions;
         ProcessDictionary["Collect until condition met"] = CollectUntilConditionMet;
         ProcessDictionary["Stop collecting"] = StopCollecting;
         ProcessDictionary["Stop collecting immediately"] = StopCollectingImmediately;
         ProcessDictionary["Stop collecting after bleed down"] = StopCollectingAfterBleedDown;
+        ProcessDictionary["Evacuate and Freeze first trap"] = FreezeFirstTrap;
         ProcessDictionary["Evacuate and Freeze VTT"] = FreezeVtt;
         ProcessDictionary["Admit Dead CO2 into MC"] = AdmitDeadCO2;
         ProcessDictionary["Purify CO2 in MC"] = CleanupCO2InMC;
@@ -263,14 +273,25 @@ public partial class CegsLLNL : Cegs
         ProcessDictionary["Divide sample into aliquots"] = DivideAliquots;
         Separators.Add(ProcessDictionary.Count);
 
+        // Split sample processing
+        ProcessDictionary["Create a sample split"] = CreateSampleSplit;
+        ProcessDictionary["Wait for CEGS to be free"] = WaitForCegs;
+        ProcessDictionary["Launch Transfer, etc."] = LaunchTransferEtc;
+        ProcessDictionary["Collect sample gas, then launch Transfer, etc."] = CollectAndLaunchTransferEtc;
+        ProcessDictionary["Keep all LN Manifolds Active"] = KeepAllLNManifoldsActive;
+        ProcessDictionary["Resume all LN Manifolds Monitoring"] = ResumeAllLNManifoldsMonitoring;
+        ProcessDictionary["Open and Evacuate VTT..GM"] = OpenAndEvacuateVttToGM;
+        Separators.Add(ProcessDictionary.Count);
+
         // Granular inlet port & sample process control
+        ProcessDictionary["Reset Inlet Port to Loaded"] = ResetIpToLoaded;
+        ProcessDictionary["Freeze the Inlet Port"] = FreezeIp;
+        ProcessDictionary["Raise LN on the Inlet Port"] = RaiseLNIp;
+        ProcessDictionary["Thaw the Inlet Port"] = ThawIp;
+        ProcessDictionary["Raise IP furnaces"] = RaiseIpFurnaces;
         ProcessDictionary["Turn on quartz furnace"] = TurnOnIpQuartzFurnace;
         ProcessDictionary["Turn off quartz furnace"] = TurnOffIpQuartzFurnace;
-        ProcessDictionary["Disable sample setpoint ramping"] = DisableIpRamp;
-        ProcessDictionary["Enable sample setpoint ramping"] = EnableIpRamp;
         ProcessDictionary["Turn on sample furnace"] = TurnOnIpSampleFurnace;
-        ProcessDictionary["Adjust sample setpoint"] = AdjustIpSetpoint;
-        ProcessDictionary["Adjust sample ramp rate"] = AdjustIpRampRate;
         ProcessDictionary["Wait for sample to rise to setpoint"] = WaitIpRiseToSetpoint;
         ProcessDictionary["Wait for sample to fall to setpoint"] = WaitIpFallToSetpoint;
         ProcessDictionary["Turn off sample furnace"] = TurnOffIpSampleFurnace;
@@ -280,52 +301,43 @@ public partial class CegsLLNL : Cegs
         ProcessDictionary["Wait for timer"] = WaitForTimer;
         ProcessDictionary["Wait for IP timer"] = WaitIpMinutes;
         ProcessDictionary["Wait for operator"] = Notify.WaitForOperator;
-        ProcessDictionary["Wait for CEGS to be free"] = WaitForCegs;
-        ProcessDictionary["Start Extract, Etc"] = StartExtractEtc;
         Separators.Add(ProcessDictionary.Count);
 
         // Transferring CO2
-        ProcessDictionary["Transfer CO2 from CT to VTT"] = TransferCO2FromCTToVTT;
         ProcessDictionary["Transfer CO2 from MC to VTT"] = TransferCO2FromMCToVTT;
         ProcessDictionary["Transfer CO2 from MC to GR"] = TransferCO2FromMCToGR;
         ProcessDictionary["Transfer CO2 from prior GR to MC"] = TransferCO2FromGRToMC;
         Separators.Add(ProcessDictionary.Count);
 
         // Flow control steps & special collection operations
-        ProcessDictionary["Reset tracked flow and collected µgC."] = ResetUgcTracking;
-        ProcessDictionary["No IP flow"] = NoIpFlow;
-        ProcessDictionary["Use IP flow"] = UseIpFlow;
-        ProcessDictionary["Include CO2 analyzer"] = IncludeCO2Analyzer;
-        ProcessDictionary["Bypass CO2 analyzer"] = BypassCO2Analyzer;
+        ProcessDictionary["Reset tracked flow and collected µgC"] = ResetUgcTracking;
         ProcessDictionary["Select CT1"] = SelectCT1;
         ProcessDictionary["Select CT2"] = SelectCT2;
-        ProcessDictionary["Start collecting"] = StartCollecting;
-        ProcessDictionary["Clear collection conditions"] = ClearCollectionConditions;
-        ProcessDictionary["Collect until condition met"] = CollectUntilConditionMet;
         ProcessDictionary["Toggle CT collection"] = ToggleCT;
-        ProcessDictionary["Stop collecting"] = StopCollecting;
-        ProcessDictionary["Stop collecting after bleed down"] = StopCollectingAfterBleedDown;
         Separators.Add(ProcessDictionary.Count);
+
 
         // Flow control sub-steps
         ProcessDictionary["Start flow through to trap"] = StartFlowThroughToTrap;
         ProcessDictionary["Start flow through to waste"] = StartFlowThroughToWaste;
-        ProcessDictionary["Stop flow-through gas"] = StopFlowThroughGas;
+        ProcessDictionary["Stop flow-through gas"] = StopFtg;
         Separators.Add(ProcessDictionary.Count);
 
         // d13C port service routines
         //ProcessDictionary["Empty completed d13C ports"] = EmptyCompleted_d13CPorts;
         //ProcessDictionary["Thaw frozen d13C ports"] = ThawFrozen_d13CPorts;
         //ProcessDictionary["Load empty d13C ports"] = LoadEmpty_d13CPorts;
-        //ProcessDictionary["Prepare loaded d13C ports"] = PrepareLoaded_d13CPorts;
-        //Separators.Add(ProcessDictionary.Count);
+        ProcessDictionary["Prepare loaded d13C ports"] = PrepareLoaded_d13CPorts;
+        Separators.Add(ProcessDictionary.Count);
 
 
         // Utilities (generally not for sample processing)
         ProcessDictionary["Exercise all Opened valves"] = ExerciseAllValves;
         ProcessDictionary["Close all Opened valves"] = CloseAllValves;
         ProcessDictionary["Exercise all LN Manifold valves"] = ExerciseLNValves;
+        ProcessDictionary["Close all LN Manifold valves"] = CloseLNValves;
         ProcessDictionary["Calibrate all multi-turn valves"] = CalibrateRS232Valves;
+        ProcessDictionary["Open all multi-turn valves"] = OpenRS232Valves;
         ProcessDictionary["Measure MC volume (KV in MCP1)"] = MeasureVolumeMC;
         ProcessDictionary["Measure valve volumes (plug in MCP1)"] = MeasureValveVolumes;
         ProcessDictionary["Measure remaining chamber volumes"] = MeasureRemainingVolumes;
@@ -349,34 +361,64 @@ public partial class CegsLLNL : Cegs
     /// </summary>
     protected override void OpenLine()
     {
-        ProcessStep.Start("Close gas supplies");
+        var step = ProcessStep.Start("Close gas supplies");
         CloseGasSupplies();
-        ProcessStep.End();
+        step.End();
 
         var vacuumSystems = VacuumSystems.Values.ToList();
+        vacuumSystems.ForEach(OpenLine);
 
-        // Which do we want? Do we want to be able to choose?
-        vacuumSystems.ForEach(base.OpenLine);           // thaws coldfingers
-        //vacuumSystems.ForEach(vs => vs.OpenLine());   // doesn't thaw coldfingers
-
-        ProcessStep.Start($"Wait for all vacuum systems to reach {OkPressure} Torr");
+        step = ProcessStep.Start($"Wait for all vacuum systems to reach {OkPressure} Torr");
         WaitFor(() => vacuumSystems.All(vs => vs.Pressure <= OkPressure));
-        ProcessStep.End();
+        step.End();
 
-        ProcessStep.Start("Join vacuum system lines");
+        step = ProcessStep.Start("Join vacuum system lines");
         // compute all pairs?
         Section.Connections(vacuumSystems.First().MySection, vacuumSystems.Last().MySection).Open();
-        ProcessStep.End();
+        step.End();
 
-        ProcessStep.Start($"Isolate {CA.Name} (temp. due to leak)");
+        step = ProcessStep.Start($"Isolate {CA.Name} (temp. due to leak)");
         CA.Isolate();
-        ProcessStep.End();
+        step.End();
 
     }
 
     #endregion OpenLine
 
+    /// <summary>
+    /// Whenever the MC sample measurement (in ugC) changes,
+    /// notify subscribers that umolCinMC has changed as well.
+    /// </summary>
+    protected override void UpdateSampleMeasurement(object sender = null, PropertyChangedEventArgs e = null)
+    {
+        var ugC = ugCinMC.Value;
+        base.UpdateSampleMeasurement(sender, e);
+        if (ugCinMC.Value != ugC)
+            NotifyPropertyChanged(nameof(umolCinMC));
+    }
+
     #region Process Control Parameters
+
+    /// <summary>
+    /// "Provide a flow of oxygen through the Inlet Port to combust the sample, instead of a fixed pressure.
+    /// </summary>
+    public bool FlowThroughIP => ParameterTrue(nameof(FlowThroughIP));
+
+    /// <summary>
+    /// Amount of He to flow through IP, in sccm
+    /// </summary>
+    public double FlowThroughHe => GetParameter(nameof(FlowThroughHe));
+
+    /// <summary>
+    /// Amount of O2 to flow through IP, in sccm
+    /// 
+    public double FlowThroughO2 => GetParameter(nameof(FlowThroughO2));
+
+
+    /// <summary>
+    /// Whether or not to include the CO2 analyzer in the collection path.
+    /// </summary>
+    public bool IncludeCO2Analyzer => ParameterTrue(nameof(IncludeCO2Analyzer));
 
     /// <summary>
     /// Stop collecting into the coil trap when amount of carbon in the Coil Trap reaches this value,
@@ -387,17 +429,6 @@ public partial class CegsLLNL : Cegs
     #endregion Process Control Parameters
 
     #region Process Control Properties
-
-    /// <summary>
-    /// Provide a flow of oxygen through the Inlet Port to combust the sample,
-    /// instead of a fixed pressure.
-    /// </summary>
-    public virtual bool NeedIpFlow { get; set; } = false;
-
-    /// <summary>
-    /// Direct the sample gas through the CO2 analyzer during collection.
-    /// </summary>
-    public virtual bool NeedAnalyzer { get; set; } = false;
 
     /// <summary>
     /// The coil trap currently being used to trap sample gas.
@@ -423,18 +454,29 @@ public partial class CegsLLNL : Cegs
     #region Process Steps
 
     /// <summary>
-    /// Use a flow of oxygen through the Inlet Port to combust the sample.
+    /// Evacuate the Inlet Port to 'OkPressure'.
     /// </summary>
-    protected virtual void UseIpFlow() => NeedIpFlow = true;
+    protected override void EvacuateIP()
+    {
+        var step = ProcessStep.Start($"Evacuate {InletPort.Name}");
+
+        if (FlowThroughIP && InletPort == IP1)
+            FTG_IP1.Open();
+        base.EvacuateIP(IpEvacuationPressure);
+
+        step.End();
+    }
+
+    protected override void EvacuateAndCheckIPs(ISection im, IEnumerable<IPort> ips)
+    {
+        if (FlowThroughIP && ips.Contains(IP1))
+            FTG_IP1.Open();
+        base.EvacuateAndCheckIPs(im, ips);
+    }
+
 
     /// <summary>
-    /// Provide a fixed amount (pressure) of oxygen into the Inlet Port
-    /// to combust the sample.
-    /// </summary>
-    protected virtual void NoIpFlow() => NeedIpFlow = false;
-
-    /// <summary>
-    /// Start flowing O2 through the Inlet Port and the (warm) coil trap to vacuum.
+    /// Start flowing gas through the Inlet Port, analyzer, and the (warm) coil trap to vacuum.
     /// </summary>
     protected virtual void StartFlowThroughToWaste() => StartFlowThrough(false);
 
@@ -448,84 +490,93 @@ public partial class CegsLLNL : Cegs
     /// </summary>
     protected virtual void StartFlowThrough(bool trap)
     {
-        ProcessStep.Start($"Start flowing O2 through {InletPort.Name}");
+        var step = ProcessStep.Start($"Start flowing O2 through {InletPort.Name}");
 
         var source = FTG_IP1;
-        var gasfm = FTG_IMFlowManager;
-        // Need to manage the upstream FTG gas supply valve manually, because we want the shutoff to be
-        // downstream of the flow valve.
-        var o2 = Find<IValve>("vO2_FTG");
 
-        ProcessStep.Start($"Isolate and open section {source.Name}.");
+        var substep = ProcessSubStep.Start($"Isolate and open section {source.Name}.");
         source.Isolate();
         source.Open();
-        ProcessStep.End();
+        substep.End();
 
-        gasfm.FlowValve.CloseWait();
+        // TODO: These should already be off...remove?
+        //mfcHe.TurnOff();
+        //mfcO2.TurnOff();
 
         IM_FirstTrap.FlowManager.StopOnFullyOpened = false;
-        StartSampleFlow(trap);          // Manage CT flow to maintain bleed pressure
-        o2.OpenWait();
-
-        // TODO magic number "IMFlowPressure"? (make parameter)
-        gasfm.Start(20);                // Manage supply flow to maintain IM pressure
-
-        ProcessStep.End();
+        //StartSampleFlow(trap);          // Manage CT flow to maintain bleed pressure
+        StartCollecting();              // Manage CT flow to maintain bleed pressure
+        StartFtg();
+        step.End();
     }
 
     /// <summary>
-    /// Stop flowing O2 into the Inlet Port.
+    /// Start flowing the desired gas mixture into the Inlet Port.
     /// </summary>
-    protected virtual void StopFlowThroughGas()
+    public virtual void StartFtg()
     {
-        ProcessStep.Start($"Stopping O2 flow into {InletPort.Name}");
+        if (FlowThroughHe.IsANumber() && FlowThroughHe > 0)
+        {
+            mfcHe.TurnOn(FlowThroughHe);
+            WaitFor(() => Math.Abs(mfcHe.FlowRate - GetParameter("FlowThroughHe")) < 0.1, -1, 1000);
+        }
 
-        var gasfm = FTG_IMFlowManager;
-        var supplyValve = Find<IValve>("vO2_FTG");
-        var gasSupply = GasSupply("O2", IM);
-
-        gasfm.Stop();
-        gasSupply.ShutOff();
-        supplyValve.CloseWait();
-        gasfm.FlowValve.CloseWait();
-
-        ProcessStep.End();
+        if (FlowThroughO2.IsANumber() && FlowThroughO2 > 0)
+        {
+            mfcO2.TurnOn(GetParameter("FlowThroughO2"));
+            WaitFor(() => Math.Abs(mfcO2.FlowRate - GetParameter("FlowThroughO2")) < 0.1, -1, 1000);
+        }
     }
 
     /// <summary>
-    /// Include the CO2 Analyzer in the sample gas collection path.
+    /// Stop flowing gas into the Inlet Port.
     /// </summary>
-    protected virtual void IncludeCO2Analyzer() => NeedAnalyzer = true;
-
-    /// <summary>
-    /// Bypass the CO2 Analyzer when collecting sample gas.
-    /// </summary>
-    protected virtual void BypassCO2Analyzer() => NeedAnalyzer = false;
+    protected virtual void StopFtg()
+    {
+        var step = ProcessStep.Start($"Stopping gas flow into {InletPort.Name}");
+        mfcHe.TurnOff();
+        mfcO2.TurnOff();
+        step.End();
+    }
 
     /// <summary>
     /// Use Coil Trap 1 for sample collection;
     /// </summary>
-    protected virtual void SelectCT1() => base.IM_FirstTrap = NeedAnalyzer ? IM_CA_CT1 : IM_CT1;
+    protected virtual void SelectCT1() => base.IM_FirstTrap =
+        IncludeCO2Analyzer ? IM_CA_CT1 : IM_CT1;
 
     /// <summary>
     /// Use Coil Trap 2 for sample collection.
     /// </summary>
-    protected virtual void SelectCT2() => base.IM_FirstTrap = NeedAnalyzer ? IM_CA_CT2 : IM_CT2;
+    protected virtual void SelectCT2() => base.IM_FirstTrap =
+        IncludeCO2Analyzer ? IM_CA_CT2 : IM_CT2;
+
+    /// <summary>
+    /// Stop the flow-through gas if it's going and stop collecting CO2
+    /// </summary>
+    protected override void StopCollecting(bool immediately = true)
+    {
+        if (mfcO2.IsOn || mfcHe.IsOn) StopFtg();
+        var valves = IM_FirstTrap?.InternalValves;
+        var count = valves?.Count ?? 0;
+        if (count > 1)  // next-to-last internal valve feeds vCTFlow
+            valves[count - 2].CloseWait();
+        base.StopCollecting(immediately);
+    }
 
     /// <summary>
     /// Switch coil traps.
     /// </summary>
     protected virtual void ToggleCT()
     {
-        ProcessStep.Start($"Toggle CT");
+        var step = ProcessStep.Start($"Toggle CT");
 
-        if (CT == CT1)
+        if (FirstTrap == CT1)
             SelectCT2();
         else
             SelectCT1();
-        StartCollecting();
 
-        ProcessStep.End();
+        step.End();
     }
 
     protected void ResetUgcTracking()
@@ -542,7 +593,7 @@ public partial class CegsLLNL : Cegs
     }
 
     /// <summary>
-    /// Set all collection condition parameters to NaN
+    /// Set all collection stop condition parameters to NaN
     /// </summary>
     protected override void ClearCollectionConditions()
     {
@@ -552,87 +603,20 @@ public partial class CegsLLNL : Cegs
 
     protected override List<Func<string>> CollectionConditions()
     {
-        var CollectionConditions = base.CollectionConditions();
-        if (FirstTrap is null) return CollectionConditions;    // collection requires a trap
-
         IpIm(out ISection im);
         double p;
 
-        p = GetParameter("CollectUntilUgc");
-        if (p.IsANumber() && InletPort is not null)
+        var CollectionConditions = base.CollectionConditions();
+
+        p = CollectUntilUgc;
+        if (p.IsANumber())
         {
             var value = p;
             CollectionConditions.Add(() => CollectedUgc >= value ?
-                $"Collected {value:0} µg C" : "");
+                $"Collected >= {CollectUntilUgc:0} µg C" : "");
         }
 
         return CollectionConditions;
-    }
-
-    /// <summary>
-    /// Stop collecting. If 'immediately' is false, wait for CT pressure to bleed down after closing IP
-    /// </summary>
-    /// <param name="immediately">If false, wait for CT pressure to bleed down after closing IP</param>
-    protected override void StopCollecting(bool immediately = true)
-    {
-        CT = CurrentCT;     // The VTT will take it from here
-        base.StopCollecting(immediately);
-    }
-
-
-    /// <summary>
-    /// Wait for the CEGS to be ready to process a sample.
-    /// ("CEGS" in this case is the section from the VTT onward.)
-    /// </summary>
-    protected virtual void WaitForCegs()
-    {
-        ProcessStep.Start("Wait for CEGS to be ready to process sample");
-
-        bool cegsAvailable()
-        {
-            if (Stopping)
-                return true;
-            return CegsTask?.IsCompleted ?? true;
-        }
-        WaitFor(cegsAvailable, -1, 1000);
-
-        ProcessStep.End();
-    }
-
-    /// <summary>
-    /// Keep LN manifolds active for faster processing.
-    /// </summary>
-    protected override void ExtractEtc()
-    {
-        var lnManifolds = FindAll<LNManifold>();
-        lnManifolds.ForEach(m => m.StayActive());
-        base.ExtractEtc();
-        lnManifolds.ForEach(m => m.Monitor());
-    }
-
-    /// <summary>
-    /// Initiate the ExtractEtc process step, followed by evacuating VS2,
-    /// to run concurrently while the Collection process continues.
-    /// </summary>
-    protected virtual void StartExtractEtc()
-    {
-        CegsTask = Task.Run(ExtractEtcThenEvacuate);
-    }
-
-    /// <summary>
-    /// Run the ExtractEtc process step, then evacuate the line.
-    /// </summary>
-    protected virtual void ExtractEtcThenEvacuate()
-    {
-        ProcessStep.Start($"Extract from {CT.Name}");
-
-        TransferCO2FromCTToVTT();
-        ExtractEtc();
-        var vacuumSystem = GM.VacuumSystem;
-        OpenLine(vacuumSystem);          // TODO: decide between this and vacuumSystem.OpenLine()
-        vacuumSystem.WaitForPressure(OkPressure);
-
-        ProcessStep.End();
     }
 
 
@@ -642,10 +626,10 @@ public partial class CegsLLNL : Cegs
     protected void FreezeCompleted_d13CPorts()
     {
         var ports = d13CPorts.FindAll(p => p.State == LinePort.States.Complete);
-        ProcessStep.Start("Freeze completed d13C ports");
+        var step = ProcessStep.Start("Freeze completed d13C ports");
         ports.ForEach(p => p.Coldfinger.Freeze());
         WaitFor(() => ports.All(p => p.Coldfinger.Frozen));
-        ProcessStep.End();
+        step.End();
     }
 
     /// <summary>
@@ -703,7 +687,7 @@ public partial class CegsLLNL : Cegs
     /// Record the Sample data in LLNL's preferred format
     /// </summary>
     /// <param name="aliquot"></param>
-    protected override void SampleRecord(IAliquot aliquot)
+    protected override void SampleRecord(Aliquot aliquot)
     {
         if (aliquot == null) return;
 
@@ -760,159 +744,31 @@ public partial class CegsLLNL : Cegs
         sampleRecord.Clear();
     }
 
-    protected void RampedOxidation()
-    {
-        SetParameter("HoldSampleAtPorts", 1);
-
-        FTG_IP1.Close();
-        IM.VacuumSystem.OpenLine(); // don't thaw coldfingers
-        EvacuateIP(OkPressure);
-        FlushIP();        
-
-        IM.ClosePortsExcept(InletPort);
-        while (PortLeakRate(InletPort) > LeakTightTorrLitersPerSecond)
-        {
-            if (Warn($"The gas load at {InletPort.Name} is too high.",
-                $"Ok to try again or Cancel to move on.\r\n" +
-                $"Restart the application to abort the process.").Cancelled())
-                break;
-        }
-
-        //TODO change this to CleanPressure? It's OkPressure for process testing.
-        EvacuateIP(OkPressure);
-
-        ProcessStep.Start($"Heat Quartz");
-        TurnOnIpQuartzFurnace();
-        WaitMinutes((int)QuartzFurnaceWarmupMinutes);
-        ProcessStep.End();
-
-        IncludeCO2Analyzer();
-        //BypassCO2Analyzer();		 // for testing?
-        SelectCT1();
-        UseIpFlow();
-        StartFlowThroughToTrap();
-        ResetUgcTracking();
-
-        SetParameter("IpSetpoint", 1000);
-        SetParameter("IpRampRate", 5);
-        EnableIpRamp();
-        TurnOnIpSampleFurnace();
-
-        List<Sample> Splits = new() { Sample as Sample };
-        var numberOfSplits = GetParameter("NumberOfSplits");
-        if (!numberOfSplits.IsANumber())
-            numberOfSplits = 1;
-
-        for (int i = 1; i <= numberOfSplits; i++)
-        {
-            if (i > 1)
-            {
-                // Clone the sample for subsequent splits
-                Sample = Sample.Clone();
-                Sample.DateTime = DateTime.Now;
-                Sample.MicrogramsDilutionCarbon = 0;
-                Sample.TotalMicrogramsCarbon = 0;
-                Sample.Discards = 0;
-                Sample.SelectedMicrogramsCarbon = 0;
-                Sample.Micrograms_d13C = 0;
-                Sample.d13CPartsPerMillion = 0;
-                // Use autogeneratedgraphite number for Aliquot IDs?
-                // If not, we need a scheme to make them unique.
-                // Prefix with Sample.Name?
-
-                Splits.Add(Sample as Sample);
-                ToggleCT();
-            }
-
-            ClearCollectionConditions();
-
-            var targetUgc = GetValidParameter($"Split{i}TargetUgc");
-            if (!targetUgc.IsANumber()) return;
-            SetParameter("CollectUntilUgc", targetUgc);
-            SetParameter("MaximumSampleTemperature", 1000);
-            SetParameter("MinutesAtMaximumTemperature", 10);
-
-            CollectUntilConditionMet();
-
-            WaitForCegs();
-            StartExtractEtc();
-        }
-
-        Splits.ForEach(s =>
-        {
-            Sample = s;
-
-            // Re-freeze and start graphite reactor(s) (typically only 1 per split).
-            Sample.Aliquots.ForEach(a =>
-                Find<GraphiteReactor>(a.GraphiteReactor).Coldfinger.Raise());
-            GraphitizeAliquots();
-
-            AddCarrierTo_d13C();
-        });
-
-        OpenLine();
-    }
 
     #endregion Process Steps
 
     #endregion Process Management
 
-    #region Test functions
-
     protected virtual void FtgPressurize(string gasName, ISection destination, double pressure)
     {
-        // Need to manage the upstream FTG gas supply valve manually, because we want the shutoff to be
-        // downstream of the flow valve.
-        var vGas = Find<IValve>($"v{gasName}_FTG");
-        var gs = GasSupply(gasName, destination);
-        vGas.OpenWait();
-        gs.Pressurize(pressure);
-        vGas.CloseWait();
+        var mfc =
+            gasName == "He" ? mfcHe :
+            gasName == "O2" ? mfcO2 :
+            default;
+
+        // TODO handle errors (Notify?)
+        if (mfc == default) return;
+        if (!destination.Chambers.Contains(Find<Chamber>("FTG"))) return; // don't know how to get there
+
+        destination.OpenAndEvacuate();
+        destination.Isolate();
+
+        mfc.TurnOn(mfc.MaximumSetpoint);            // add Pressurize(Meter, double) to mfc class
+        WaitFor(() => destination.Pressure >= pressure);
+        mfc.TurnOff();
     }
 
     #region Coil trap flow rate testing and estimation
-
-    /// <summary>
-    /// Coil trap flow rate in standard cubic centimeters per minute.
-    /// Rough draft / prototype version.
-    /// See "CT flow analysis.ods".
-    /// </summary>
-    /// <returns></returns>
-    public double CoilTrapSccm
-    {
-        get
-        {
-            if (!IM_CT1.IsOpened &&
-                !IM_CT2.IsOpened &&
-                !IM_CA_CT1.IsOpened &&
-                !IM_CA_CT2.IsOpened)
-                return 0;
-            var pUp = ImPressure;      // upstream pressure
-            if (pUp < 0.3) pUp = 0;    // treat very low upstream pressure as 0.
-            var pos = CtFlowValvePosition;
-
-            // pIM => sccm model
-            // The flow rate model is a polynomial of degree 2.
-            // The reference model was obtained by testing the flow rate
-            // with flow valve set to Position 667.
-            // Tests were then performed for several other valve positions
-            // and the data was analyzed to produce second-degree polynomials for
-            // each position.
-            // The coefficients of all of these polynomials were plotted against the
-            // valve position, and trend lines were constructed to fit the curves.
-            // The trend line equations are used here to calculate 2nd-degree
-            // coefficients from the relative valve position. 
-            //var refPos = 667;                   // model reference position
-            //var dpos = refPos - pos;            // relative valve position
-            var c0 = 0;         // x^0 coefficient; this is indistinguishable from zero 
-            var c1 = 0.34038 + pos * (3.4682e-4 + pos * (-1.7704e-6 + pos * 7.1666e-10));  // x^1 coefficient
-            if (c1 < 0.002151) c1 = 0.002151;     // Pos 667
-            var c2 = 0.033837 - 5.2801e-5 * pos;   // x^2
-            if (c2 < 1.0901e-5) c2 = 1.0901e-5;     // Pos 667
-            var sscm = c0 + pUp * (c1 + pUp * c2);   // evaluate the polynomial
-            return sscm;
-        }
-    }
 
     Stopwatch ugCTrackingStopwatch = new Stopwatch();
     double Co2Percent;
@@ -941,26 +797,11 @@ public partial class CegsLLNL : Cegs
         }
     }
 
-
-    double ImPressure;
-    int CtFlowValvePosition;
     protected virtual void UpdateFlowRate(object sender, PropertyChangedEventArgs e)
     {
         var property = e.PropertyName;
-        var update = false;
-        if (sender == IM.Manometer && property == nameof(IM.Manometer.Value) && ImPressure != IM.Manometer.Value)
-        {
-            ImPressure = Math.Max(0, IM.Manometer.Value);
-            update = true;
-        }
-        if (CtFlowValvePosition != IM_FirstTrap.FlowValve.Position)
-        {
-            CtFlowValvePosition = IM_FirstTrap.FlowValve.Position;
-            update = true;
-        }
-
-        if (update)
-            CtFlowMonitor.FlowRateMeter.Update(CoilTrapSccm);
+        if (sender is IMassFlowController && property == nameof(IMassFlowController.FlowRate))
+            CtFlowMonitor.FlowRateMeter.Update(mfcHe.FlowRate + mfcO2.FlowRate);
     }
 
 
@@ -969,23 +810,23 @@ public partial class CegsLLNL : Cegs
         var dest = Find<Section>("IM_CA");
         var vFlow = IM_CA_CT1.FlowManager.FlowValve;
 
-        ProcessStep.Start("Evacuate IM_CA_CT1");
+        var step = ProcessStep.Start("Evacuate IM_CA_CT1");
         IM_CA_CT1.Isolate();
         vFlow.Open();
         IM_CA_CT1.OpenAndEvacuate(0.005);
         vFlow.Close();
-        ProcessStep.End();
+        step.End();
 
         FtgPressurize("O2", dest, pressure);
 
-        ProcessStep.Start("Bleed IM_CA down until pCT < 0.5 Torr");
+        step = ProcessStep.Start("Bleed IM_CA down until pCT < 0.5 Torr");
         IM_CA_CT1.OpenAndEvacuate();
         vFlow.MoveTo(position);
         WaitSeconds(5);
         var p0 = IM.Pressure;
         WaitFor(() => CTF.Pressure < 0.5);
         var p1 = IM.Pressure;
-        ProcessStep.End();
+        step.End();
 
         return (p0, p1);
     }
@@ -1007,9 +848,12 @@ public partial class CegsLLNL : Cegs
         }
     }
 
-    #endregion Coil trap flow rate testing and model
+    #endregion Coil trap flow rate testing and estimation
 
     protected override void TransferCO2FromMCToIP() => TransferCO2FromMCToIPviaGR();
+
+
+    #region Test functions
 
     /// <summary>
     /// General-purpose code tester. Put whatever you want here.
@@ -1019,5 +863,4 @@ public partial class CegsLLNL : Cegs
     }
 
     #endregion Test functions
-
 }
